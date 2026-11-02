@@ -1,0 +1,38 @@
+{
+  "files": {
+    "taxi_zone_lookup.csv": {
+      "url": "https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv",
+      "retrieved_at": "2026-11-02T22:45:15+00:00",
+      "size_bytes": 12331,
+      "sha256": "1a99e105092230f8620f301edcca7f80d3080642ff404d28ed957d3fa222c8ed"
+    },
+    "yellow_tripdata_2024-01.parquet": {
+      "url": "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-01.parquet",
+      "retrieved_at": "2026-11-02T22:45:15+00:00",
+      "size_bytes": 49961641,
+      "sha256": "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510",
+      "num_rows": 2964624
+    },
+    "yellow_tripdata_2024-02.parquet": {
+      "url": "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-02.parquet",
+      "retrieved_at": "2026-11-02T22:45:15+00:00",
+      "size_bytes": 50349284,
+      "sha256": "c76c43c18c6c6664080dd920baab4928988d5786a6b65980792ca7cd796f9f20",
+      "num_rows": 3007526
+    },
+    "yellow_tripdata_2024-03.parquet": {
+      "url": "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-03.parquet",
+      "retrieved_at": "2026-11-02T22:45:15+00:00",
+      "size_bytes": 60078280,
+      "sha256": "2d4cdc8fb96726cdd3803b13b02d2e61e71d45720aff0ebc693a8bdd1f249823",
+      "num_rows": 3582628
+    },
+    "yellow_tripdata_2024-04.parquet": {
+      "url": "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-04.parquet",
+      "retrieved_at": "2026-11-02T22:45:15+00:00",
+      "size_bytes": 59133625,
+      "sha256": "ce37f736c7cf9e92164c850ef2b502a8f7bb590fc1804b6edbcb80293da01b89",
+      "num_rows": 3514289
+    }
+  }
+}

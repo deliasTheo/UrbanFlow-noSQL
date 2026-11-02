@@ -1,0 +1,1992 @@
+[
+  {
+    "file": "yellow_tripdata_2024-01.parquet",
+    "file_month": "2024-01",
+    "num_rows": 2964624,
+    "trips_by_pickup_month": {
+      "2002-12": 2,
+      "2009-01": 3,
+      "2023-12": 10,
+      "2024-01": 2964606,
+      "2024-02": 3
+    },
+    "spatial_coverage": {
+      "distinct_pickup_zones": 260,
+      "distinct_dropoff_zones": 261,
+      "pickups_by_borough": {
+        "Manhattan": 2646948,
+        "Queens": 273128,
+        "Brooklyn": 25258,
+        "Unknown": 10360,
+        "Bronx": 6905,
+        "Outside of NYC": 1658,
+        "EWR": 295,
+        "Staten Island": 72
+      }
+    },
+    "anomalies": {
+      "PICKUP_OUTSIDE_FILE_MONTH": {
+        "description": "heure de prise en charge hors du mois du fichier",
+        "count": 18,
+        "share": 6.071596263134887e-06,
+        "example": {
+          "record": {
+            "row_number": 256,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2023-12-31 23:56:46",
+            "tpep_dropoff_datetime": "2024-01-01 00:12:06",
+            "passenger_count": 2.0,
+            "trip_distance": 2.38,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 236,
+            "DOLocationID": 142,
+            "payment_type": 1,
+            "fare_amount": 15.6,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 1.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 21.6,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 920.0,
+            "naive_duration_s": 920.0
+          }
+        }
+      },
+      "NON_POSITIVE_DURATION": {
+        "description": "durée nulle ou négative",
+        "count": 870,
+        "share": 0.0002934604860515195,
+        "example": {
+          "record": {
+            "row_number": 87994,
+            "VendorID": 1,
+            "tpep_pickup_datetime": "2024-01-02 10:00:00",
+            "tpep_dropoff_datetime": "2024-01-02 09:53:56",
+            "passenger_count": 1.0,
+            "trip_distance": 7.2,
+            "RatecodeID": 99.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 75,
+            "DOLocationID": 95,
+            "payment_type": 1,
+            "fare_amount": 38.5,
+            "extra": 0.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 6.94,
+            "improvement_surcharge": 1.0,
+            "total_amount": 46.94,
+            "congestion_surcharge": 0.0,
+            "Airport_fee": 0.0,
+            "duration_s": -364.0,
+            "naive_duration_s": -364.0
+          }
+        }
+      },
+      "EXCESSIVE_DURATION": {
+        "description": "durée supérieure à 6 h",
+        "count": 1772,
+        "share": 0.0005977149210152789,
+        "example": {
+          "record": {
+            "row_number": 3992,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-01-01 00:39:11",
+            "tpep_dropoff_datetime": "2024-01-02 00:34:19",
+            "passenger_count": 5.0,
+            "trip_distance": 2.75,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 43,
+            "DOLocationID": 137,
+            "payment_type": 1,
+            "fare_amount": 17.7,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 5.68,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 28.38,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 86108.0,
+            "naive_duration_s": 86108.0
+          }
+        }
+      },
+      "ZERO_DISTANCE": {
+        "description": "distance nulle",
+        "count": 60371,
+        "share": 0.020363796555650904,
+        "example": {
+          "record": {
+            "row_number": 17,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-01-01 00:52:09",
+            "tpep_dropoff_datetime": "2024-01-01 00:52:28",
+            "passenger_count": 1.0,
+            "trip_distance": 0.0,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 237,
+            "DOLocationID": 237,
+            "payment_type": 2,
+            "fare_amount": 3.0,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 8.0,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 19.0,
+            "naive_duration_s": 19.0
+          }
+        }
+      },
+      "IMPLAUSIBLE_DISTANCE": {
+        "description": "distance supérieure à 100 miles",
+        "count": 59,
+        "share": 1.9901343306942127e-05,
+        "example": {
+          "record": {
+            "row_number": 71811,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-01-02 02:38:04",
+            "tpep_dropoff_datetime": "2024-01-02 04:38:30",
+            "passenger_count": 1.0,
+            "trip_distance": 101.28,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 144,
+            "DOLocationID": 265,
+            "payment_type": 2,
+            "fare_amount": 359.3,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 364.3,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 7226.0,
+            "naive_duration_s": 7226.0
+          }
+        }
+      },
+      "IMPLAUSIBLE_SPEED": {
+        "description": "vitesse moyenne supérieure à 80 mph",
+        "count": 1107,
+        "share": 0.0003734031701827955,
+        "example": {
+          "record": {
+            "row_number": 221,
+            "VendorID": 1,
+            "tpep_pickup_datetime": "2024-01-01 00:26:02",
+            "tpep_dropoff_datetime": "2024-01-01 00:26:21",
+            "passenger_count": 1.0,
+            "trip_distance": 2.3,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 42,
+            "DOLocationID": 42,
+            "payment_type": 1,
+            "fare_amount": 3.0,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 10.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 15.5,
+            "congestion_surcharge": 0.0,
+            "Airport_fee": 0.0,
+            "duration_s": 19.0,
+            "naive_duration_s": 19.0
+          }
+        }
+      },
+      "NEGATIVE_AMOUNT": {
+        "description": "montant total négatif",
+        "count": 35504,
+        "share": 0.011975886318130057,
+        "example": {
+          "record": {
+            "row_number": 99,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-01-01 00:18:24",
+            "tpep_dropoff_datetime": "2024-01-01 00:30:39",
+            "passenger_count": 1.0,
+            "trip_distance": 2.16,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 249,
+            "DOLocationID": 232,
+            "payment_type": 4,
+            "fare_amount": -13.5,
+            "extra": -1.0,
+            "mta_tax": -0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": -1.0,
+            "total_amount": -18.5,
+            "congestion_surcharge": -2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 735.0,
+            "naive_duration_s": 735.0
+          }
+        }
+      },
+      "REVERSAL_RECORD": {
+        "description": "écriture d'annulation : montant négatif avec un trajet d'origine identique",
+        "count": 30672,
+        "share": 0.010346000032381846,
+        "example": {
+          "record": {
+            "row_number": 99,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-01-01 00:18:24",
+            "tpep_dropoff_datetime": "2024-01-01 00:30:39",
+            "passenger_count": 1.0,
+            "trip_distance": 2.16,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 249,
+            "DOLocationID": 232,
+            "payment_type": 4,
+            "fare_amount": -13.5,
+            "extra": -1.0,
+            "mta_tax": -0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": -1.0,
+            "total_amount": -18.5,
+            "congestion_surcharge": -2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 735.0,
+            "naive_duration_s": 735.0
+          },
+          "paired_rows": [
+            {
+              "row_number": 100,
+              "VendorID": 2,
+              "tpep_pickup_datetime": "2024-01-01 00:18:24",
+              "tpep_dropoff_datetime": "2024-01-01 00:30:39",
+              "passenger_count": 1.0,
+              "trip_distance": 2.16,
+              "RatecodeID": 1.0,
+              "store_and_fwd_flag": "N",
+              "PULocationID": 249,
+              "DOLocationID": 232,
+              "payment_type": 4,
+              "fare_amount": 13.5,
+              "extra": 1.0,
+              "mta_tax": 0.5,
+              "tip_amount": 0.0,
+              "tolls_amount": 0.0,
+              "improvement_surcharge": 1.0,
+              "total_amount": 18.5,
+              "congestion_surcharge": 2.5,
+              "Airport_fee": 0.0,
+              "duration_s": 735.0,
+              "naive_duration_s": 735.0
+            }
+          ]
+        }
+      },
+      "REVERSED_ORIGINAL": {
+        "description": "trajet d'origine ayant fait l'objet d'une annulation",
+        "count": 30672,
+        "share": 0.010346000032381846,
+        "example": {
+          "record": {
+            "row_number": 100,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-01-01 00:18:24",
+            "tpep_dropoff_datetime": "2024-01-01 00:30:39",
+            "passenger_count": 1.0,
+            "trip_distance": 2.16,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 249,
+            "DOLocationID": 232,
+            "payment_type": 4,
+            "fare_amount": 13.5,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 18.5,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 735.0,
+            "naive_duration_s": 735.0
+          },
+          "paired_rows": [
+            {
+              "row_number": 99,
+              "VendorID": 2,
+              "tpep_pickup_datetime": "2024-01-01 00:18:24",
+              "tpep_dropoff_datetime": "2024-01-01 00:30:39",
+              "passenger_count": 1.0,
+              "trip_distance": 2.16,
+              "RatecodeID": 1.0,
+              "store_and_fwd_flag": "N",
+              "PULocationID": 249,
+              "DOLocationID": 232,
+              "payment_type": 4,
+              "fare_amount": -13.5,
+              "extra": -1.0,
+              "mta_tax": -0.5,
+              "tip_amount": 0.0,
+              "tolls_amount": 0.0,
+              "improvement_surcharge": -1.0,
+              "total_amount": -18.5,
+              "congestion_surcharge": -2.5,
+              "Airport_fee": 0.0,
+              "duration_s": 735.0,
+              "naive_duration_s": 735.0
+            }
+          ]
+        }
+      },
+      "UNKNOWN_ZONE": {
+        "description": "zone de départ ou d'arrivée inconnue ou hors de la ville (264/265)",
+        "count": 31527,
+        "share": 0.010634400854880753,
+        "example": {
+          "record": {
+            "row_number": 24,
+            "VendorID": 1,
+            "tpep_pickup_datetime": "2024-01-01 00:42:05",
+            "tpep_dropoff_datetime": "2024-01-01 01:16:49",
+            "passenger_count": 1.0,
+            "trip_distance": 23.9,
+            "RatecodeID": 5.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 263,
+            "DOLocationID": 265,
+            "payment_type": 1,
+            "fare_amount": 120.0,
+            "extra": 0.0,
+            "mta_tax": 0.0,
+            "tip_amount": 0.0,
+            "tolls_amount": 6.94,
+            "improvement_surcharge": 1.0,
+            "total_amount": 127.94,
+            "congestion_surcharge": 0.0,
+            "Airport_fee": 0.0,
+            "duration_s": 2084.0,
+            "naive_duration_s": 2084.0
+          }
+        }
+      },
+      "EXACT_DUPLICATE": {
+        "description": "ligne strictement identique à une ligne précédente du même fichier",
+        "count": 0,
+        "share": 0.0,
+        "example": null
+      },
+      "MISSING_PASSENGER_INFO": {
+        "description": "passenger_count, RatecodeID et suppléments absents",
+        "count": 140162,
+        "share": 0.04727817085741733,
+        "example": {
+          "record": {
+            "row_number": 2824462,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-01-01 00:34:19",
+            "tpep_dropoff_datetime": "2024-01-01 00:51:22",
+            "passenger_count": null,
+            "trip_distance": 2.04,
+            "RatecodeID": null,
+            "store_and_fwd_flag": null,
+            "PULocationID": 143,
+            "DOLocationID": 141,
+            "payment_type": 0,
+            "fare_amount": 12.72,
+            "extra": 0.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 16.72,
+            "congestion_surcharge": null,
+            "Airport_fee": null,
+            "duration_s": 1023.0,
+            "naive_duration_s": 1023.0
+          }
+        }
+      },
+      "DST_SPANNING": {
+        "description": "trajet à cheval sur un changement d'heure (durée corrigée)",
+        "count": 0,
+        "share": 0.0,
+        "example": null
+      },
+      "DST_UNRESOLVED": {
+        "description": "heure inexistante ou ambiguë à cause d'un changement d'heure",
+        "count": 0,
+        "share": 0.0,
+        "example": null
+      }
+    },
+    "profiles": {
+      "activity": {
+        "services": "F1, F3 (comptages par zone et par période)",
+        "excluded_anomalies": [
+          "NEGATIVE_AMOUNT",
+          "EXACT_DUPLICATE"
+        ],
+        "usable": 2929120,
+        "excluded": 35504,
+        "excluded_share": 0.011975886318130057
+      },
+      "flows": {
+        "services": "F2, F5 (flux origine-destination)",
+        "excluded_anomalies": [
+          "NEGATIVE_AMOUNT",
+          "EXACT_DUPLICATE",
+          "UNKNOWN_ZONE"
+        ],
+        "usable": 2898055,
+        "excluded": 66569,
+        "excluded_share": 0.022454449535590348
+      },
+      "journey": {
+        "services": "F4 (durées, distances, vitesses)",
+        "excluded_anomalies": [
+          "NEGATIVE_AMOUNT",
+          "EXACT_DUPLICATE",
+          "UNKNOWN_ZONE",
+          "NON_POSITIVE_DURATION",
+          "EXCESSIVE_DURATION",
+          "ZERO_DISTANCE",
+          "IMPLAUSIBLE_DISTANCE",
+          "IMPLAUSIBLE_SPEED",
+          "DST_UNRESOLVED"
+        ],
+        "usable": 2841251,
+        "excluded": 123373,
+        "excluded_share": 0.04161505809843002
+      }
+    }
+  },
+  {
+    "file": "yellow_tripdata_2024-02.parquet",
+    "file_month": "2024-02",
+    "num_rows": 3007526,
+    "trips_by_pickup_month": {
+      "2008-12": 1,
+      "2009-01": 1,
+      "2024-01": 11,
+      "2024-02": 3007511,
+      "2024-03": 2
+    },
+    "spatial_coverage": {
+      "distinct_pickup_zones": 254,
+      "distinct_dropoff_zones": 260,
+      "pickups_by_borough": {
+        "Manhattan": 2710784,
+        "Queens": 250310,
+        "Brooklyn": 28022,
+        "Unknown": 9661,
+        "Bronx": 6972,
+        "Outside of NYC": 1433,
+        "EWR": 287,
+        "Staten Island": 57
+      }
+    },
+    "anomalies": {
+      "PICKUP_OUTSIDE_FILE_MONTH": {
+        "description": "heure de prise en charge hors du mois du fichier",
+        "count": 15,
+        "share": 4.987488054966108e-06,
+        "example": {
+          "record": {
+            "row_number": 248,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-01-31 23:59:53",
+            "tpep_dropoff_datetime": "2024-02-01 00:18:35",
+            "passenger_count": 1.0,
+            "trip_distance": 6.95,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 249,
+            "DOLocationID": 166,
+            "payment_type": 1,
+            "fare_amount": 30.3,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 7.06,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 42.36,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 1122.0,
+            "naive_duration_s": 1122.0
+          }
+        }
+      },
+      "NON_POSITIVE_DURATION": {
+        "description": "durée nulle ou négative",
+        "count": 803,
+        "share": 0.000266996860542519,
+        "example": {
+          "record": {
+            "row_number": 80331,
+            "VendorID": 1,
+            "tpep_pickup_datetime": "2024-02-01 19:28:06",
+            "tpep_dropoff_datetime": "2024-02-01 19:28:06",
+            "passenger_count": 0.0,
+            "trip_distance": 9.1,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 230,
+            "DOLocationID": 230,
+            "payment_type": 1,
+            "fare_amount": 38.7,
+            "extra": 5.0,
+            "mta_tax": 0.5,
+            "tip_amount": 10.4,
+            "tolls_amount": 6.94,
+            "improvement_surcharge": 1.0,
+            "total_amount": 62.54,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 1.75,
+            "duration_s": 0.0,
+            "naive_duration_s": 0.0
+          }
+        }
+      },
+      "EXCESSIVE_DURATION": {
+        "description": "durée supérieure à 6 h",
+        "count": 1736,
+        "share": 0.000577218617561411,
+        "example": {
+          "record": {
+            "row_number": 1760,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-02-01 01:16:27",
+            "tpep_dropoff_datetime": "2024-02-01 15:09:01",
+            "passenger_count": 1.0,
+            "trip_distance": 0.26,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 14,
+            "DOLocationID": 195,
+            "payment_type": 2,
+            "fare_amount": 3.7,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 13.88,
+            "improvement_surcharge": 1.0,
+            "total_amount": 20.08,
+            "congestion_surcharge": 0.0,
+            "Airport_fee": 0.0,
+            "duration_s": 49954.0,
+            "naive_duration_s": 49954.0
+          }
+        }
+      },
+      "ZERO_DISTANCE": {
+        "description": "distance nulle",
+        "count": 68225,
+        "share": 0.022684758170004184,
+        "example": {
+          "record": {
+            "row_number": 22,
+            "VendorID": 1,
+            "tpep_pickup_datetime": "2024-02-01 00:48:44",
+            "tpep_dropoff_datetime": "2024-02-01 01:42:07",
+            "passenger_count": 1.0,
+            "trip_distance": 0.0,
+            "RatecodeID": 99.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 161,
+            "DOLocationID": 197,
+            "payment_type": 1,
+            "fare_amount": 39.5,
+            "extra": 0.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 6.94,
+            "improvement_surcharge": 1.0,
+            "total_amount": 47.94,
+            "congestion_surcharge": 0.0,
+            "Airport_fee": 0.0,
+            "duration_s": 3203.0,
+            "naive_duration_s": 3203.0
+          }
+        }
+      },
+      "IMPLAUSIBLE_DISTANCE": {
+        "description": "distance supérieure à 100 miles",
+        "count": 71,
+        "share": 2.3607443460172913e-05,
+        "example": {
+          "record": {
+            "row_number": 1723277,
+            "VendorID": 1,
+            "tpep_pickup_datetime": "2024-02-18 18:25:03",
+            "tpep_dropoff_datetime": "2024-02-18 21:28:37",
+            "passenger_count": 2.0,
+            "trip_distance": 108.6,
+            "RatecodeID": 4.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 230,
+            "DOLocationID": 125,
+            "payment_type": 1,
+            "fare_amount": 740.1,
+            "extra": 2.5,
+            "mta_tax": 0.5,
+            "tip_amount": 150.05,
+            "tolls_amount": 6.36,
+            "improvement_surcharge": 1.0,
+            "total_amount": 900.51,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 11014.0,
+            "naive_duration_s": 11014.0
+          }
+        }
+      },
+      "IMPLAUSIBLE_SPEED": {
+        "description": "vitesse moyenne supérieure à 80 mph",
+        "count": 953,
+        "share": 0.00031687174109218006,
+        "example": {
+          "record": {
+            "row_number": 2249,
+            "VendorID": 1,
+            "tpep_pickup_datetime": "2024-02-01 01:43:02",
+            "tpep_dropoff_datetime": "2024-02-01 01:43:35",
+            "passenger_count": 1.0,
+            "trip_distance": 2.9,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 164,
+            "DOLocationID": 164,
+            "payment_type": 4,
+            "fare_amount": 3.0,
+            "extra": 3.5,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 8.0,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 33.0,
+            "naive_duration_s": 33.0
+          }
+        }
+      },
+      "NEGATIVE_AMOUNT": {
+        "description": "montant total négatif",
+        "count": 36080,
+        "share": 0.011996571268211813,
+        "example": {
+          "record": {
+            "row_number": 13,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-02-01 00:03:06",
+            "tpep_dropoff_datetime": "2024-02-01 00:14:21",
+            "passenger_count": 1.0,
+            "trip_distance": 5.55,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 239,
+            "DOLocationID": 244,
+            "payment_type": 3,
+            "fare_amount": -23.3,
+            "extra": -1.0,
+            "mta_tax": -0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": -1.0,
+            "total_amount": -28.3,
+            "congestion_surcharge": -2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 675.0,
+            "naive_duration_s": 675.0
+          }
+        }
+      },
+      "REVERSAL_RECORD": {
+        "description": "écriture d'annulation : montant négatif avec un trajet d'origine identique",
+        "count": 31183,
+        "share": 0.01036832266786721,
+        "example": {
+          "record": {
+            "row_number": 13,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-02-01 00:03:06",
+            "tpep_dropoff_datetime": "2024-02-01 00:14:21",
+            "passenger_count": 1.0,
+            "trip_distance": 5.55,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 239,
+            "DOLocationID": 244,
+            "payment_type": 3,
+            "fare_amount": -23.3,
+            "extra": -1.0,
+            "mta_tax": -0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": -1.0,
+            "total_amount": -28.3,
+            "congestion_surcharge": -2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 675.0,
+            "naive_duration_s": 675.0
+          },
+          "paired_rows": [
+            {
+              "row_number": 14,
+              "VendorID": 2,
+              "tpep_pickup_datetime": "2024-02-01 00:03:06",
+              "tpep_dropoff_datetime": "2024-02-01 00:14:21",
+              "passenger_count": 1.0,
+              "trip_distance": 5.55,
+              "RatecodeID": 1.0,
+              "store_and_fwd_flag": "N",
+              "PULocationID": 239,
+              "DOLocationID": 244,
+              "payment_type": 3,
+              "fare_amount": 23.3,
+              "extra": 1.0,
+              "mta_tax": 0.5,
+              "tip_amount": 0.0,
+              "tolls_amount": 0.0,
+              "improvement_surcharge": 1.0,
+              "total_amount": 28.3,
+              "congestion_surcharge": 2.5,
+              "Airport_fee": 0.0,
+              "duration_s": 675.0,
+              "naive_duration_s": 675.0
+            }
+          ]
+        }
+      },
+      "REVERSED_ORIGINAL": {
+        "description": "trajet d'origine ayant fait l'objet d'une annulation",
+        "count": 31183,
+        "share": 0.01036832266786721,
+        "example": {
+          "record": {
+            "row_number": 14,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-02-01 00:03:06",
+            "tpep_dropoff_datetime": "2024-02-01 00:14:21",
+            "passenger_count": 1.0,
+            "trip_distance": 5.55,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 239,
+            "DOLocationID": 244,
+            "payment_type": 3,
+            "fare_amount": 23.3,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 28.3,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 675.0,
+            "naive_duration_s": 675.0
+          },
+          "paired_rows": [
+            {
+              "row_number": 13,
+              "VendorID": 2,
+              "tpep_pickup_datetime": "2024-02-01 00:03:06",
+              "tpep_dropoff_datetime": "2024-02-01 00:14:21",
+              "passenger_count": 1.0,
+              "trip_distance": 5.55,
+              "RatecodeID": 1.0,
+              "store_and_fwd_flag": "N",
+              "PULocationID": 239,
+              "DOLocationID": 244,
+              "payment_type": 3,
+              "fare_amount": -23.3,
+              "extra": -1.0,
+              "mta_tax": -0.5,
+              "tip_amount": 0.0,
+              "tolls_amount": 0.0,
+              "improvement_surcharge": -1.0,
+              "total_amount": -28.3,
+              "congestion_surcharge": -2.5,
+              "Airport_fee": 0.0,
+              "duration_s": 675.0,
+              "naive_duration_s": 675.0
+            }
+          ]
+        }
+      },
+      "UNKNOWN_ZONE": {
+        "description": "zone de départ ou d'arrivée inconnue ou hors de la ville (264/265)",
+        "count": 28974,
+        "share": 0.009633831926972534,
+        "example": {
+          "record": {
+            "row_number": 34,
+            "VendorID": 1,
+            "tpep_pickup_datetime": "2024-02-01 00:58:34",
+            "tpep_dropoff_datetime": "2024-02-01 01:04:51",
+            "passenger_count": 1.0,
+            "trip_distance": 1.2,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 162,
+            "DOLocationID": 264,
+            "payment_type": 1,
+            "fare_amount": 7.9,
+            "extra": 3.5,
+            "mta_tax": 0.5,
+            "tip_amount": 3.2,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 16.1,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 377.0,
+            "naive_duration_s": 377.0
+          }
+        }
+      },
+      "EXACT_DUPLICATE": {
+        "description": "ligne strictement identique à une ligne précédente du même fichier",
+        "count": 1,
+        "share": 3.324992036644072e-07,
+        "example": {
+          "record": {
+            "row_number": 754252,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-02-08 18:23:50",
+            "tpep_dropoff_datetime": "2024-02-08 18:38:14",
+            "passenger_count": 1.0,
+            "trip_distance": 0.81,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 162,
+            "DOLocationID": 230,
+            "payment_type": 1,
+            "fare_amount": 12.8,
+            "extra": 2.5,
+            "mta_tax": 0.5,
+            "tip_amount": 3.86,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 23.16,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 864.0,
+            "naive_duration_s": 864.0
+          }
+        }
+      },
+      "MISSING_PASSENGER_INFO": {
+        "description": "passenger_count, RatecodeID et suppléments absents",
+        "count": 185610,
+        "share": 0.061715177192150625,
+        "example": {
+          "record": {
+            "row_number": 2821919,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-02-01 00:38:38",
+            "tpep_dropoff_datetime": "2024-02-01 00:43:44",
+            "passenger_count": null,
+            "trip_distance": 0.81,
+            "RatecodeID": null,
+            "store_and_fwd_flag": null,
+            "PULocationID": 114,
+            "DOLocationID": 107,
+            "payment_type": 0,
+            "fare_amount": 6.83,
+            "extra": 0.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 10.83,
+            "congestion_surcharge": null,
+            "Airport_fee": null,
+            "duration_s": 306.0,
+            "naive_duration_s": 306.0
+          }
+        }
+      },
+      "DST_SPANNING": {
+        "description": "trajet à cheval sur un changement d'heure (durée corrigée)",
+        "count": 0,
+        "share": 0.0,
+        "example": null
+      },
+      "DST_UNRESOLVED": {
+        "description": "heure inexistante ou ambiguë à cause d'un changement d'heure",
+        "count": 0,
+        "share": 0.0,
+        "example": null
+      }
+    },
+    "profiles": {
+      "activity": {
+        "services": "F1, F3 (comptages par zone et par période)",
+        "excluded_anomalies": [
+          "NEGATIVE_AMOUNT",
+          "EXACT_DUPLICATE"
+        ],
+        "usable": 2971445,
+        "excluded": 36081,
+        "excluded_share": 0.011996903767415476
+      },
+      "flows": {
+        "services": "F2, F5 (flux origine-destination)",
+        "excluded_anomalies": [
+          "NEGATIVE_AMOUNT",
+          "EXACT_DUPLICATE",
+          "UNKNOWN_ZONE"
+        ],
+        "usable": 2942952,
+        "excluded": 64574,
+        "excluded_share": 0.02147080357742543
+      },
+      "journey": {
+        "services": "F4 (durées, distances, vitesses)",
+        "excluded_anomalies": [
+          "NEGATIVE_AMOUNT",
+          "EXACT_DUPLICATE",
+          "UNKNOWN_ZONE",
+          "NON_POSITIVE_DURATION",
+          "EXCESSIVE_DURATION",
+          "ZERO_DISTANCE",
+          "IMPLAUSIBLE_DISTANCE",
+          "IMPLAUSIBLE_SPEED",
+          "DST_UNRESOLVED"
+        ],
+        "usable": 2878111,
+        "excluded": 129415,
+        "excluded_share": 0.04303038444222926
+      }
+    }
+  },
+  {
+    "file": "yellow_tripdata_2024-03.parquet",
+    "file_month": "2024-03",
+    "num_rows": 3582628,
+    "trips_by_pickup_month": {
+      "2002-12": 2,
+      "2024-02": 19,
+      "2024-03": 3582605,
+      "2024-04": 2
+    },
+    "spatial_coverage": {
+      "distinct_pickup_zones": 259,
+      "distinct_dropoff_zones": 260,
+      "pickups_by_borough": {
+        "Manhattan": 3199034,
+        "Queens": 314448,
+        "Brooklyn": 43939,
+        "Unknown": 11567,
+        "Bronx": 11082,
+        "Outside of NYC": 2081,
+        "EWR": 372,
+        "Staten Island": 105
+      }
+    },
+    "anomalies": {
+      "PICKUP_OUTSIDE_FILE_MONTH": {
+        "description": "heure de prise en charge hors du mois du fichier",
+        "count": 23,
+        "share": 6.419868320127013e-06,
+        "example": {
+          "record": {
+            "row_number": 310,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-02-29 23:52:39",
+            "tpep_dropoff_datetime": "2024-02-29 23:57:31",
+            "passenger_count": 2.0,
+            "trip_distance": 0.69,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 234,
+            "DOLocationID": 113,
+            "payment_type": 1,
+            "fare_amount": 6.5,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 2.3,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 13.8,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 292.0,
+            "naive_duration_s": 292.0
+          }
+        }
+      },
+      "NON_POSITIVE_DURATION": {
+        "description": "durée nulle ou négative",
+        "count": 1128,
+        "share": 0.0003148526723957944,
+        "example": {
+          "record": {
+            "row_number": 11452,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-03-01 00:00:00",
+            "tpep_dropoff_datetime": "2024-03-01 00:00:00",
+            "passenger_count": 1.0,
+            "trip_distance": 18.75,
+            "RatecodeID": 2.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 132,
+            "DOLocationID": 262,
+            "payment_type": 1,
+            "fare_amount": 70.0,
+            "extra": 0.0,
+            "mta_tax": 0.5,
+            "tip_amount": 4.05,
+            "tolls_amount": 6.94,
+            "improvement_surcharge": 1.0,
+            "total_amount": 84.99,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 0.0,
+            "naive_duration_s": 0.0
+          }
+        }
+      },
+      "EXCESSIVE_DURATION": {
+        "description": "durée supérieure à 6 h",
+        "count": 1927,
+        "share": 0.0005378733153428154,
+        "example": {
+          "record": {
+            "row_number": 2579,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-03-01 00:55:45",
+            "tpep_dropoff_datetime": "2024-03-01 16:26:50",
+            "passenger_count": 1.0,
+            "trip_distance": 18.92,
+            "RatecodeID": 4.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 161,
+            "DOLocationID": 193,
+            "payment_type": 2,
+            "fare_amount": 89.8,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 94.8,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 55865.0,
+            "naive_duration_s": 55865.0
+          }
+        }
+      },
+      "ZERO_DISTANCE": {
+        "description": "distance nulle",
+        "count": 87168,
+        "share": 0.024330742683862237,
+        "example": {
+          "record": {
+            "row_number": 231,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-03-01 00:25:48",
+            "tpep_dropoff_datetime": "2024-03-01 00:26:04",
+            "passenger_count": 1.0,
+            "trip_distance": 0.0,
+            "RatecodeID": 5.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 107,
+            "DOLocationID": 107,
+            "payment_type": 1,
+            "fare_amount": 15.7,
+            "extra": 0.0,
+            "mta_tax": 0.5,
+            "tip_amount": 4.92,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 24.62,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 16.0,
+            "naive_duration_s": 16.0
+          }
+        }
+      },
+      "IMPLAUSIBLE_DISTANCE": {
+        "description": "distance supérieure à 100 miles",
+        "count": 122,
+        "share": 3.4053214567630245e-05,
+        "example": {
+          "record": {
+            "row_number": 1126975,
+            "VendorID": 1,
+            "tpep_pickup_datetime": "2024-03-12 04:09:41",
+            "tpep_dropoff_datetime": "2024-03-12 08:55:31",
+            "passenger_count": 0.0,
+            "trip_distance": 105.5,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 162,
+            "DOLocationID": 166,
+            "payment_type": 3,
+            "fare_amount": 280.0,
+            "extra": 0.5,
+            "mta_tax": 0.0,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 281.5,
+            "congestion_surcharge": 0.0,
+            "Airport_fee": 0.0,
+            "duration_s": 17150.0,
+            "naive_duration_s": 17150.0
+          }
+        }
+      },
+      "IMPLAUSIBLE_SPEED": {
+        "description": "vitesse moyenne supérieure à 80 mph",
+        "count": 1241,
+        "share": 0.00034639376457728794,
+        "example": {
+          "record": {
+            "row_number": 3316,
+            "VendorID": 1,
+            "tpep_pickup_datetime": "2024-03-01 01:31:22",
+            "tpep_dropoff_datetime": "2024-03-01 01:31:40",
+            "passenger_count": 1.0,
+            "trip_distance": 1.8,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 13,
+            "DOLocationID": 13,
+            "payment_type": 3,
+            "fare_amount": 3.0,
+            "extra": 3.5,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 8.0,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 18.0,
+            "naive_duration_s": 18.0
+          }
+        }
+      },
+      "NEGATIVE_AMOUNT": {
+        "description": "montant total négatif",
+        "count": 44311,
+        "share": 0.012368295005789046,
+        "example": {
+          "record": {
+            "row_number": 193,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-03-01 00:33:51",
+            "tpep_dropoff_datetime": "2024-03-01 00:58:25",
+            "passenger_count": 2.0,
+            "trip_distance": 5.93,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 68,
+            "DOLocationID": 80,
+            "payment_type": 4,
+            "fare_amount": -29.6,
+            "extra": -1.0,
+            "mta_tax": -0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": -1.0,
+            "total_amount": -34.6,
+            "congestion_surcharge": -2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 1474.0,
+            "naive_duration_s": 1474.0
+          }
+        }
+      },
+      "REVERSAL_RECORD": {
+        "description": "écriture d'annulation : montant négatif avec un trajet d'origine identique",
+        "count": 38391,
+        "share": 0.010715876725130268,
+        "example": {
+          "record": {
+            "row_number": 193,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-03-01 00:33:51",
+            "tpep_dropoff_datetime": "2024-03-01 00:58:25",
+            "passenger_count": 2.0,
+            "trip_distance": 5.93,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 68,
+            "DOLocationID": 80,
+            "payment_type": 4,
+            "fare_amount": -29.6,
+            "extra": -1.0,
+            "mta_tax": -0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": -1.0,
+            "total_amount": -34.6,
+            "congestion_surcharge": -2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 1474.0,
+            "naive_duration_s": 1474.0
+          },
+          "paired_rows": [
+            {
+              "row_number": 194,
+              "VendorID": 2,
+              "tpep_pickup_datetime": "2024-03-01 00:33:51",
+              "tpep_dropoff_datetime": "2024-03-01 00:58:25",
+              "passenger_count": 2.0,
+              "trip_distance": 5.93,
+              "RatecodeID": 1.0,
+              "store_and_fwd_flag": "N",
+              "PULocationID": 68,
+              "DOLocationID": 80,
+              "payment_type": 4,
+              "fare_amount": 29.6,
+              "extra": 1.0,
+              "mta_tax": 0.5,
+              "tip_amount": 0.0,
+              "tolls_amount": 0.0,
+              "improvement_surcharge": 1.0,
+              "total_amount": 34.6,
+              "congestion_surcharge": 2.5,
+              "Airport_fee": 0.0,
+              "duration_s": 1474.0,
+              "naive_duration_s": 1474.0
+            }
+          ]
+        }
+      },
+      "REVERSED_ORIGINAL": {
+        "description": "trajet d'origine ayant fait l'objet d'une annulation",
+        "count": 38391,
+        "share": 0.010715876725130268,
+        "example": {
+          "record": {
+            "row_number": 194,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-03-01 00:33:51",
+            "tpep_dropoff_datetime": "2024-03-01 00:58:25",
+            "passenger_count": 2.0,
+            "trip_distance": 5.93,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 68,
+            "DOLocationID": 80,
+            "payment_type": 4,
+            "fare_amount": 29.6,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 34.6,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 1474.0,
+            "naive_duration_s": 1474.0
+          },
+          "paired_rows": [
+            {
+              "row_number": 193,
+              "VendorID": 2,
+              "tpep_pickup_datetime": "2024-03-01 00:33:51",
+              "tpep_dropoff_datetime": "2024-03-01 00:58:25",
+              "passenger_count": 2.0,
+              "trip_distance": 5.93,
+              "RatecodeID": 1.0,
+              "store_and_fwd_flag": "N",
+              "PULocationID": 68,
+              "DOLocationID": 80,
+              "payment_type": 4,
+              "fare_amount": -29.6,
+              "extra": -1.0,
+              "mta_tax": -0.5,
+              "tip_amount": 0.0,
+              "tolls_amount": 0.0,
+              "improvement_surcharge": -1.0,
+              "total_amount": -34.6,
+              "congestion_surcharge": -2.5,
+              "Airport_fee": 0.0,
+              "duration_s": 1474.0,
+              "naive_duration_s": 1474.0
+            }
+          ]
+        }
+      },
+      "UNKNOWN_ZONE": {
+        "description": "zone de départ ou d'arrivée inconnue ou hors de la ville (264/265)",
+        "count": 35374,
+        "share": 0.009873757476355346,
+        "example": {
+          "record": {
+            "row_number": 121,
+            "VendorID": 1,
+            "tpep_pickup_datetime": "2024-03-01 00:36:22",
+            "tpep_dropoff_datetime": "2024-03-01 00:57:38",
+            "passenger_count": 1.0,
+            "trip_distance": 6.6,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 264,
+            "DOLocationID": 74,
+            "payment_type": 1,
+            "fare_amount": 31.0,
+            "extra": 3.5,
+            "mta_tax": 0.5,
+            "tip_amount": 7.2,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 43.2,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 1276.0,
+            "naive_duration_s": 1276.0
+          }
+        }
+      },
+      "EXACT_DUPLICATE": {
+        "description": "ligne strictement identique à une ligne précédente du même fichier",
+        "count": 0,
+        "share": 0.0,
+        "example": null
+      },
+      "MISSING_PASSENGER_INFO": {
+        "description": "passenger_count, RatecodeID et suppléments absents",
+        "count": 426190,
+        "share": 0.11896015997195356,
+        "example": {
+          "record": {
+            "row_number": 3156438,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-03-01 00:13:53",
+            "tpep_dropoff_datetime": "2024-03-01 00:20:25",
+            "passenger_count": null,
+            "trip_distance": 0.69,
+            "RatecodeID": null,
+            "store_and_fwd_flag": null,
+            "PULocationID": 114,
+            "DOLocationID": 79,
+            "payment_type": 0,
+            "fare_amount": 7.13,
+            "extra": 0.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 11.13,
+            "congestion_surcharge": null,
+            "Airport_fee": null,
+            "duration_s": 392.0,
+            "naive_duration_s": 392.0
+          }
+        }
+      },
+      "DST_SPANNING": {
+        "description": "trajet à cheval sur un changement d'heure (durée corrigée)",
+        "count": 1153,
+        "share": 0.00032183079013506285,
+        "example": {
+          "record": {
+            "row_number": 942762,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-03-09 23:38:43",
+            "tpep_dropoff_datetime": "2024-03-10 03:40:14",
+            "passenger_count": 1.0,
+            "trip_distance": 31.35,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 249,
+            "DOLocationID": 203,
+            "payment_type": 2,
+            "fare_amount": 119.2,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 6.94,
+            "improvement_surcharge": 1.0,
+            "total_amount": 131.14,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 10891.0,
+            "naive_duration_s": 14491.0
+          }
+        }
+      },
+      "DST_UNRESOLVED": {
+        "description": "heure inexistante ou ambiguë à cause d'un changement d'heure",
+        "count": 3,
+        "share": 8.373741287122191e-07,
+        "example": {
+          "record": {
+            "row_number": 841170,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-03-09 02:31:02",
+            "tpep_dropoff_datetime": "2024-03-10 02:09:54",
+            "passenger_count": 1.0,
+            "trip_distance": 3.36,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 114,
+            "DOLocationID": 48,
+            "payment_type": 1,
+            "fare_amount": 19.1,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 3.62,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 27.72,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 85132.0,
+            "naive_duration_s": 85132.0
+          }
+        }
+      }
+    },
+    "profiles": {
+      "activity": {
+        "services": "F1, F3 (comptages par zone et par période)",
+        "excluded_anomalies": [
+          "NEGATIVE_AMOUNT",
+          "EXACT_DUPLICATE"
+        ],
+        "usable": 3538317,
+        "excluded": 44311,
+        "excluded_share": 0.012368295005789046
+      },
+      "flows": {
+        "services": "F2, F5 (flux origine-destination)",
+        "excluded_anomalies": [
+          "NEGATIVE_AMOUNT",
+          "EXACT_DUPLICATE",
+          "UNKNOWN_ZONE"
+        ],
+        "usable": 3503542,
+        "excluded": 79086,
+        "excluded_share": 0.02207485678111152
+      },
+      "journey": {
+        "services": "F4 (durées, distances, vitesses)",
+        "excluded_anomalies": [
+          "NEGATIVE_AMOUNT",
+          "EXACT_DUPLICATE",
+          "UNKNOWN_ZONE",
+          "NON_POSITIVE_DURATION",
+          "EXCESSIVE_DURATION",
+          "ZERO_DISTANCE",
+          "IMPLAUSIBLE_DISTANCE",
+          "IMPLAUSIBLE_SPEED",
+          "DST_UNRESOLVED"
+        ],
+        "usable": 3420628,
+        "excluded": 162000,
+        "excluded_share": 0.04521820295045983
+      }
+    }
+  },
+  {
+    "file": "yellow_tripdata_2024-04.parquet",
+    "file_month": "2024-04",
+    "num_rows": 3514289,
+    "trips_by_pickup_month": {
+      "2002-12": 3,
+      "2008-12": 1,
+      "2024-03": 4,
+      "2024-04": 3514280,
+      "2024-05": 1
+    },
+    "spatial_coverage": {
+      "distinct_pickup_zones": 259,
+      "distinct_dropoff_zones": 261,
+      "pickups_by_borough": {
+        "Manhattan": 3127376,
+        "Queens": 317164,
+        "Brooklyn": 45444,
+        "Unknown": 10892,
+        "Bronx": 10836,
+        "Outside of NYC": 1956,
+        "EWR": 509,
+        "Staten Island": 112
+      }
+    },
+    "anomalies": {
+      "PICKUP_OUTSIDE_FILE_MONTH": {
+        "description": "heure de prise en charge hors du mois du fichier",
+        "count": 9,
+        "share": 2.5609732153502456e-06,
+        "example": {
+          "record": {
+            "row_number": 71,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-03-31 23:56:32",
+            "tpep_dropoff_datetime": "2024-04-01 00:11:23",
+            "passenger_count": 1.0,
+            "trip_distance": 5.66,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 68,
+            "DOLocationID": 74,
+            "payment_type": 1,
+            "fare_amount": 23.3,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 5.66,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 33.96,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 891.0,
+            "naive_duration_s": 891.0
+          }
+        }
+      },
+      "NON_POSITIVE_DURATION": {
+        "description": "durée nulle ou négative",
+        "count": 1089,
+        "share": 0.00030987775905737974,
+        "example": {
+          "record": {
+            "row_number": 29814,
+            "VendorID": 1,
+            "tpep_pickup_datetime": "2024-04-01 12:30:00",
+            "tpep_dropoff_datetime": "2024-04-01 12:09:12",
+            "passenger_count": 1.0,
+            "trip_distance": 8.2,
+            "RatecodeID": 99.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 137,
+            "DOLocationID": 213,
+            "payment_type": 1,
+            "fare_amount": 34.5,
+            "extra": 0.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 36.0,
+            "congestion_surcharge": 0.0,
+            "Airport_fee": 0.0,
+            "duration_s": -1248.0,
+            "naive_duration_s": -1248.0
+          }
+        }
+      },
+      "EXCESSIVE_DURATION": {
+        "description": "durée supérieure à 6 h",
+        "count": 1982,
+        "share": 0.0005639832125360208,
+        "example": {
+          "record": {
+            "row_number": 4387,
+            "VendorID": 1,
+            "tpep_pickup_datetime": "2024-04-01 07:45:00",
+            "tpep_dropoff_datetime": "2024-04-01 16:54:25",
+            "passenger_count": 1.0,
+            "trip_distance": 3.8,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 237,
+            "DOLocationID": 3,
+            "payment_type": 3,
+            "fare_amount": 6.5,
+            "extra": 2.5,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 10.5,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 32965.0,
+            "naive_duration_s": 32965.0
+          }
+        }
+      },
+      "ZERO_DISTANCE": {
+        "description": "distance nulle",
+        "count": 45813,
+        "share": 0.013036207323871202,
+        "example": {
+          "record": {
+            "row_number": 55,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-04-01 00:02:41",
+            "tpep_dropoff_datetime": "2024-04-01 00:02:46",
+            "passenger_count": 1.0,
+            "trip_distance": 0.0,
+            "RatecodeID": 5.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 141,
+            "DOLocationID": 141,
+            "payment_type": 1,
+            "fare_amount": 18.0,
+            "extra": 0.0,
+            "mta_tax": 0.5,
+            "tip_amount": 3.9,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 23.4,
+            "congestion_surcharge": 0.0,
+            "Airport_fee": 0.0,
+            "duration_s": 5.0,
+            "naive_duration_s": 5.0
+          }
+        }
+      },
+      "IMPLAUSIBLE_DISTANCE": {
+        "description": "distance supérieure à 100 miles",
+        "count": 150,
+        "share": 4.26828869225041e-05,
+        "example": {
+          "record": {
+            "row_number": 40664,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-04-01 14:22:54",
+            "tpep_dropoff_datetime": "2024-04-01 15:18:00",
+            "passenger_count": 4.0,
+            "trip_distance": 577.05,
+            "RatecodeID": 2.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 163,
+            "DOLocationID": 132,
+            "payment_type": 2,
+            "fare_amount": 70.0,
+            "extra": 0.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 74.0,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 3306.0,
+            "naive_duration_s": 3306.0
+          }
+        }
+      },
+      "IMPLAUSIBLE_SPEED": {
+        "description": "vitesse moyenne supérieure à 80 mph",
+        "count": 1141,
+        "share": 0.00032467449319051447,
+        "example": {
+          "record": {
+            "row_number": 1518,
+            "VendorID": 1,
+            "tpep_pickup_datetime": "2024-04-01 01:34:24",
+            "tpep_dropoff_datetime": "2024-04-01 01:34:39",
+            "passenger_count": 1.0,
+            "trip_distance": 0.6,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 4,
+            "DOLocationID": 4,
+            "payment_type": 4,
+            "fare_amount": 3.0,
+            "extra": 3.5,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 8.0,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 15.0,
+            "naive_duration_s": 15.0
+          }
+        }
+      },
+      "NEGATIVE_AMOUNT": {
+        "description": "montant total négatif",
+        "count": 43749,
+        "share": 0.012448890799817544,
+        "example": {
+          "record": {
+            "row_number": 101,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-04-01 00:00:50",
+            "tpep_dropoff_datetime": "2024-04-01 00:01:08",
+            "passenger_count": 1.0,
+            "trip_distance": 0.03,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 263,
+            "DOLocationID": 263,
+            "payment_type": 4,
+            "fare_amount": -3.0,
+            "extra": -1.0,
+            "mta_tax": -0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": -1.0,
+            "total_amount": -8.0,
+            "congestion_surcharge": -2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 18.0,
+            "naive_duration_s": 18.0
+          }
+        }
+      },
+      "REVERSAL_RECORD": {
+        "description": "écriture d'annulation : montant négatif avec un trajet d'origine identique",
+        "count": 37825,
+        "share": 0.010763201318958117,
+        "example": {
+          "record": {
+            "row_number": 101,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-04-01 00:00:50",
+            "tpep_dropoff_datetime": "2024-04-01 00:01:08",
+            "passenger_count": 1.0,
+            "trip_distance": 0.03,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 263,
+            "DOLocationID": 263,
+            "payment_type": 4,
+            "fare_amount": -3.0,
+            "extra": -1.0,
+            "mta_tax": -0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": -1.0,
+            "total_amount": -8.0,
+            "congestion_surcharge": -2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 18.0,
+            "naive_duration_s": 18.0
+          },
+          "paired_rows": [
+            {
+              "row_number": 102,
+              "VendorID": 2,
+              "tpep_pickup_datetime": "2024-04-01 00:00:50",
+              "tpep_dropoff_datetime": "2024-04-01 00:01:08",
+              "passenger_count": 1.0,
+              "trip_distance": 0.03,
+              "RatecodeID": 1.0,
+              "store_and_fwd_flag": "N",
+              "PULocationID": 263,
+              "DOLocationID": 263,
+              "payment_type": 4,
+              "fare_amount": 3.0,
+              "extra": 1.0,
+              "mta_tax": 0.5,
+              "tip_amount": 0.0,
+              "tolls_amount": 0.0,
+              "improvement_surcharge": 1.0,
+              "total_amount": 8.0,
+              "congestion_surcharge": 2.5,
+              "Airport_fee": 0.0,
+              "duration_s": 18.0,
+              "naive_duration_s": 18.0
+            }
+          ]
+        }
+      },
+      "REVERSED_ORIGINAL": {
+        "description": "trajet d'origine ayant fait l'objet d'une annulation",
+        "count": 37825,
+        "share": 0.010763201318958117,
+        "example": {
+          "record": {
+            "row_number": 102,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-04-01 00:00:50",
+            "tpep_dropoff_datetime": "2024-04-01 00:01:08",
+            "passenger_count": 1.0,
+            "trip_distance": 0.03,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 263,
+            "DOLocationID": 263,
+            "payment_type": 4,
+            "fare_amount": 3.0,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 0.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 8.0,
+            "congestion_surcharge": 2.5,
+            "Airport_fee": 0.0,
+            "duration_s": 18.0,
+            "naive_duration_s": 18.0
+          },
+          "paired_rows": [
+            {
+              "row_number": 101,
+              "VendorID": 2,
+              "tpep_pickup_datetime": "2024-04-01 00:00:50",
+              "tpep_dropoff_datetime": "2024-04-01 00:01:08",
+              "passenger_count": 1.0,
+              "trip_distance": 0.03,
+              "RatecodeID": 1.0,
+              "store_and_fwd_flag": "N",
+              "PULocationID": 263,
+              "DOLocationID": 263,
+              "payment_type": 4,
+              "fare_amount": -3.0,
+              "extra": -1.0,
+              "mta_tax": -0.5,
+              "tip_amount": 0.0,
+              "tolls_amount": 0.0,
+              "improvement_surcharge": -1.0,
+              "total_amount": -8.0,
+              "congestion_surcharge": -2.5,
+              "Airport_fee": 0.0,
+              "duration_s": 18.0,
+              "naive_duration_s": 18.0
+            }
+          ]
+        }
+      },
+      "UNKNOWN_ZONE": {
+        "description": "zone de départ ou d'arrivée inconnue ou hors de la ville (264/265)",
+        "count": 35759,
+        "share": 0.010175315689745494,
+        "example": {
+          "record": {
+            "row_number": 1,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-04-01 00:41:12",
+            "tpep_dropoff_datetime": "2024-04-01 00:55:29",
+            "passenger_count": 1.0,
+            "trip_distance": 5.6,
+            "RatecodeID": 1.0,
+            "store_and_fwd_flag": "N",
+            "PULocationID": 264,
+            "DOLocationID": 264,
+            "payment_type": 1,
+            "fare_amount": 25.4,
+            "extra": 1.0,
+            "mta_tax": 0.5,
+            "tip_amount": 10.0,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 37.9,
+            "congestion_surcharge": 0.0,
+            "Airport_fee": 0.0,
+            "duration_s": 857.0,
+            "naive_duration_s": 857.0
+          }
+        }
+      },
+      "EXACT_DUPLICATE": {
+        "description": "ligne strictement identique à une ligne précédente du même fichier",
+        "count": 0,
+        "share": 0.0,
+        "example": null
+      },
+      "MISSING_PASSENGER_INFO": {
+        "description": "passenger_count, RatecodeID et suppléments absents",
+        "count": 408576,
+        "share": 0.11626135471499356,
+        "example": {
+          "record": {
+            "row_number": 3105713,
+            "VendorID": 2,
+            "tpep_pickup_datetime": "2024-04-01 00:08:47",
+            "tpep_dropoff_datetime": "2024-04-01 00:14:02",
+            "passenger_count": null,
+            "trip_distance": 2.82,
+            "RatecodeID": null,
+            "store_and_fwd_flag": null,
+            "PULocationID": 112,
+            "DOLocationID": 232,
+            "payment_type": 0,
+            "fare_amount": 12.84,
+            "extra": 0.0,
+            "mta_tax": 0.5,
+            "tip_amount": 3.37,
+            "tolls_amount": 0.0,
+            "improvement_surcharge": 1.0,
+            "total_amount": 20.21,
+            "congestion_surcharge": null,
+            "Airport_fee": null,
+            "duration_s": 315.0,
+            "naive_duration_s": 315.0
+          }
+        }
+      },
+      "DST_SPANNING": {
+        "description": "trajet à cheval sur un changement d'heure (durée corrigée)",
+        "count": 0,
+        "share": 0.0,
+        "example": null
+      },
+      "DST_UNRESOLVED": {
+        "description": "heure inexistante ou ambiguë à cause d'un changement d'heure",
+        "count": 0,
+        "share": 0.0,
+        "example": null
+      }
+    },
+    "profiles": {
+      "activity": {
+        "services": "F1, F3 (comptages par zone et par période)",
+        "excluded_anomalies": [
+          "NEGATIVE_AMOUNT",
+          "EXACT_DUPLICATE"
+        ],
+        "usable": 3470540,
+        "excluded": 43749,
+        "excluded_share": 0.012448890799817544
+      },
+      "flows": {
+        "services": "F2, F5 (flux origine-destination)",
+        "excluded_anomalies": [
+          "NEGATIVE_AMOUNT",
+          "EXACT_DUPLICATE",
+          "UNKNOWN_ZONE"
+        ],
+        "usable": 3435410,
+        "excluded": 78879,
+        "excluded_share": 0.022445222917068006
+      },
+      "journey": {
+        "services": "F4 (durées, distances, vitesses)",
+        "excluded_anomalies": [
+          "NEGATIVE_AMOUNT",
+          "EXACT_DUPLICATE",
+          "UNKNOWN_ZONE",
+          "NON_POSITIVE_DURATION",
+          "EXCESSIVE_DURATION",
+          "ZERO_DISTANCE",
+          "IMPLAUSIBLE_DISTANCE",
+          "IMPLAUSIBLE_SPEED",
+          "DST_UNRESOLVED"
+        ],
+        "usable": 3394040,
+        "excluded": 120249,
+        "excluded_share": 0.03421716313029463
+      }
+    }
+  }
+]

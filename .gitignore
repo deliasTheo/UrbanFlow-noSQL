@@ -1,0 +1,47 @@
+# Données TLC (volumineuses, re-téléchargeables via script)
+data/raw/
+data/staging/
+*.parquet
+*.csv.gz
+
+# Volumes / données MongoDB
+mongo-data/
+data/db/
+docker/volumes/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Environnement / secrets
+.env
+.env.*
+!.env.example
+
+# Résultats temporaires (les mesures brutes finales vont dans results/, versionné)
+tmp/
+*.log
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# LaTeX (rapport)
+report/*.aux
+report/*.log
+report/*.out
+report/*.toc
+report/*.synctex.gz
+report/*.fdb_latexmk
+report/*.fls
