@@ -9,8 +9,8 @@ empreinte est recalculée et comparée à celle du manifeste, ce qui permet de
 détecter une modification locale ou une nouvelle version publiée par la TLC.
 
 Usage :
-    python -m urbanflow.download                       # mois d'étude + mois de mise à jour
-    python -m urbanflow.download --months 2024-05 2024-06
+    python -m urbanflow.download                       # mois d'étude, de mise à jour et d'expérience
+    python -m urbanflow.download --months 2024-07
 """
 
 import argparse
@@ -103,7 +103,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument(
         "--months", nargs="+",
-        default=config.STUDY_MONTHS + [config.UPDATE_MONTH],
+        default=config.STUDY_MONTHS + [config.UPDATE_MONTH] + config.EXPERIMENT_MONTHS,
         help="mois à récupérer, au format AAAA-MM",
     )
     parser.add_argument("--force", action="store_true", help="re-télécharger même si le fichier existe")

@@ -11,9 +11,10 @@ Projet 3 — Big Data et NoSQL, Master 2 SLCD, Université Côte d'Azur (2026-20
 |---|---|
 | Mois d'étude | 2024-01, 2024-02, 2024-03 (passage à l'heure d'été le 10 mars) |
 | Mois de mise à jour (F6) | 2024-04 |
-| Zone d'étude | Manhattan |
+| Zone d'étude | Brooklyn |
+| Mois d'expérience (E1–E3, six mois) | 2024-05, 2024-06 |
 
-Ce périmètre est provisoire et se modifie dans `urbanflow/config.py`.
+Ce périmètre peut être modifié dans `urbanflow/config.py`.
 
 ## Arborescence
 
@@ -49,13 +50,13 @@ pip install -r requirements.txt
 python -m urbanflow.download
 ```
 
-Télécharge la table des zones, les mois d'étude et le mois de mise à jour dans
-`data/raw/`, puis écrit `data/manifest.json`. Un fichier déjà présent n'est pas
-re-téléchargé ; son empreinte est recontrôlée à chaque exécution. D'autres mois
-peuvent être ajoutés, par exemple pour l'expérience E1 :
+Télécharge la table des zones, les mois d'étude, le mois de mise à jour et les
+mois d'expérience dans `data/raw/`, puis écrit `data/manifest.json`. Un fichier
+déjà présent n'est pas re-téléchargé ; son empreinte est recontrôlée à chaque
+exécution. D'autres mois peuvent être ajoutés :
 
 ```bash
-python -m urbanflow.download --months 2024-05 2024-06
+python -m urbanflow.download --months 2024-07
 ```
 
 ### 2. Rapport de qualité
@@ -65,7 +66,7 @@ python -m urbanflow.quality_report
 ```
 
 Produit `results/quality/quality_report.md` et `quality_report.json`
-(environ 2 minutes pour quatre mois).
+(quelques minutes pour six mois).
 
 ## Choix de préparation des données
 

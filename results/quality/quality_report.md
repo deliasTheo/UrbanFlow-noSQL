@@ -10,6 +10,8 @@ Règle : un trajet est affecté au mois de son heure de prise en charge (heure l
 | yellow_tripdata_2024-02.parquet | 3,007,526 | 3,007,511 | 15 |
 | yellow_tripdata_2024-03.parquet | 3,582,628 | 3,582,605 | 23 |
 | yellow_tripdata_2024-04.parquet | 3,514,289 | 3,514,280 | 9 |
+| yellow_tripdata_2024-05.parquet | 3,723,833 | 3,723,800 | 33 |
+| yellow_tripdata_2024-06.parquet | 3,539,193 | 3,539,142 | 51 |
 
 ## Couverture spatiale (prises en charge par borough)
 
@@ -19,25 +21,27 @@ Règle : un trajet est affecté au mois de son heure de prise en charge (heure l
 | 2024-02 | 254 | 260 | 6,972 | 28,022 | 287 | 2,710,784 | 1,433 | 250,310 | 57 | 9,661 |
 | 2024-03 | 259 | 260 | 11,082 | 43,939 | 372 | 3,199,034 | 2,081 | 314,448 | 105 | 11,567 |
 | 2024-04 | 259 | 261 | 10,836 | 45,444 | 509 | 3,127,376 | 1,956 | 317,164 | 112 | 10,892 |
+| 2024-05 | 258 | 259 | 11,930 | 53,855 | 595 | 3,296,123 | 2,183 | 347,295 | 172 | 11,680 |
+| 2024-06 | 260 | 259 | 11,140 | 57,039 | 481 | 3,127,944 | 1,996 | 328,919 | 156 | 11,518 |
 
 ## Fréquence des anomalies
 
-| Code | Description | 2024-01 | 2024-02 | 2024-03 | 2024-04 |
-|---|---|---:|---:|---:|---:|
-| `PICKUP_OUTSIDE_FILE_MONTH` | heure de prise en charge hors du mois du fichier | 18 (0.00 %) | 15 (0.00 %) | 23 (0.00 %) | 9 (0.00 %) |
-| `NON_POSITIVE_DURATION` | durée nulle ou négative | 870 (0.03 %) | 803 (0.03 %) | 1,128 (0.03 %) | 1,089 (0.03 %) |
-| `EXCESSIVE_DURATION` | durée supérieure à 6 h | 1,772 (0.06 %) | 1,736 (0.06 %) | 1,927 (0.05 %) | 1,982 (0.06 %) |
-| `ZERO_DISTANCE` | distance nulle | 60,371 (2.04 %) | 68,225 (2.27 %) | 87,168 (2.43 %) | 45,813 (1.30 %) |
-| `IMPLAUSIBLE_DISTANCE` | distance supérieure à 100 miles | 59 (0.00 %) | 71 (0.00 %) | 122 (0.00 %) | 150 (0.00 %) |
-| `IMPLAUSIBLE_SPEED` | vitesse moyenne supérieure à 80 mph | 1,107 (0.04 %) | 953 (0.03 %) | 1,241 (0.03 %) | 1,141 (0.03 %) |
-| `NEGATIVE_AMOUNT` | montant total négatif | 35,504 (1.20 %) | 36,080 (1.20 %) | 44,311 (1.24 %) | 43,749 (1.24 %) |
-| `REVERSAL_RECORD` | écriture d'annulation : montant négatif avec un trajet d'origine identique | 30,672 (1.03 %) | 31,183 (1.04 %) | 38,391 (1.07 %) | 37,825 (1.08 %) |
-| `REVERSED_ORIGINAL` | trajet d'origine ayant fait l'objet d'une annulation | 30,672 (1.03 %) | 31,183 (1.04 %) | 38,391 (1.07 %) | 37,825 (1.08 %) |
-| `UNKNOWN_ZONE` | zone de départ ou d'arrivée inconnue ou hors de la ville (264/265) | 31,527 (1.06 %) | 28,974 (0.96 %) | 35,374 (0.99 %) | 35,759 (1.02 %) |
-| `EXACT_DUPLICATE` | ligne strictement identique à une ligne précédente du même fichier | 0 (0.00 %) | 1 (0.00 %) | 0 (0.00 %) | 0 (0.00 %) |
-| `MISSING_PASSENGER_INFO` | passenger_count, RatecodeID et suppléments absents | 140,162 (4.73 %) | 185,610 (6.17 %) | 426,190 (11.90 %) | 408,576 (11.63 %) |
-| `DST_SPANNING` | trajet à cheval sur un changement d'heure (durée corrigée) | 0 (0.00 %) | 0 (0.00 %) | 1,153 (0.03 %) | 0 (0.00 %) |
-| `DST_UNRESOLVED` | heure inexistante ou ambiguë à cause d'un changement d'heure | 0 (0.00 %) | 0 (0.00 %) | 3 (0.00 %) | 0 (0.00 %) |
+| Code | Description | 2024-01 | 2024-02 | 2024-03 | 2024-04 | 2024-05 | 2024-06 |
+|---|---|---:|---:|---:|---:|---:|---:|
+| `PICKUP_OUTSIDE_FILE_MONTH` | heure de prise en charge hors du mois du fichier | 18 (0.00 %) | 15 (0.00 %) | 23 (0.00 %) | 9 (0.00 %) | 33 (0.00 %) | 51 (0.00 %) |
+| `NON_POSITIVE_DURATION` | durée nulle ou négative | 870 (0.03 %) | 803 (0.03 %) | 1,128 (0.03 %) | 1,089 (0.03 %) | 1,147 (0.03 %) | 1,140 (0.03 %) |
+| `EXCESSIVE_DURATION` | durée supérieure à 6 h | 1,772 (0.06 %) | 1,736 (0.06 %) | 1,927 (0.05 %) | 1,982 (0.06 %) | 1,982 (0.05 %) | 1,950 (0.06 %) |
+| `ZERO_DISTANCE` | distance nulle | 60,371 (2.04 %) | 68,225 (2.27 %) | 87,168 (2.43 %) | 45,813 (1.30 %) | 49,791 (1.34 %) | 52,954 (1.50 %) |
+| `IMPLAUSIBLE_DISTANCE` | distance supérieure à 100 miles | 59 (0.00 %) | 71 (0.00 %) | 122 (0.00 %) | 150 (0.00 %) | 154 (0.00 %) | 169 (0.00 %) |
+| `IMPLAUSIBLE_SPEED` | vitesse moyenne supérieure à 80 mph | 1,107 (0.04 %) | 953 (0.03 %) | 1,241 (0.03 %) | 1,141 (0.03 %) | 1,158 (0.03 %) | 1,115 (0.03 %) |
+| `NEGATIVE_AMOUNT` | montant total négatif | 35,504 (1.20 %) | 36,080 (1.20 %) | 44,311 (1.24 %) | 43,749 (1.24 %) | 48,992 (1.32 %) | 48,795 (1.38 %) |
+| `REVERSAL_RECORD` | écriture d'annulation : montant négatif avec un trajet d'origine identique | 30,672 (1.03 %) | 31,183 (1.04 %) | 38,391 (1.07 %) | 37,825 (1.08 %) | 42,606 (1.14 %) | 42,313 (1.20 %) |
+| `REVERSED_ORIGINAL` | trajet d'origine ayant fait l'objet d'une annulation | 30,672 (1.03 %) | 31,183 (1.04 %) | 38,391 (1.07 %) | 37,825 (1.08 %) | 42,606 (1.14 %) | 42,313 (1.20 %) |
+| `UNKNOWN_ZONE` | zone de départ ou d'arrivée inconnue ou hors de la ville (264/265) | 31,527 (1.06 %) | 28,974 (0.96 %) | 35,374 (0.99 %) | 35,759 (1.02 %) | 38,725 (1.04 %) | 38,513 (1.09 %) |
+| `EXACT_DUPLICATE` | ligne strictement identique à une ligne précédente du même fichier | 0 (0.00 %) | 1 (0.00 %) | 0 (0.00 %) | 0 (0.00 %) | 0 (0.00 %) | 0 (0.00 %) |
+| `MISSING_PASSENGER_INFO` | passenger_count, RatecodeID et suppléments absents | 140,162 (4.73 %) | 185,610 (6.17 %) | 426,190 (11.90 %) | 408,576 (11.63 %) | 404,666 (10.87 %) | 410,781 (11.61 %) |
+| `DST_SPANNING` | trajet à cheval sur un changement d'heure (durée corrigée) | 0 (0.00 %) | 0 (0.00 %) | 1,153 (0.03 %) | 0 (0.00 %) | 0 (0.00 %) | 0 (0.00 %) |
+| `DST_UNRESOLVED` | heure inexistante ou ambiguë à cause d'un changement d'heure | 0 (0.00 %) | 0 (0.00 %) | 3 (0.00 %) | 0 (0.00 %) | 0 (0.00 %) | 0 (0.00 %) |
 
 ## Effet du filtrage par profil
 
@@ -45,11 +49,11 @@ Règle : un trajet est affecté au mois de son heure de prise en charge (heure l
 - **flows** (F2, F5 (flux origine-destination)) : exclut `NEGATIVE_AMOUNT`, `EXACT_DUPLICATE`, `UNKNOWN_ZONE`
 - **journey** (F4 (durées, distances, vitesses)) : exclut `NEGATIVE_AMOUNT`, `EXACT_DUPLICATE`, `UNKNOWN_ZONE`, `NON_POSITIVE_DURATION`, `EXCESSIVE_DURATION`, `ZERO_DISTANCE`, `IMPLAUSIBLE_DISTANCE`, `IMPLAUSIBLE_SPEED`, `DST_UNRESOLVED`
 
-| Profil | 2024-01 | 2024-02 | 2024-03 | 2024-04 |
-|---|---:|---:|---:|---:|
-| activity | 2,929,120 (−1.20 %) | 2,971,445 (−1.20 %) | 3,538,317 (−1.24 %) | 3,470,540 (−1.24 %) |
-| flows | 2,898,055 (−2.25 %) | 2,942,952 (−2.15 %) | 3,503,542 (−2.21 %) | 3,435,410 (−2.24 %) |
-| journey | 2,841,251 (−4.16 %) | 2,878,111 (−4.30 %) | 3,420,628 (−4.52 %) | 3,394,040 (−3.42 %) |
+| Profil | 2024-01 | 2024-02 | 2024-03 | 2024-04 | 2024-05 | 2024-06 |
+|---|---:|---:|---:|---:|---:|---:|
+| activity | 2,929,120 (−1.20 %) | 2,971,445 (−1.20 %) | 3,538,317 (−1.24 %) | 3,470,540 (−1.24 %) | 3,674,841 (−1.32 %) | 3,490,398 (−1.38 %) |
+| flows | 2,898,055 (−2.25 %) | 2,942,952 (−2.15 %) | 3,503,542 (−2.21 %) | 3,435,410 (−2.24 %) | 3,636,771 (−2.34 %) | 3,452,592 (−2.45 %) |
+| journey | 2,841,251 (−4.16 %) | 2,878,111 (−4.30 %) | 3,420,628 (−4.52 %) | 3,394,040 (−3.42 %) | 3,591,918 (−3.54 %) | 3,404,607 (−3.80 %) |
 
 ## Exemples concrets
 
