@@ -138,3 +138,9 @@ Le backend Spring Boot (JDK 21) permet d'explorer l'activité d'une zone dans
 Postman. Voir [F1 : installation, endpoints et règles de comptage](docs/f1-activite.md).
 Le code est dans `backend/` ; les agrégations sont exécutées par MongoDB via
 `MongoTemplate`. L'ingestion Python reste inchangée.
+
+## API — F2
+
+[F2 : flux origine–destination, règles, pipeline et mesures](docs/f2-flux.md).
+Pour comprendre les opérateurs utilisés par F1, voir
+[l'explication MongoDB de F1](docs/f1-mongodb-explique.md).

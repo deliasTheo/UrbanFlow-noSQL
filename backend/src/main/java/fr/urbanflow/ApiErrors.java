@@ -17,7 +17,7 @@ public class ApiErrors {
     @ExceptionHandler({MethodArgumentTypeMismatchException.class, MissingServletRequestParameterException.class})
     ProblemDetail parameters(Exception ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,
-                "Paramètres requis : zoneId entier, direction pickup ou dropoff, from et to au format AAAA-MM-JJ.");
+                "Paramètre absent ou invalide : vérifier les nombres, les dates AAAA-MM-JJ et les valeurs autorisées par l’endpoint.");
     }
 
     @ExceptionHandler(DataAccessException.class)
