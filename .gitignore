@@ -45,3 +45,6 @@ report/*.toc
 report/*.synctex.gz
 report/*.fdb_latexmk
 report/*.fls
+
+# Java / Maven
+backend/target/

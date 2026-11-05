@@ -80,7 +80,8 @@ Produit `results/quality/quality_report.md` et `quality_report.json`
 
 **Affectation temporelle.** Un trajet appartient à la période qui contient son
 heure de prise en charge, en heure locale de New York, indépendamment du
-fichier mensuel qui le contient.
+fichier mensuel qui le contient. Pour F1 en mode arrivées, le filtrage et les
+regroupements utilisent toutefois la date et l'heure d'arrivée.
 
 **Durées.** Les heures locales sont converties en UTC avant soustraction, ce
 qui corrige les trajets à cheval sur un changement d'heure. Les heures
@@ -130,3 +131,10 @@ versions modifiées demandent une politique supplémentaire avant F6.
 `urbanflow`). `results/ingestion/AAAA-MM.json` contient les compteurs de contrôle.
 MongoDB écoute uniquement sur localhost, sans authentification pour cet usage
 local ; ne pas exposer ce port sur Internet. Les volumes ne vont pas dans Git.
+
+## API — F1
+
+Le backend Spring Boot (JDK 21) permet d'explorer l'activité d'une zone dans
+Postman. Voir [F1 : installation, endpoints et règles de comptage](docs/f1-activite.md).
+Le code est dans `backend/` ; les agrégations sont exécutées par MongoDB via
+`MongoTemplate`. L'ingestion Python reste inchangée.
