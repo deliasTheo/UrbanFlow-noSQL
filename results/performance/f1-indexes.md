@@ -27,8 +27,11 @@ http://localhost:8080/api/activity?zoneId=181&direction=dropoff&from=2024-01-01&
 | Avec index F1 de départ | pickup | 1 après création, après les appels dropoff | 0,9 s |
 | Avec index F1 de départ | pickup | 2 | 0,030 s (30 ms) |
 
-Les temps sont rapportés manuellement, sans précision supplémentaire. Les réponses
-et plans d'exécution correspondants n'ont pas été archivés. L'ordre après index rapporté est dropoff, puis pickup ; aucun vidage des caches
+Les temps sont rapportés manuellement, sans précision supplémentaire.
+L'utilisateur rapporte des réponses identiques après comparaison visuelle ;
+chaque champ n'a pas été vérifié exhaustivement et aucune comparaison automatisée
+n'a été réalisée sur ces réponses PC. Les réponses et plans d'exécution
+correspondants n'ont pas été archivés. L'ordre après index rapporté est dropoff, puis pickup ; aucun vidage des caches
 n'a été rapporté. Ce sont des repères exploratoires, pas encore une expérience contrôlée.
 
 Les caches MongoDB et du système peuvent expliquer une partie de la baisse,
