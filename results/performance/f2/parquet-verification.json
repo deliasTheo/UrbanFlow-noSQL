@@ -1,0 +1,58 @@
+{
+  "verified": true,
+  "sourceRows": 2964624,
+  "checks": [
+    {
+      "scope": "zoneIds=181",
+      "totals": {
+        "raw": 983,
+        "retained": 973,
+        "excluded": 10
+      },
+      "eligiblePairs": 7,
+      "top": [
+        [
+          181,
+          181,
+          122
+        ],
+        [
+          181,
+          89,
+          48
+        ],
+        [
+          181,
+          61,
+          37
+        ]
+      ]
+    },
+    {
+      "scope": "borough=Brooklyn",
+      "totals": {
+        "raw": 25258,
+        "retained": 24860,
+        "excluded": 398
+      },
+      "eligiblePairs": 160,
+      "top": [
+        [
+          181,
+          181,
+          122
+        ],
+        [
+          52,
+          33,
+          98
+        ],
+        [
+          33,
+          33,
+          91
+        ]
+      ]
+    }
+  ]
+}

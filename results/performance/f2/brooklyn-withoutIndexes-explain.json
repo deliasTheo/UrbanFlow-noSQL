@@ -1,0 +1,938 @@
+{
+  "explainVersion": "1",
+  "stages": [
+    {
+      "$cursor": {
+        "queryPlanner": {
+          "namespace": "urbanflow_f2_benchmark.trips",
+          "parsedQuery": {
+            "$and": [
+              {
+                "$or": [
+                  {
+                    "data.DOLocationID": {
+                      "$in": [
+                        11,
+                        14,
+                        17,
+                        21,
+                        22,
+                        25,
+                        26,
+                        29,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        39,
+                        40,
+                        49,
+                        52,
+                        54,
+                        55,
+                        61,
+                        62,
+                        63,
+                        65,
+                        66,
+                        67,
+                        71,
+                        72,
+                        76,
+                        77,
+                        80,
+                        85,
+                        89,
+                        91,
+                        97,
+                        106,
+                        108,
+                        111,
+                        112,
+                        123,
+                        133,
+                        149,
+                        150,
+                        154,
+                        155,
+                        165,
+                        177,
+                        178,
+                        181,
+                        188,
+                        189,
+                        190,
+                        195,
+                        210,
+                        217,
+                        222,
+                        225,
+                        227,
+                        228,
+                        255,
+                        256,
+                        257
+                      ]
+                    }
+                  },
+                  {
+                    "data.PULocationID": {
+                      "$in": [
+                        11,
+                        14,
+                        17,
+                        21,
+                        22,
+                        25,
+                        26,
+                        29,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        39,
+                        40,
+                        49,
+                        52,
+                        54,
+                        55,
+                        61,
+                        62,
+                        63,
+                        65,
+                        66,
+                        67,
+                        71,
+                        72,
+                        76,
+                        77,
+                        80,
+                        85,
+                        89,
+                        91,
+                        97,
+                        106,
+                        108,
+                        111,
+                        112,
+                        123,
+                        133,
+                        149,
+                        150,
+                        154,
+                        155,
+                        165,
+                        177,
+                        178,
+                        181,
+                        188,
+                        189,
+                        190,
+                        195,
+                        210,
+                        217,
+                        222,
+                        225,
+                        227,
+                        228,
+                        255,
+                        256,
+                        257
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "source.file_id": {
+                  "$eq": "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510"
+                }
+              },
+              {
+                "data.tpep_pickup_datetime": {
+                  "$lt": "2024-02-01T00:00:00"
+                }
+              },
+              {
+                "data.tpep_pickup_datetime": {
+                  "$gte": "2024-01-01T00:00:00"
+                }
+              }
+            ]
+          },
+          "indexFilterSet": false,
+          "queryHash": "026FFAF1",
+          "planCacheShapeHash": "026FFAF1",
+          "planCacheKey": "E03000A5",
+          "optimizationTimeMillis": 0,
+          "maxIndexedOrSolutionsReached": false,
+          "maxIndexedAndSolutionsReached": false,
+          "maxScansToExplodeReached": false,
+          "prunedSimilarIndexes": false,
+          "winningPlan": {
+            "isCached": false,
+            "stage": "PROJECTION_DEFAULT",
+            "transformBy": {
+              "_id": true,
+              "origin": "$data.PULocationID",
+              "destination": "$data.DOLocationID",
+              "source": "$source.file_id",
+              "week": {
+                "$dateToString": {
+                  "date": {
+                    "$dateTrunc": {
+                      "date": {
+                        "$dateFromString": {
+                          "dateString": "$data.tpep_pickup_datetime"
+                        }
+                      },
+                      "unit": {
+                        "$const": "week"
+                      },
+                      "startOfWeek": {
+                        "$const": "monday"
+                      }
+                    }
+                  },
+                  "format": {
+                    "$const": "%Y-%m-%d"
+                  }
+                }
+              },
+              "retained": {
+                "$eq": [
+                  {
+                    "$size": [
+                      {
+                        "$setIntersection": [
+                          {
+                            "$ifNull": [
+                              "$quality_flags",
+                              {
+                                "$const": []
+                              }
+                            ]
+                          },
+                          {
+                            "$const": [
+                              "NEGATIVE_AMOUNT",
+                              "EXACT_DUPLICATE",
+                              "UNKNOWN_ZONE"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "$const": 0
+                  }
+                ]
+              }
+            },
+            "inputStage": {
+              "stage": "COLLSCAN",
+              "filter": {
+                "$and": [
+                  {
+                    "$or": [
+                      {
+                        "data.DOLocationID": {
+                          "$in": [
+                            11,
+                            14,
+                            17,
+                            21,
+                            22,
+                            25,
+                            26,
+                            29,
+                            33,
+                            34,
+                            35,
+                            36,
+                            37,
+                            39,
+                            40,
+                            49,
+                            52,
+                            54,
+                            55,
+                            61,
+                            62,
+                            63,
+                            65,
+                            66,
+                            67,
+                            71,
+                            72,
+                            76,
+                            77,
+                            80,
+                            85,
+                            89,
+                            91,
+                            97,
+                            106,
+                            108,
+                            111,
+                            112,
+                            123,
+                            133,
+                            149,
+                            150,
+                            154,
+                            155,
+                            165,
+                            177,
+                            178,
+                            181,
+                            188,
+                            189,
+                            190,
+                            195,
+                            210,
+                            217,
+                            222,
+                            225,
+                            227,
+                            228,
+                            255,
+                            256,
+                            257
+                          ]
+                        }
+                      },
+                      {
+                        "data.PULocationID": {
+                          "$in": [
+                            11,
+                            14,
+                            17,
+                            21,
+                            22,
+                            25,
+                            26,
+                            29,
+                            33,
+                            34,
+                            35,
+                            36,
+                            37,
+                            39,
+                            40,
+                            49,
+                            52,
+                            54,
+                            55,
+                            61,
+                            62,
+                            63,
+                            65,
+                            66,
+                            67,
+                            71,
+                            72,
+                            76,
+                            77,
+                            80,
+                            85,
+                            89,
+                            91,
+                            97,
+                            106,
+                            108,
+                            111,
+                            112,
+                            123,
+                            133,
+                            149,
+                            150,
+                            154,
+                            155,
+                            165,
+                            177,
+                            178,
+                            181,
+                            188,
+                            189,
+                            190,
+                            195,
+                            210,
+                            217,
+                            222,
+                            225,
+                            227,
+                            228,
+                            255,
+                            256,
+                            257
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "source.file_id": {
+                      "$eq": "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510"
+                    }
+                  },
+                  {
+                    "data.tpep_pickup_datetime": {
+                      "$lt": "2024-02-01T00:00:00"
+                    }
+                  },
+                  {
+                    "data.tpep_pickup_datetime": {
+                      "$gte": "2024-01-01T00:00:00"
+                    }
+                  }
+                ]
+              },
+              "direction": "forward"
+            }
+          },
+          "rejectedPlans": []
+        },
+        "executionStats": {
+          "executionSuccess": true,
+          "nReturned": 119349,
+          "executionTimeMillis": 4369,
+          "totalKeysExamined": 0,
+          "totalDocsExamined": 2964624,
+          "executionStages": {
+            "isCached": false,
+            "stage": "PROJECTION_DEFAULT",
+            "nReturned": 119349,
+            "executionTimeMillisEstimate": 3854,
+            "works": 2964625,
+            "advanced": 119349,
+            "needTime": 2845275,
+            "needYield": 0,
+            "saveState": 237,
+            "restoreState": 237,
+            "isEOF": 1,
+            "transformBy": {
+              "_id": true,
+              "origin": "$data.PULocationID",
+              "destination": "$data.DOLocationID",
+              "source": "$source.file_id",
+              "week": {
+                "$dateToString": {
+                  "date": {
+                    "$dateTrunc": {
+                      "date": {
+                        "$dateFromString": {
+                          "dateString": "$data.tpep_pickup_datetime"
+                        }
+                      },
+                      "unit": {
+                        "$const": "week"
+                      },
+                      "startOfWeek": {
+                        "$const": "monday"
+                      }
+                    }
+                  },
+                  "format": {
+                    "$const": "%Y-%m-%d"
+                  }
+                }
+              },
+              "retained": {
+                "$eq": [
+                  {
+                    "$size": [
+                      {
+                        "$setIntersection": [
+                          {
+                            "$ifNull": [
+                              "$quality_flags",
+                              {
+                                "$const": []
+                              }
+                            ]
+                          },
+                          {
+                            "$const": [
+                              "NEGATIVE_AMOUNT",
+                              "EXACT_DUPLICATE",
+                              "UNKNOWN_ZONE"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "$const": 0
+                  }
+                ]
+              }
+            },
+            "inputStage": {
+              "stage": "COLLSCAN",
+              "filter": {
+                "$and": [
+                  {
+                    "$or": [
+                      {
+                        "data.DOLocationID": {
+                          "$in": [
+                            11,
+                            14,
+                            17,
+                            21,
+                            22,
+                            25,
+                            26,
+                            29,
+                            33,
+                            34,
+                            35,
+                            36,
+                            37,
+                            39,
+                            40,
+                            49,
+                            52,
+                            54,
+                            55,
+                            61,
+                            62,
+                            63,
+                            65,
+                            66,
+                            67,
+                            71,
+                            72,
+                            76,
+                            77,
+                            80,
+                            85,
+                            89,
+                            91,
+                            97,
+                            106,
+                            108,
+                            111,
+                            112,
+                            123,
+                            133,
+                            149,
+                            150,
+                            154,
+                            155,
+                            165,
+                            177,
+                            178,
+                            181,
+                            188,
+                            189,
+                            190,
+                            195,
+                            210,
+                            217,
+                            222,
+                            225,
+                            227,
+                            228,
+                            255,
+                            256,
+                            257
+                          ]
+                        }
+                      },
+                      {
+                        "data.PULocationID": {
+                          "$in": [
+                            11,
+                            14,
+                            17,
+                            21,
+                            22,
+                            25,
+                            26,
+                            29,
+                            33,
+                            34,
+                            35,
+                            36,
+                            37,
+                            39,
+                            40,
+                            49,
+                            52,
+                            54,
+                            55,
+                            61,
+                            62,
+                            63,
+                            65,
+                            66,
+                            67,
+                            71,
+                            72,
+                            76,
+                            77,
+                            80,
+                            85,
+                            89,
+                            91,
+                            97,
+                            106,
+                            108,
+                            111,
+                            112,
+                            123,
+                            133,
+                            149,
+                            150,
+                            154,
+                            155,
+                            165,
+                            177,
+                            178,
+                            181,
+                            188,
+                            189,
+                            190,
+                            195,
+                            210,
+                            217,
+                            222,
+                            225,
+                            227,
+                            228,
+                            255,
+                            256,
+                            257
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "source.file_id": {
+                      "$eq": "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510"
+                    }
+                  },
+                  {
+                    "data.tpep_pickup_datetime": {
+                      "$lt": "2024-02-01T00:00:00"
+                    }
+                  },
+                  {
+                    "data.tpep_pickup_datetime": {
+                      "$gte": "2024-01-01T00:00:00"
+                    }
+                  }
+                ]
+              },
+              "nReturned": 119349,
+              "executionTimeMillisEstimate": 3149,
+              "works": 2964625,
+              "advanced": 119349,
+              "needTime": 2845275,
+              "needYield": 0,
+              "saveState": 237,
+              "restoreState": 237,
+              "isEOF": 1,
+              "direction": "forward",
+              "docsExamined": 2964624
+            }
+          }
+        }
+      },
+      "nReturned": 119349,
+      "executionTimeMillisEstimate": 4081
+    },
+    {
+      "$group": {
+        "_id": {
+          "origin": "$origin",
+          "destination": "$destination",
+          "week": "$week",
+          "source": "$source"
+        },
+        "raw": {
+          "$sum": {
+            "$const": 1
+          }
+        },
+        "retained": {
+          "$sum": {
+            "$cond": [
+              "$retained",
+              {
+                "$const": 1
+              },
+              {
+                "$const": 0
+              }
+            ]
+          }
+        }
+      },
+      "maxAccumulatorMemoryUsageBytes": {
+        "raw": 3252608,
+        "retained": 3252608
+      },
+      "totalOutputDataSizeBytes": 17127014,
+      "usedDisk": false,
+      "spills": 0,
+      "spilledDataStorageSize": 0,
+      "numBytesSpilledEstimate": 0,
+      "spilledRecords": 0,
+      "nReturned": 25411,
+      "executionTimeMillisEstimate": 4349
+    }
+  ],
+  "queryShapeHash": "2C7467C59ECD23F600AA194B1C8CDF85F0B427F518D2131327C953FB751ED91A",
+  "serverInfo": {
+    "host": "6e76c765dd63",
+    "port": 27017,
+    "version": "8.0.16",
+    "gitVersion": "ba70b6a13fda907977110bf46e6c8137f5de48f6"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "command": {
+    "aggregate": "trips",
+    "pipeline": [
+      {
+        "$match": {
+          "source.file_id": {
+            "$in": [
+              "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510"
+            ]
+          },
+          "data.tpep_pickup_datetime": {
+            "$gte": "2024-01-01T00:00:00",
+            "$lt": "2024-02-01T00:00:00"
+          },
+          "$or": [
+            {
+              "data.PULocationID": {
+                "$in": [
+                  11,
+                  14,
+                  17,
+                  21,
+                  22,
+                  25,
+                  26,
+                  29,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  39,
+                  40,
+                  49,
+                  52,
+                  54,
+                  55,
+                  61,
+                  62,
+                  63,
+                  65,
+                  66,
+                  67,
+                  71,
+                  72,
+                  76,
+                  77,
+                  80,
+                  85,
+                  89,
+                  91,
+                  97,
+                  106,
+                  108,
+                  111,
+                  112,
+                  123,
+                  133,
+                  149,
+                  150,
+                  154,
+                  155,
+                  165,
+                  177,
+                  178,
+                  181,
+                  188,
+                  189,
+                  190,
+                  195,
+                  210,
+                  217,
+                  222,
+                  225,
+                  227,
+                  228,
+                  255,
+                  256,
+                  257
+                ]
+              }
+            },
+            {
+              "data.DOLocationID": {
+                "$in": [
+                  11,
+                  14,
+                  17,
+                  21,
+                  22,
+                  25,
+                  26,
+                  29,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  39,
+                  40,
+                  49,
+                  52,
+                  54,
+                  55,
+                  61,
+                  62,
+                  63,
+                  65,
+                  66,
+                  67,
+                  71,
+                  72,
+                  76,
+                  77,
+                  80,
+                  85,
+                  89,
+                  91,
+                  97,
+                  106,
+                  108,
+                  111,
+                  112,
+                  123,
+                  133,
+                  149,
+                  150,
+                  154,
+                  155,
+                  165,
+                  177,
+                  178,
+                  181,
+                  188,
+                  189,
+                  190,
+                  195,
+                  210,
+                  217,
+                  222,
+                  225,
+                  227,
+                  228,
+                  255,
+                  256,
+                  257
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "$project": {
+          "origin": "$data.PULocationID",
+          "destination": "$data.DOLocationID",
+          "source": "$source.file_id",
+          "week": {
+            "$dateToString": {
+              "format": "%Y-%m-%d",
+              "date": {
+                "$dateTrunc": {
+                  "date": {
+                    "$dateFromString": {
+                      "dateString": "$data.tpep_pickup_datetime"
+                    }
+                  },
+                  "unit": "week",
+                  "startOfWeek": "monday"
+                }
+              }
+            }
+          },
+          "retained": {
+            "$eq": [
+              {
+                "$size": {
+                  "$setIntersection": [
+                    {
+                      "$ifNull": [
+                        "$quality_flags",
+                        []
+                      ]
+                    },
+                    [
+                      "NEGATIVE_AMOUNT",
+                      "EXACT_DUPLICATE",
+                      "UNKNOWN_ZONE"
+                    ]
+                  ]
+                }
+              },
+              0
+            ]
+          }
+        }
+      },
+      {
+        "$group": {
+          "_id": {
+            "origin": "$origin",
+            "destination": "$destination",
+            "week": "$week",
+            "source": "$source"
+          },
+          "raw": {
+            "$sum": 1
+          },
+          "retained": {
+            "$sum": {
+              "$cond": [
+                "$retained",
+                1,
+                0
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "cursor": {},
+    "allowDiskUse": true,
+    "maxTimeMS": 120000,
+    "$db": "urbanflow_f2_benchmark"
+  },
+  "ok": 1.0
+}

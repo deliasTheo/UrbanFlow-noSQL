@@ -189,3 +189,7 @@ Conserver les mêmes paramètres pour la comparaison et vérifier que les répon
 restent identiques. Les mesures initiales rapportées sur le PC et les informations
 à compléter pour le rapport sont dans
 [le suivi des mesures F1](../results/performance/f1-indexes.md).
+
+
+Pour une explication étape par étape des opérateurs et de leur rôle dans le code,
+voir [Comprendre les requêtes MongoDB de F1](f1-mongodb-explique.md).
