@@ -4,9 +4,16 @@
 
 Mesures de temps HTTP communiquées dans le chat le 5 novembre 2026.
 Le jeu de référence prévu est janvier–mars 2024 ; le nombre exact de documents
-sur le PC et les paramètres effectifs des requêtes restent à confirmer.
-Les exemples donnés dans le guide utilisent zoneId=181, from=2024-01-01 et
-to=2024-02-01, mais ces valeurs ne sont pas attestées pour ces mesures.
+sur le PC reste à confirmer. Les paramètres suivants ont été confirmés par
+l'utilisateur pour les comparaisons avant et après index : zone 181 (Park Slope,
+Brooklyn), du 1er janvier 2024 inclus au 1er février 2024 exclu.
+
+Requêtes GET exactes :
+
+```text
+http://localhost:8080/api/activity?zoneId=181&direction=pickup&from=2024-01-01&to=2024-02-01
+http://localhost:8080/api/activity?zoneId=181&direction=dropoff&from=2024-01-01&to=2024-02-01
+```
 
 | Configuration | Sens | Appel successif | Temps rapporté |
 |---|---|---:|---:|
@@ -15,10 +22,14 @@ to=2024-02-01, mais ces valeurs ne sont pas attestées pour ces mesures.
 | Sans index F1 | pickup | 3 | 17 s |
 | Sans index F1 | dropoff | 1, après les appels pickup | 25 s |
 | Sans index F1 | dropoff | 2 | 16 s |
+| Avec index F1 d'arrivée | dropoff | 1 après création | 1,9 s |
+| Avec index F1 d'arrivée | dropoff | 2 | 0,9 s |
+| Avec index F1 de départ | pickup | 1 après création, après les appels dropoff | 0,9 s |
+| Avec index F1 de départ | pickup | 2 | 0,030 s (30 ms) |
 
 Les temps sont rapportés manuellement, sans précision supplémentaire. Les réponses
-et plans d'exécution correspondants n'ont pas été archivés. Ce sont des repères
-exploratoires, pas encore une expérience contrôlée.
+et plans d'exécution correspondants n'ont pas été archivés. L'ordre après index rapporté est dropoff, puis pickup ; aucun vidage des caches
+n'a été rapporté. Ce sont des repères exploratoires, pas encore une expérience contrôlée.
 
 Les caches MongoDB et du système peuvent expliquer une partie de la baisse,
 sans que cette cause ait été isolée. Les appels dropoff peuvent réutiliser des
@@ -39,7 +50,8 @@ Choix proposé : deux index non uniques, zone en égalité puis date en interval
 Script reproductible : `scripts/create-f1-indexes.js`. Il est exécuté explicitement,
 pas au démarrage de Spring ni pendant l'ingestion. MongoDB maintient ensuite les
 index lors des insertions, notamment pour F6. Coûts : espace disque et travail
-supplémentaire à l'import. Le gain reste à mesurer ; il dépend de la sélectivité.
+supplémentaire à l'import. Les temps rapportés baissent nettement après création ; le gain dépend de la
+sélectivité et des conditions de cache.
 
 ## Compléments nécessaires pour le rapport
 
@@ -48,19 +60,22 @@ deux requêtes représentatives. Une requête pickup et une dropoff permettent d
 construire cette comparaison, avec les mêmes données et paramètres avant/après.
 Les temps HTTP mesurent le service complet, pas seulement le moteur MongoDB.
 
-À conserver pour chaque requête : URL exacte, réponse JSON, état des imports,
-effectif de trips, index présents, ordre des appels et temps successifs.
+Les URL, temps et ordre des appels sont consignés ci-dessus. Restent à archiver :
+réponses JSON, état des imports, effectif de trips et liste des index présents.
 Documenter le matériel, les ressources Docker et les versions. Définir le même
 échauffement pour les deux configurations ; distinguer le premier appel des
 répétitions, puis présenter une tendance centrale et la variabilité.
 
-Après création : relever plusieurs temps pickup et dropoff, vérifier l'identité
-des réponses et examiner le pipeline avec `explain("executionStats")`, notamment
+Pour compléter ces premières mesures : réaliser des répétitions avec un
+échauffement défini, vérifier l'identité des réponses et examiner le pipeline avec `explain("executionStats")`, notamment
 `totalDocsExamined`, `totalKeysExamined` et le plan choisi. L'API ne force pas
 l'utilisation d'un index : le planificateur MongoDB décide.
 
-Aucune mesure avec index n'est encore disponible. Ne pas calculer de gain ni
-conclure que le choix est validé avant ces mesures. Les résultats et limites de
-cette comparaison iront dans la partie conception/expériences du rapport, avec
-ce fichier comme trace des observations initiales. Ce travail ne remplace pas les
+Les mesures observées passent de 83/32/17 s à 0,9/0,030 s pour pickup et de
+25/16 s à 1,9/0,9 s pour dropoff. Elles soutiennent l'intérêt des index pour ces
+requêtes, sans isoler leur effet de celui des caches. Deux répétitions après
+index ne suffisent pas à établir une latence stable ; 30 ms est une observation,
+pas une garantie générale. Aucun facteur d'accélération contrôlé n'est déduit.
+Les résultats et limites de cette comparaison iront dans la partie
+conception/expériences du rapport, avec ce fichier comme trace des observations. Ce travail ne remplace pas les
 expériences distribuées E1–E3 demandées séparément dans le sujet.
