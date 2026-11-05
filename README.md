@@ -144,3 +144,8 @@ Le code est dans `backend/` ; les agrégations sont exécutées par MongoDB via
 [F2 : flux origine–destination, règles, pipeline et mesures](docs/f2-flux.md).
 Pour comprendre les opérateurs utilisés par F1, voir
 [l'explication MongoDB de F1](docs/f1-mongodb-explique.md).
+
+## API — F3
+
+[F3 : activité inhabituelle, références, calendrier et pipelines MongoDB](docs/f3-activite-inhabituelle.md).
+Les mesures et vérifications reproductibles sont dans `results/performance/f3/`.

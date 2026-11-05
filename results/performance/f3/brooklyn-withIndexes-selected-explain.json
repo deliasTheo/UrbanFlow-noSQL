@@ -1,0 +1,1115 @@
+{
+  "explainVersion": "1",
+  "stages": [
+    {
+      "$cursor": {
+        "queryPlanner": {
+          "namespace": "urbanflow_f3_benchmark.trips",
+          "parsedQuery": {
+            "$and": [
+              {
+                "$or": [
+                  {
+                    "$and": [
+                      {
+                        "data.tpep_pickup_datetime": {
+                          "$lt": "2024-02-01T00:00:00"
+                        }
+                      },
+                      {
+                        "data.tpep_pickup_datetime": {
+                          "$gte": "2024-01-22T00:00:00"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "$and": [
+                      {
+                        "data.tpep_pickup_datetime": {
+                          "$lt": "2024-01-22T00:00:00"
+                        }
+                      },
+                      {
+                        "data.tpep_pickup_datetime": {
+                          "$gte": "2024-01-01T00:00:00"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "source.file_id": {
+                  "$eq": "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510"
+                }
+              },
+              {
+                "data.PULocationID": {
+                  "$in": [
+                    11,
+                    14,
+                    17,
+                    21,
+                    22,
+                    25,
+                    26,
+                    29,
+                    33,
+                    34,
+                    35,
+                    36,
+                    37,
+                    39,
+                    40,
+                    49,
+                    52,
+                    54,
+                    55,
+                    61,
+                    62,
+                    63,
+                    65,
+                    66,
+                    67,
+                    71,
+                    72,
+                    76,
+                    77,
+                    80,
+                    85,
+                    89,
+                    91,
+                    97,
+                    106,
+                    108,
+                    111,
+                    112,
+                    123,
+                    133,
+                    149,
+                    150,
+                    154,
+                    155,
+                    165,
+                    177,
+                    178,
+                    181,
+                    188,
+                    189,
+                    190,
+                    195,
+                    210,
+                    217,
+                    222,
+                    225,
+                    227,
+                    228,
+                    255,
+                    256,
+                    257
+                  ]
+                }
+              }
+            ]
+          },
+          "indexFilterSet": false,
+          "queryHash": "2AC29558",
+          "planCacheShapeHash": "2AC29558",
+          "planCacheKey": "327FF9F6",
+          "optimizationTimeMillis": 4,
+          "maxIndexedOrSolutionsReached": false,
+          "maxIndexedAndSolutionsReached": false,
+          "maxScansToExplodeReached": false,
+          "prunedSimilarIndexes": false,
+          "winningPlan": {
+            "isCached": true,
+            "stage": "PROJECTION_DEFAULT",
+            "transformBy": {
+              "_id": true,
+              "zone": "$data.PULocationID",
+              "date": {
+                "$substrBytes": [
+                  "$data.tpep_pickup_datetime",
+                  {
+                    "$const": 0
+                  },
+                  {
+                    "$const": 10
+                  }
+                ]
+              },
+              "hour": {
+                "$hour": {
+                  "date": {
+                    "$dateFromString": {
+                      "dateString": "$data.tpep_pickup_datetime"
+                    }
+                  }
+                }
+              },
+              "source": "$source.file_id",
+              "retained": {
+                "$eq": [
+                  {
+                    "$size": [
+                      {
+                        "$setIntersection": [
+                          {
+                            "$ifNull": [
+                              "$quality_flags",
+                              {
+                                "$const": []
+                              }
+                            ]
+                          },
+                          {
+                            "$const": [
+                              "NEGATIVE_AMOUNT",
+                              "EXACT_DUPLICATE"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "$const": 0
+                  }
+                ]
+              }
+            },
+            "inputStage": {
+              "stage": "FETCH",
+              "filter": {
+                "source.file_id": {
+                  "$eq": "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510"
+                }
+              },
+              "inputStage": {
+                "stage": "OR",
+                "inputStages": [
+                  {
+                    "stage": "IXSCAN",
+                    "keyPattern": {
+                      "data.PULocationID": 1,
+                      "data.tpep_pickup_datetime": 1
+                    },
+                    "indexName": "f1_pickup_zone_datetime",
+                    "isMultiKey": false,
+                    "multiKeyPaths": {
+                      "data.PULocationID": [],
+                      "data.tpep_pickup_datetime": []
+                    },
+                    "isUnique": false,
+                    "isSparse": false,
+                    "isPartial": false,
+                    "indexVersion": 2,
+                    "direction": "forward",
+                    "indexBounds": {
+                      "data.PULocationID": [
+                        "[11, 11]",
+                        "[14, 14]",
+                        "[17, 17]",
+                        "[21, 21]",
+                        "[22, 22]",
+                        "[25, 25]",
+                        "[26, 26]",
+                        "[29, 29]",
+                        "[33, 33]",
+                        "[34, 34]",
+                        "[35, 35]",
+                        "[36, 36]",
+                        "[37, 37]",
+                        "[39, 39]",
+                        "[40, 40]",
+                        "[49, 49]",
+                        "[52, 52]",
+                        "[54, 54]",
+                        "[55, 55]",
+                        "[61, 61]",
+                        "[62, 62]",
+                        "[63, 63]",
+                        "[65, 65]",
+                        "[66, 66]",
+                        "[67, 67]",
+                        "[71, 71]",
+                        "[72, 72]",
+                        "[76, 76]",
+                        "[77, 77]",
+                        "[80, 80]",
+                        "[85, 85]",
+                        "[89, 89]",
+                        "[91, 91]",
+                        "[97, 97]",
+                        "[106, 106]",
+                        "[108, 108]",
+                        "[111, 111]",
+                        "[112, 112]",
+                        "[123, 123]",
+                        "[133, 133]",
+                        "[149, 149]",
+                        "[150, 150]",
+                        "[154, 154]",
+                        "[155, 155]",
+                        "[165, 165]",
+                        "[177, 177]",
+                        "[178, 178]",
+                        "[181, 181]",
+                        "[188, 188]",
+                        "[189, 189]",
+                        "[190, 190]",
+                        "[195, 195]",
+                        "[210, 210]",
+                        "[217, 217]",
+                        "[222, 222]",
+                        "[225, 225]",
+                        "[227, 227]",
+                        "[228, 228]",
+                        "[255, 255]",
+                        "[256, 256]",
+                        "[257, 257]"
+                      ],
+                      "data.tpep_pickup_datetime": [
+                        "[\"2024-01-22T00:00:00\", \"2024-02-01T00:00:00\")"
+                      ]
+                    }
+                  },
+                  {
+                    "stage": "IXSCAN",
+                    "keyPattern": {
+                      "data.PULocationID": 1,
+                      "data.tpep_pickup_datetime": 1
+                    },
+                    "indexName": "f1_pickup_zone_datetime",
+                    "isMultiKey": false,
+                    "multiKeyPaths": {
+                      "data.PULocationID": [],
+                      "data.tpep_pickup_datetime": []
+                    },
+                    "isUnique": false,
+                    "isSparse": false,
+                    "isPartial": false,
+                    "indexVersion": 2,
+                    "direction": "forward",
+                    "indexBounds": {
+                      "data.PULocationID": [
+                        "[11, 11]",
+                        "[14, 14]",
+                        "[17, 17]",
+                        "[21, 21]",
+                        "[22, 22]",
+                        "[25, 25]",
+                        "[26, 26]",
+                        "[29, 29]",
+                        "[33, 33]",
+                        "[34, 34]",
+                        "[35, 35]",
+                        "[36, 36]",
+                        "[37, 37]",
+                        "[39, 39]",
+                        "[40, 40]",
+                        "[49, 49]",
+                        "[52, 52]",
+                        "[54, 54]",
+                        "[55, 55]",
+                        "[61, 61]",
+                        "[62, 62]",
+                        "[63, 63]",
+                        "[65, 65]",
+                        "[66, 66]",
+                        "[67, 67]",
+                        "[71, 71]",
+                        "[72, 72]",
+                        "[76, 76]",
+                        "[77, 77]",
+                        "[80, 80]",
+                        "[85, 85]",
+                        "[89, 89]",
+                        "[91, 91]",
+                        "[97, 97]",
+                        "[106, 106]",
+                        "[108, 108]",
+                        "[111, 111]",
+                        "[112, 112]",
+                        "[123, 123]",
+                        "[133, 133]",
+                        "[149, 149]",
+                        "[150, 150]",
+                        "[154, 154]",
+                        "[155, 155]",
+                        "[165, 165]",
+                        "[177, 177]",
+                        "[178, 178]",
+                        "[181, 181]",
+                        "[188, 188]",
+                        "[189, 189]",
+                        "[190, 190]",
+                        "[195, 195]",
+                        "[210, 210]",
+                        "[217, 217]",
+                        "[222, 222]",
+                        "[225, 225]",
+                        "[227, 227]",
+                        "[228, 228]",
+                        "[255, 255]",
+                        "[256, 256]",
+                        "[257, 257]"
+                      ],
+                      "data.tpep_pickup_datetime": [
+                        "[\"2024-01-01T00:00:00\", \"2024-01-22T00:00:00\")"
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "rejectedPlans": [
+            {
+              "isCached": false,
+              "stage": "PROJECTION_DEFAULT",
+              "transformBy": {
+                "_id": true,
+                "zone": "$data.PULocationID",
+                "date": {
+                  "$substrBytes": [
+                    "$data.tpep_pickup_datetime",
+                    {
+                      "$const": 0
+                    },
+                    {
+                      "$const": 10
+                    }
+                  ]
+                },
+                "hour": {
+                  "$hour": {
+                    "date": {
+                      "$dateFromString": {
+                        "dateString": "$data.tpep_pickup_datetime"
+                      }
+                    }
+                  }
+                },
+                "source": "$source.file_id",
+                "retained": {
+                  "$eq": [
+                    {
+                      "$size": [
+                        {
+                          "$setIntersection": [
+                            {
+                              "$ifNull": [
+                                "$quality_flags",
+                                {
+                                  "$const": []
+                                }
+                              ]
+                            },
+                            {
+                              "$const": [
+                                "NEGATIVE_AMOUNT",
+                                "EXACT_DUPLICATE"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "$const": 0
+                    }
+                  ]
+                }
+              },
+              "inputStage": {
+                "stage": "FETCH",
+                "filter": {
+                  "$and": [
+                    {
+                      "$or": [
+                        {
+                          "$and": [
+                            {
+                              "data.tpep_pickup_datetime": {
+                                "$lt": "2024-02-01T00:00:00"
+                              }
+                            },
+                            {
+                              "data.tpep_pickup_datetime": {
+                                "$gte": "2024-01-22T00:00:00"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "$and": [
+                            {
+                              "data.tpep_pickup_datetime": {
+                                "$lt": "2024-01-22T00:00:00"
+                              }
+                            },
+                            {
+                              "data.tpep_pickup_datetime": {
+                                "$gte": "2024-01-01T00:00:00"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "source.file_id": {
+                        "$eq": "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510"
+                      }
+                    }
+                  ]
+                },
+                "inputStage": {
+                  "stage": "IXSCAN",
+                  "keyPattern": {
+                    "data.PULocationID": 1,
+                    "data.tpep_pickup_datetime": 1
+                  },
+                  "indexName": "f1_pickup_zone_datetime",
+                  "isMultiKey": false,
+                  "multiKeyPaths": {
+                    "data.PULocationID": [],
+                    "data.tpep_pickup_datetime": []
+                  },
+                  "isUnique": false,
+                  "isSparse": false,
+                  "isPartial": false,
+                  "indexVersion": 2,
+                  "direction": "forward",
+                  "indexBounds": {
+                    "data.PULocationID": [
+                      "[11, 11]",
+                      "[14, 14]",
+                      "[17, 17]",
+                      "[21, 21]",
+                      "[22, 22]",
+                      "[25, 25]",
+                      "[26, 26]",
+                      "[29, 29]",
+                      "[33, 33]",
+                      "[34, 34]",
+                      "[35, 35]",
+                      "[36, 36]",
+                      "[37, 37]",
+                      "[39, 39]",
+                      "[40, 40]",
+                      "[49, 49]",
+                      "[52, 52]",
+                      "[54, 54]",
+                      "[55, 55]",
+                      "[61, 61]",
+                      "[62, 62]",
+                      "[63, 63]",
+                      "[65, 65]",
+                      "[66, 66]",
+                      "[67, 67]",
+                      "[71, 71]",
+                      "[72, 72]",
+                      "[76, 76]",
+                      "[77, 77]",
+                      "[80, 80]",
+                      "[85, 85]",
+                      "[89, 89]",
+                      "[91, 91]",
+                      "[97, 97]",
+                      "[106, 106]",
+                      "[108, 108]",
+                      "[111, 111]",
+                      "[112, 112]",
+                      "[123, 123]",
+                      "[133, 133]",
+                      "[149, 149]",
+                      "[150, 150]",
+                      "[154, 154]",
+                      "[155, 155]",
+                      "[165, 165]",
+                      "[177, 177]",
+                      "[178, 178]",
+                      "[181, 181]",
+                      "[188, 188]",
+                      "[189, 189]",
+                      "[190, 190]",
+                      "[195, 195]",
+                      "[210, 210]",
+                      "[217, 217]",
+                      "[222, 222]",
+                      "[225, 225]",
+                      "[227, 227]",
+                      "[228, 228]",
+                      "[255, 255]",
+                      "[256, 256]",
+                      "[257, 257]"
+                    ],
+                    "data.tpep_pickup_datetime": [
+                      "[MinKey, MaxKey]"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "executionStats": {
+          "executionSuccess": true,
+          "nReturned": 25258,
+          "executionTimeMillis": 233,
+          "totalKeysExamined": 25416,
+          "totalDocsExamined": 25258,
+          "executionStages": {
+            "isCached": true,
+            "stage": "PROJECTION_DEFAULT",
+            "nReturned": 25258,
+            "executionTimeMillisEstimate": 170,
+            "works": 25416,
+            "advanced": 25258,
+            "needTime": 157,
+            "needYield": 0,
+            "saveState": 20,
+            "restoreState": 20,
+            "isEOF": 1,
+            "transformBy": {
+              "_id": true,
+              "zone": "$data.PULocationID",
+              "date": {
+                "$substrBytes": [
+                  "$data.tpep_pickup_datetime",
+                  {
+                    "$const": 0
+                  },
+                  {
+                    "$const": 10
+                  }
+                ]
+              },
+              "hour": {
+                "$hour": {
+                  "date": {
+                    "$dateFromString": {
+                      "dateString": "$data.tpep_pickup_datetime"
+                    }
+                  }
+                }
+              },
+              "source": "$source.file_id",
+              "retained": {
+                "$eq": [
+                  {
+                    "$size": [
+                      {
+                        "$setIntersection": [
+                          {
+                            "$ifNull": [
+                              "$quality_flags",
+                              {
+                                "$const": []
+                              }
+                            ]
+                          },
+                          {
+                            "$const": [
+                              "NEGATIVE_AMOUNT",
+                              "EXACT_DUPLICATE"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "$const": 0
+                  }
+                ]
+              }
+            },
+            "inputStage": {
+              "stage": "FETCH",
+              "filter": {
+                "source.file_id": {
+                  "$eq": "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510"
+                }
+              },
+              "nReturned": 25258,
+              "executionTimeMillisEstimate": 143,
+              "works": 25416,
+              "advanced": 25258,
+              "needTime": 157,
+              "needYield": 0,
+              "saveState": 20,
+              "restoreState": 20,
+              "isEOF": 1,
+              "docsExamined": 25258,
+              "alreadyHasObj": 0,
+              "inputStage": {
+                "stage": "OR",
+                "nReturned": 25258,
+                "executionTimeMillisEstimate": 26,
+                "works": 25416,
+                "advanced": 25258,
+                "needTime": 157,
+                "needYield": 0,
+                "saveState": 20,
+                "restoreState": 20,
+                "isEOF": 1,
+                "dupsTested": 25258,
+                "dupsDropped": 0,
+                "inputStages": [
+                  {
+                    "stage": "IXSCAN",
+                    "nReturned": 8293,
+                    "executionTimeMillisEstimate": 0,
+                    "works": 8354,
+                    "advanced": 8293,
+                    "needTime": 60,
+                    "needYield": 0,
+                    "saveState": 20,
+                    "restoreState": 20,
+                    "isEOF": 1,
+                    "keyPattern": {
+                      "data.PULocationID": 1,
+                      "data.tpep_pickup_datetime": 1
+                    },
+                    "indexName": "f1_pickup_zone_datetime",
+                    "isMultiKey": false,
+                    "multiKeyPaths": {
+                      "data.PULocationID": [],
+                      "data.tpep_pickup_datetime": []
+                    },
+                    "isUnique": false,
+                    "isSparse": false,
+                    "isPartial": false,
+                    "indexVersion": 2,
+                    "direction": "forward",
+                    "indexBounds": {
+                      "data.PULocationID": [
+                        "[11, 11]",
+                        "[14, 14]",
+                        "[17, 17]",
+                        "[21, 21]",
+                        "[22, 22]",
+                        "[25, 25]",
+                        "[26, 26]",
+                        "[29, 29]",
+                        "[33, 33]",
+                        "[34, 34]",
+                        "[35, 35]",
+                        "[36, 36]",
+                        "[37, 37]",
+                        "[39, 39]",
+                        "[40, 40]",
+                        "[49, 49]",
+                        "[52, 52]",
+                        "[54, 54]",
+                        "[55, 55]",
+                        "[61, 61]",
+                        "[62, 62]",
+                        "[63, 63]",
+                        "[65, 65]",
+                        "[66, 66]",
+                        "[67, 67]",
+                        "[71, 71]",
+                        "[72, 72]",
+                        "[76, 76]",
+                        "[77, 77]",
+                        "[80, 80]",
+                        "[85, 85]",
+                        "[89, 89]",
+                        "[91, 91]",
+                        "[97, 97]",
+                        "[106, 106]",
+                        "[108, 108]",
+                        "[111, 111]",
+                        "[112, 112]",
+                        "[123, 123]",
+                        "[133, 133]",
+                        "[149, 149]",
+                        "[150, 150]",
+                        "[154, 154]",
+                        "[155, 155]",
+                        "[165, 165]",
+                        "[177, 177]",
+                        "[178, 178]",
+                        "[181, 181]",
+                        "[188, 188]",
+                        "[189, 189]",
+                        "[190, 190]",
+                        "[195, 195]",
+                        "[210, 210]",
+                        "[217, 217]",
+                        "[222, 222]",
+                        "[225, 225]",
+                        "[227, 227]",
+                        "[228, 228]",
+                        "[255, 255]",
+                        "[256, 256]",
+                        "[257, 257]"
+                      ],
+                      "data.tpep_pickup_datetime": [
+                        "[\"2024-01-22T00:00:00\", \"2024-02-01T00:00:00\")"
+                      ]
+                    },
+                    "keysExamined": 8354,
+                    "seeks": 61,
+                    "dupsTested": 0,
+                    "dupsDropped": 0
+                  },
+                  {
+                    "stage": "IXSCAN",
+                    "nReturned": 16965,
+                    "executionTimeMillisEstimate": 26,
+                    "works": 17062,
+                    "advanced": 16965,
+                    "needTime": 96,
+                    "needYield": 0,
+                    "saveState": 20,
+                    "restoreState": 20,
+                    "isEOF": 1,
+                    "keyPattern": {
+                      "data.PULocationID": 1,
+                      "data.tpep_pickup_datetime": 1
+                    },
+                    "indexName": "f1_pickup_zone_datetime",
+                    "isMultiKey": false,
+                    "multiKeyPaths": {
+                      "data.PULocationID": [],
+                      "data.tpep_pickup_datetime": []
+                    },
+                    "isUnique": false,
+                    "isSparse": false,
+                    "isPartial": false,
+                    "indexVersion": 2,
+                    "direction": "forward",
+                    "indexBounds": {
+                      "data.PULocationID": [
+                        "[11, 11]",
+                        "[14, 14]",
+                        "[17, 17]",
+                        "[21, 21]",
+                        "[22, 22]",
+                        "[25, 25]",
+                        "[26, 26]",
+                        "[29, 29]",
+                        "[33, 33]",
+                        "[34, 34]",
+                        "[35, 35]",
+                        "[36, 36]",
+                        "[37, 37]",
+                        "[39, 39]",
+                        "[40, 40]",
+                        "[49, 49]",
+                        "[52, 52]",
+                        "[54, 54]",
+                        "[55, 55]",
+                        "[61, 61]",
+                        "[62, 62]",
+                        "[63, 63]",
+                        "[65, 65]",
+                        "[66, 66]",
+                        "[67, 67]",
+                        "[71, 71]",
+                        "[72, 72]",
+                        "[76, 76]",
+                        "[77, 77]",
+                        "[80, 80]",
+                        "[85, 85]",
+                        "[89, 89]",
+                        "[91, 91]",
+                        "[97, 97]",
+                        "[106, 106]",
+                        "[108, 108]",
+                        "[111, 111]",
+                        "[112, 112]",
+                        "[123, 123]",
+                        "[133, 133]",
+                        "[149, 149]",
+                        "[150, 150]",
+                        "[154, 154]",
+                        "[155, 155]",
+                        "[165, 165]",
+                        "[177, 177]",
+                        "[178, 178]",
+                        "[181, 181]",
+                        "[188, 188]",
+                        "[189, 189]",
+                        "[190, 190]",
+                        "[195, 195]",
+                        "[210, 210]",
+                        "[217, 217]",
+                        "[222, 222]",
+                        "[225, 225]",
+                        "[227, 227]",
+                        "[228, 228]",
+                        "[255, 255]",
+                        "[256, 256]",
+                        "[257, 257]"
+                      ],
+                      "data.tpep_pickup_datetime": [
+                        "[\"2024-01-01T00:00:00\", \"2024-01-22T00:00:00\")"
+                      ]
+                    },
+                    "keysExamined": 17062,
+                    "seeks": 97,
+                    "dupsTested": 0,
+                    "dupsDropped": 0
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "nReturned": 25258,
+      "executionTimeMillisEstimate": 225
+    },
+    {
+      "$match": {
+        "$and": [
+          {
+            "hour": {
+              "$gte": 0
+            }
+          },
+          {
+            "hour": {
+              "$lt": 24
+            }
+          }
+        ]
+      },
+      "nReturned": 25258,
+      "executionTimeMillisEstimate": 225
+    },
+    {
+      "$group": {
+        "_id": {
+          "zone": "$zone",
+          "date": "$date",
+          "source": "$source"
+        },
+        "raw": {
+          "$sum": {
+            "$const": 1
+          }
+        },
+        "retained": {
+          "$sum": {
+            "$cond": [
+              "$retained",
+              {
+                "$const": 1
+              },
+              {
+                "$const": 0
+              }
+            ]
+          }
+        }
+      },
+      "maxAccumulatorMemoryUsageBytes": {
+        "raw": 229120,
+        "retained": 229120
+      },
+      "totalOutputDataSizeBytes": 1149180,
+      "usedDisk": false,
+      "spills": 0,
+      "spilledDataStorageSize": 0,
+      "numBytesSpilledEstimate": 0,
+      "spilledRecords": 0,
+      "nReturned": 1790,
+      "executionTimeMillisEstimate": 225
+    }
+  ],
+  "queryShapeHash": "77B8D9252D64632F9F1E63DB52504302163C436161379FD1FCEB170ED0621F9C",
+  "serverInfo": {
+    "host": "6e76c765dd63",
+    "port": 27017,
+    "version": "8.0.16",
+    "gitVersion": "ba70b6a13fda907977110bf46e6c8137f5de48f6"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "command": {
+    "aggregate": "trips",
+    "pipeline": [
+      {
+        "$match": {
+          "source.file_id": {
+            "$in": [
+              "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510"
+            ]
+          },
+          "$or": [
+            {
+              "data.tpep_pickup_datetime": {
+                "$gte": "2024-01-22T00:00:00",
+                "$lt": "2024-02-01T00:00:00"
+              }
+            },
+            {
+              "data.tpep_pickup_datetime": {
+                "$gte": "2024-01-01T00:00:00",
+                "$lt": "2024-01-22T00:00:00"
+              }
+            }
+          ],
+          "data.PULocationID": {
+            "$in": [
+              11,
+              14,
+              17,
+              21,
+              22,
+              25,
+              26,
+              29,
+              33,
+              34,
+              35,
+              36,
+              37,
+              39,
+              40,
+              49,
+              52,
+              54,
+              55,
+              61,
+              62,
+              63,
+              65,
+              66,
+              67,
+              71,
+              72,
+              76,
+              77,
+              80,
+              85,
+              89,
+              91,
+              97,
+              106,
+              108,
+              111,
+              112,
+              123,
+              133,
+              149,
+              150,
+              154,
+              155,
+              165,
+              177,
+              178,
+              181,
+              188,
+              189,
+              190,
+              195,
+              210,
+              217,
+              222,
+              225,
+              227,
+              228,
+              255,
+              256,
+              257
+            ]
+          }
+        }
+      },
+      {
+        "$project": {
+          "zone": "$data.PULocationID",
+          "date": {
+            "$substrBytes": [
+              "$data.tpep_pickup_datetime",
+              0,
+              10
+            ]
+          },
+          "hour": {
+            "$hour": {
+              "$dateFromString": {
+                "dateString": "$data.tpep_pickup_datetime"
+              }
+            }
+          },
+          "source": "$source.file_id",
+          "retained": {
+            "$eq": [
+              {
+                "$size": {
+                  "$setIntersection": [
+                    {
+                      "$ifNull": [
+                        "$quality_flags",
+                        []
+                      ]
+                    },
+                    [
+                      "NEGATIVE_AMOUNT",
+                      "EXACT_DUPLICATE"
+                    ]
+                  ]
+                }
+              },
+              0
+            ]
+          }
+        }
+      },
+      {
+        "$match": {
+          "hour": {
+            "$gte": 0,
+            "$lt": 24
+          }
+        }
+      },
+      {
+        "$group": {
+          "_id": {
+            "zone": "$zone",
+            "date": "$date",
+            "source": "$source"
+          },
+          "raw": {
+            "$sum": 1
+          },
+          "retained": {
+            "$sum": {
+              "$cond": [
+                "$retained",
+                1,
+                0
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "cursor": {},
+    "allowDiskUse": true,
+    "maxTimeMS": 120000,
+    "$db": "urbanflow_f3_benchmark"
+  },
+  "ok": 1.0
+}
