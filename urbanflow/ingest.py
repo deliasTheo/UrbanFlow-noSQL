@@ -54,7 +54,6 @@ def ingest(db, month, batch_size=5000):
     name = config.trip_file_name(month)
     entry = source_entry(name)
     file_id = entry["sha256"]
-    db.trips.create_index("source.file_id")
     previous = db.imports.find_one({"_id": file_id})
     if previous and previous.get("status") == "complete":
         if db.trips.count_documents({"source.file_id": file_id}) != entry["num_rows"]:
