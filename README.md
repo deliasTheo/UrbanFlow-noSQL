@@ -16,12 +16,17 @@ Projet 3 — Big Data et NoSQL, Master 2 SLCD, Université Côte d'Azur (2026-20
 
 Ce périmètre peut être modifié dans `urbanflow/config.py`.
 
+Le [document de conception du modèle de données](docs/modele-donnees.md)
+décrit le stockage proposé, les choix liés aux services F1–F6 et les validations
+à réaliser avant l'ingestion en base.
+
 ## Arborescence
 
 ```
 urbanflow/
   config.py          chemins, URL des sources, périmètre d'étude
   download.py        téléchargement des fichiers et manifeste de provenance
+  ingest.py          import MongoDB direct, provenance et qualité
   timeutil.py        conversion des heures locales en UTC, durées robustes aux changements d'heure
   quality.py         catalogue des anomalies et profils de filtrage
   quality_report.py  rapport de qualité (fréquences, exemples, effet du filtrage)
@@ -30,6 +35,9 @@ data/
   manifest.json      provenance : URL, date, taille, SHA-256, nombre de lignes
 results/
   quality/           rapport de qualité (JSON + Markdown)
+  ingestion/         compteurs des imports terminés
+compose.yaml         serveur MongoDB local et volume persistant
+docs/                modèle de données et guide d’installation locale
 ```
 
 ## Installation
@@ -94,3 +102,35 @@ service applique le profil qui le concerne :
 | `journey` | F4 | `flows` + durée ≤ 0 ou > 6 h, distance nulle ou > 100 miles, vitesse > 80 mph, heure non convertible |
 
 Le détail des règles se trouve dans `urbanflow/quality.py`.
+
+### 3. Importer dans MongoDB
+
+```bash
+docker compose up -d --wait
+python -m urbanflow.download --months 2024-01
+python -m urbanflow.ingest --month 2024-01
+```
+
+Le [guide d’installation locale](docs/installation-locale.md) détaille toutes les
+étapes, du clonage à MongoDB Compass, ainsi que la reprise d’un import.
+
+Le script vérifie l’empreinte source, importe les zones, calcule les flags sur le
+mois entier puis écrit les documents par lots de 5 000 (`--batch-size`). Le mois
+entier reste chargé en mémoire pour détecter les doublons et annulations entre
+lots. Les UTC sont temporaires ; seuls les dates locales sources et `duration_s`
+sont conservés. Une durée non déterminable vaut `null`. Aucune ligne n’est supprimée.
+
+La collection `imports` suit les états `loading`, `failed`, `complete`. Les futurs
+services doivent sélectionner uniquement les fichiers `complete`. Les identités
+fichier + ligne et les upserts permettent la reprise sans ajout de doublons.
+Un fichier déjà complet est vérifié puis ignoré. Les extraits chevauchants ou les
+versions modifiées demandent une politique supplémentaire avant F6.
+
+`MONGODB_URI` permet de choisir le serveur ; `--database` choisit la base (défaut
+`urbanflow`). `results/ingestion/AAAA-MM.json` contient les compteurs de contrôle.
+MongoDB écoute uniquement sur localhost, sans authentification pour cet usage
+local ; ne pas exposer ce port sur Internet. Les volumes ne vont pas dans Git.
+
+Contrôles : `python -m unittest discover -s tests -v`. Le test d’intégration, activé avec `URBANFLOW_INTEGRATION=1`, utilise
+une base de test isolée sur le MongoDB local et vérifie notamment l’idempotence
+et la reprise après échec.
