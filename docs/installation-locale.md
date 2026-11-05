@@ -79,7 +79,6 @@ Cliquer sur Connect, puis ouvrir la base `urbanflow` :
 - `trips` : les enregistrements TLC, dates locales dans `data`, durée et flags.
 - `zones` : le référentiel (265 zones).
 - `imports` : provenance, état et compteurs du fichier importé.
-- `ingestion_lock` : verrou technique temporaire ; normalement vide hors import.
 
 Dans `trips`, exemples de filtres Compass :
 
@@ -119,13 +118,7 @@ Le volume conserve les données après `stop` ou `docker compose down`.
 le volume et la base.**
 
 Après un échec normal, corriger la cause puis relancer l’import : les lignes déjà
-insérées sont conservées et les manquantes sont ajoutées. Un arrêt brutal peut
-laisser le verrou ; uniquement après avoir vérifié qu’aucun import n’est encore
-actif, le retirer puis relancer :
-
-```bash
-docker compose exec mongo mongosh urbanflow --quiet --eval 'db.ingestion_lock.deleteMany({})'
-```
+insérées sont conservées et les manquantes sont ajoutées.
 
 Une connexion Compass à cette URI montre la base de ton PC, pas la base cloud.
 Pour février/mars, répéter téléchargement et import avec le mois correspondant.

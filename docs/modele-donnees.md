@@ -61,9 +61,6 @@ Les requêtes analytiques ne doivent utiliser que les imports terminés. Une
 requête fige la liste des imports visibles à son démarrage pour éviter un
 résultat mélangeant deux états de l'archive pendant F6.
 
-Une collection technique `ingestion_lock` empêche deux imports simultanés dans
-la même base. Le guide explique comment retirer un verrou après un arrêt brutal.
-
 ## Temps : dates locales conservées, UTC temporaire
 
 La documentation TLC décrit des heures locales de New York sans fuseau.

@@ -51,16 +51,6 @@ def documents(trips, flags, file_id, start, stop):
 def ingest(db, month, batch_size=5000):
     if not re.fullmatch(r"\d{4}-(0[1-9]|1[0-2])", month) or batch_size <= 0:
         raise ValueError("Mois AAAA-MM et taille de lot positive requis")
-    # Un seul processus d'ingestion à la fois par base. Verrou global sans expiration
-    # pour ne pas reprendre un import lent encore actif.
-    db.ingestion_lock.insert_one({"_id": "writer", "started_at": datetime.now(timezone.utc)})
-    try:
-        return _ingest(db, month, batch_size)
-    finally:
-        db.ingestion_lock.delete_one({"_id": "writer"})
-
-
-def _ingest(db, month, batch_size):
     name = config.trip_file_name(month)
     entry = source_entry(name)
     file_id = entry["sha256"]
