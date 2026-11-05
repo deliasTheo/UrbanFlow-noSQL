@@ -154,3 +154,8 @@ Les mesures et vérifications reproductibles sont dans `results/performance/f3/`
 
 [F4 : durées/distances, comparaison de périodes et requêtes MongoDB](docs/f4-caracteristiques-trajets.md).
 Les mesures et vérifications indépendantes sont dans `results/performance/f4/`.
+
+## API — F5
+
+[F5 : changements de parts des flux, variabilité hebdomadaire et pipelines MongoDB](docs/f5-changements-flux.md).
+Les mesures et vérifications indépendantes sont dans `results/performance/f5/`.

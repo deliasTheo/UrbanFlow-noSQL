@@ -1,0 +1,28 @@
+{
+  "verified": true,
+  "sourceRows": 2964624,
+  "checks": [
+    {
+      "scope": "zoneIds=132",
+      "pairs": 255,
+      "qualified": 3,
+      "referenceTotal": 30263,
+      "currentTotal": 26739
+    },
+    {
+      "scope": "borough=Brooklyn",
+      "pairs": 4113,
+      "qualified": 1,
+      "referenceTotal": 5526,
+      "currentTotal": 5858
+    },
+    {
+      "scope": "citywide",
+      "pairs": 19368,
+      "qualified": 0,
+      "referenceTotal": 664866,
+      "currentTotal": 694597
+    }
+  ],
+  "coverageAndInputChecks": true
+}
