@@ -1,0 +1,28 @@
+{
+  "verified": true,
+  "sourceRows": 2964624,
+  "checks": [
+    {
+      "origin": 132,
+      "destination": 161,
+      "referenceRetained": 1070,
+      "currentRetained": 1359,
+      "status": "COMPARABLE"
+    },
+    {
+      "origin": 161,
+      "destination": 236,
+      "referenceRetained": 3424,
+      "currentRetained": 5239,
+      "status": "COMPARABLE"
+    },
+    {
+      "origin": 181,
+      "destination": 89,
+      "referenceRetained": 17,
+      "currentRetained": 29,
+      "status": "INSUFFICIENT_SAMPLE"
+    }
+  ],
+  "errorsAndCoverage": true
+}

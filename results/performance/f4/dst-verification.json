@@ -1,0 +1,33 @@
+{
+  "verified": true,
+  "fixture": "Deux lignes originales de mars ; import complete simul\u00e9 uniquement dans cette base de test",
+  "checks": [
+    {
+      "source": {
+        "file_id": "2d4cdc8fb96726cdd3803b13b02d2e61e71d45720aff0ebc693a8bdd1f249823",
+        "row_number": 942762
+      },
+      "pickup": "2024-03-09 23:38:43",
+      "dropoff": "2024-03-10 03:40:14",
+      "realDurationSeconds": 10891.0,
+      "naiveDurationSeconds": 14491.0,
+      "flags": [
+        "DST_SPANNING"
+      ]
+    },
+    {
+      "source": {
+        "file_id": "2d4cdc8fb96726cdd3803b13b02d2e61e71d45720aff0ebc693a8bdd1f249823",
+        "row_number": 841170
+      },
+      "pickup": "2024-03-09 02:31:02",
+      "dropoff": "2024-03-10 02:09:54",
+      "realDurationSeconds": null,
+      "naiveDurationSeconds": 85132.0,
+      "flags": [
+        "EXCESSIVE_DURATION",
+        "DST_UNRESOLVED"
+      ]
+    }
+  ]
+}
