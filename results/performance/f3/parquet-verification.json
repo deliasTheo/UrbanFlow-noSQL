@@ -1,0 +1,31 @@
+{
+  "verified": true,
+  "sourceRows": 2964624,
+  "checks": [
+    {
+      "scope": "zoneIds=132",
+      "direction": "pickup",
+      "startHour": 0,
+      "endHour": 24,
+      "cells": 10,
+      "unusual": 0
+    },
+    {
+      "scope": "borough=Brooklyn",
+      "direction": "pickup",
+      "startHour": 0,
+      "endHour": 24,
+      "cells": 610,
+      "unusual": 3
+    },
+    {
+      "scope": "zoneIds=132",
+      "direction": "dropoff",
+      "startHour": 8,
+      "endHour": 12,
+      "cells": 10,
+      "unusual": 0
+    }
+  ],
+  "calendarAndCoverageChecks": true
+}

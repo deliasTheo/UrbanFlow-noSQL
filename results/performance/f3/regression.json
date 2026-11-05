@@ -1,0 +1,11 @@
+{
+  "F1": {
+    "comparedWith": "Parquet original, profil activity, janvier, zone181 pickup",
+    "totals": {
+      "raw": 983,
+      "retained": 977,
+      "excluded": 6
+    }
+  },
+  "F2": "Réponse JSON identique au résultat archivé pour zone181, janvier complet"
+}
