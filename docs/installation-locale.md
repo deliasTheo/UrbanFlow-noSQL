@@ -131,18 +131,3 @@ Une connexion Compass à cette URI montre la base de ton PC, pas la base cloud.
 Pour février/mars, répéter téléchargement et import avec le mois correspondant.
 Conserver avril à part pour tester F6. Cette version couvre les fichiers mensuels
 identiques ; la gestion des extraits chevauchants reste à développer.
-
-## Contrôles de développement (facultatif)
-
-Utiliser le Python du venv comme plus haut :
-
-```bash
-python -m unittest discover -s tests -v
-python -m scripts.verify_ingestion
-```
-
-La deuxième commande contrôle janvier dans la base `urbanflow`, ses flags et
-des exemples contre les sources. Pour le test de reprise dans une base isolée,
-activer `URBANFLOW_INTEGRATION=1` avant la première commande (PowerShell :
-`$env:URBANFLOW_INTEGRATION="1"` ; bash : préfixer la commande avec
-`URBANFLOW_INTEGRATION=1`). Le test supprime uniquement sa base de test aléatoire.

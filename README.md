@@ -130,7 +130,3 @@ versions modifiées demandent une politique supplémentaire avant F6.
 `urbanflow`). `results/ingestion/AAAA-MM.json` contient les compteurs de contrôle.
 MongoDB écoute uniquement sur localhost, sans authentification pour cet usage
 local ; ne pas exposer ce port sur Internet. Les volumes ne vont pas dans Git.
-
-Contrôles : `python -m unittest discover -s tests -v`. Le test d’intégration, activé avec `URBANFLOW_INTEGRATION=1`, utilise
-une base de test isolée sur le MongoDB local et vérifie notamment l’idempotence
-et la reprise après échec.
