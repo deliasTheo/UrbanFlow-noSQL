@@ -24,7 +24,8 @@ Les imports Python restent indépendants : aucun réimport n'est nécessaire.
 
 Configuration facultative : variables `MONGODB_URI`, `MONGODB_DATABASE` et `PORT`.
 Valeurs par défaut : `mongodb://127.0.0.1:27018`, `urbanflow` et `8080`.
-Aucun index ni collection n'est créé par l'API.
+Aucun index ni collection n'est créé par l'API. Les index F1 se créent
+explicitement avec le script décrit ci-dessous.
 
 ## Essayer dans Postman
 
@@ -95,7 +96,8 @@ un instantané transactionnel entre lecture des imports et agrégation.
 
 L'agrégation est limitée à 120 secondes côté MongoDB. Aucun résultat partiel
 n'est renvoyé comme complet. Sans index analytique, une recherche peut être lente
-sur plusieurs millions de documents ; les mesures et choix d'index restent à discuter.
+sur plusieurs millions de documents. Les index retenus et la procédure de
+comparaison sont décrits ci-dessous.
 
 ## Organisation et requête MongoDB
 
@@ -144,3 +146,46 @@ Les sommes des comptes par source retrouvent les totaux. Les réponses 400/404,
 l'absence d'import complet (503), l'exclusion des imports loading/failed, une
 période sans résultats et MongoDB inaccessible (503) ont été vérifiées.
 La performance sur les trois mois complets reste à mesurer.
+
+
+## Créer les index F1
+
+Le script versionné `scripts/create-f1-indexes.js` crée les deux index zone/date,
+un pour les départs et un pour les arrivées. Il peut être relancé sans dupliquer
+ces index. L'API et l'ingestion ne les créent pas automatiquement ; une fois
+créés dans une base, ils persistent et MongoDB les maintient lors des imports.
+
+Dans Compass, ouvrir le shell **mongosh** de la connexion locale et exécuter :
+
+```javascript
+const urbanflowDb = db.getSiblingDB("urbanflow");
+urbanflowDb.trips.createIndex(
+  { "data.DOLocationID": 1, "data.tpep_dropoff_datetime": 1 },
+  { name: "f1_dropoff_zone_datetime" }
+);
+```
+
+Attendre la fin de la création avant de mesurer dropoff. Pour pickup :
+
+```javascript
+urbanflowDb.trips.createIndex(
+  { "data.PULocationID": 1, "data.tpep_pickup_datetime": 1 },
+  { name: "f1_pickup_zone_datetime" }
+);
+urbanflowDb.trips.getIndexes();
+```
+
+Autre possibilité, pour créer les deux depuis PowerShell à la racine du dépôt :
+
+```powershell
+Get-Content -Raw .\scripts\create-f1-indexes.js | docker compose exec -T mongo mongosh urbanflow --quiet
+```
+
+Pas de redémarrage Spring ni de réimport nécessaire. Les index occupent du disque
+et augmentent le travail d'écriture ; ils accélèrent la sélection sans éviter
+les regroupements sur les trajets retenus par le filtre.
+
+Conserver les mêmes paramètres pour la comparaison et vérifier que les réponses
+restent identiques. Les mesures initiales rapportées sur le PC et les informations
+à compléter pour le rapport sont dans
+[le suivi des mesures F1](../results/performance/f1-indexes.md).
