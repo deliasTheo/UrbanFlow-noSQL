@@ -11,7 +11,7 @@ def main():
     name = config.trip_file_name('2024-01')
     reference = next(r for r in json.loads((config.RESULTS_DIR/'quality/quality_report.json').read_text()) if r['file'] == name)
     manifest = json.loads(config.MANIFEST_PATH.read_text())['files'][name]
-    with MongoClient(os.environ.get('MONGODB_URI', 'mongodb://127.0.0.1:27017')) as client:
+    with MongoClient(os.environ.get('MONGODB_URI', 'mongodb://127.0.0.1:27018')) as client:
         db = client.urbanflow
         file_id = manifest['sha256']
         match = {'source.file_id': file_id}

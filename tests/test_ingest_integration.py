@@ -22,7 +22,7 @@ class MongoImportTest(unittest.TestCase):
         source = config.RAW_DIR / config.trip_file_name('2024-01')
         rows = next(pq.ParquetFile(source).iter_batches(batch_size=3)).to_pandas()
         rows = pd.concat([rows, rows.iloc[[0]]], ignore_index=True)
-        with tempfile.TemporaryDirectory() as folder, MongoClient('mongodb://127.0.0.1:27017') as client:
+        with tempfile.TemporaryDirectory() as folder, MongoClient('mongodb://127.0.0.1:27018') as client:
             root = Path(folder)
             path = root / source.name
             rows.to_parquet(path, index=False)

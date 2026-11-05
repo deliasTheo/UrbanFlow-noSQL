@@ -41,7 +41,8 @@ docker compose up -d --wait
 docker compose ps
 ```
 
-Si le port 27017 est déjà occupé, arrêter l’autre MongoDB avant de continuer.
+UrbanFlow utilise le port 27018 sur ton PC ; ton MongoDB habituel peut continuer
+à utiliser le port 27017. Le conteneur conserve son port interne 27017.
 Le conteneur utilise MongoDB 8.0.16 et le volume nommé `urbanflow_mongo-data`.
 
 ## 4. Télécharger puis importer janvier
@@ -70,7 +71,7 @@ Relancer la commande d’import est sans effet sur un fichier déjà complet.
 Créer une connexion avec l’URI suivante :
 
 ```text
-mongodb://127.0.0.1:27017
+mongodb://127.0.0.1:27018
 ```
 
 Cliquer sur Connect, puis ouvrir la base `urbanflow` :

@@ -119,7 +119,7 @@ def main():
     parser.add_argument('--batch-size', type=int, default=5000)
     parser.add_argument('--database', default='urbanflow')
     args = parser.parse_args()
-    with MongoClient(os.environ.get('MONGODB_URI', 'mongodb://127.0.0.1:27017'), serverSelectionTimeoutMS=10000) as client:
+    with MongoClient(os.environ.get('MONGODB_URI', 'mongodb://127.0.0.1:27018'), serverSelectionTimeoutMS=10000) as client:
         client.admin.command('ping')
         summary = ingest(client[args.database], args.month, args.batch_size)
         output = config.RESULTS_DIR / 'ingestion'
