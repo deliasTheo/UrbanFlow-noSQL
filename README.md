@@ -149,3 +149,8 @@ Pour comprendre les opérateurs utilisés par F1, voir
 
 [F3 : activité inhabituelle, références, calendrier et pipelines MongoDB](docs/f3-activite-inhabituelle.md).
 Les mesures et vérifications reproductibles sont dans `results/performance/f3/`.
+
+## API — F4
+
+[F4 : durées/distances, comparaison de périodes et requêtes MongoDB](docs/f4-caracteristiques-trajets.md).
+Les mesures et vérifications indépendantes sont dans `results/performance/f4/`.

@@ -1,0 +1,406 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "urbanflow_f4_benchmark.trips",
+    "parsedQuery": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "$and": [
+                {
+                  "data.tpep_pickup_datetime": {
+                    "$lt": "2024-02-01T00:00:00"
+                  }
+                },
+                {
+                  "data.tpep_pickup_datetime": {
+                    "$gte": "2024-01-15T00:00:00"
+                  }
+                }
+              ]
+            },
+            {
+              "$and": [
+                {
+                  "data.tpep_pickup_datetime": {
+                    "$lt": "2024-01-15T00:00:00"
+                  }
+                },
+                {
+                  "data.tpep_pickup_datetime": {
+                    "$gte": "2024-01-01T00:00:00"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "data.DOLocationID": {
+            "$eq": 236
+          }
+        },
+        {
+          "data.PULocationID": {
+            "$eq": 161
+          }
+        },
+        {
+          "source.file_id": {
+            "$eq": "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510"
+          }
+        }
+      ]
+    },
+    "indexFilterSet": false,
+    "queryHash": "02F0C3F4",
+    "planCacheShapeHash": "02F0C3F4",
+    "planCacheKey": "106923BC",
+    "optimizationTimeMillis": 0,
+    "optimizedPipeline": true,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "PROJECTION_DEFAULT",
+      "transformBy": {
+        "period": {
+          "$cond": [
+            {
+              "$gte": [
+                "$data.tpep_pickup_datetime",
+                {
+                  "$const": "2024-01-15T00:00:00"
+                }
+              ]
+            },
+            {
+              "$const": "current"
+            },
+            {
+              "$const": "reference"
+            }
+          ]
+        },
+        "source": "$source.file_id",
+        "flags": {
+          "$ifNull": [
+            "$quality_flags",
+            {
+              "$const": []
+            }
+          ]
+        },
+        "duration": "$duration_s",
+        "distance": "$data.trip_distance",
+        "hour": {
+          "$hour": {
+            "date": {
+              "$dateFromString": {
+                "dateString": "$data.tpep_pickup_datetime"
+              }
+            }
+          }
+        },
+        "weekday": {
+          "$isoDayOfWeek": {
+            "date": {
+              "$dateFromString": {
+                "dateString": "$data.tpep_pickup_datetime"
+              }
+            }
+          }
+        },
+        "_id": false
+      },
+      "inputStage": {
+        "stage": "COLLSCAN",
+        "filter": {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "$and": [
+                    {
+                      "data.tpep_pickup_datetime": {
+                        "$lt": "2024-02-01T00:00:00"
+                      }
+                    },
+                    {
+                      "data.tpep_pickup_datetime": {
+                        "$gte": "2024-01-15T00:00:00"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "$and": [
+                    {
+                      "data.tpep_pickup_datetime": {
+                        "$lt": "2024-01-15T00:00:00"
+                      }
+                    },
+                    {
+                      "data.tpep_pickup_datetime": {
+                        "$gte": "2024-01-01T00:00:00"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "data.DOLocationID": {
+                "$eq": 236
+              }
+            },
+            {
+              "data.PULocationID": {
+                "$eq": 161
+              }
+            },
+            {
+              "source.file_id": {
+                "$eq": "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510"
+              }
+            }
+          ]
+        },
+        "direction": "forward"
+      }
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 8766,
+    "executionTimeMillis": 2476,
+    "totalKeysExamined": 0,
+    "totalDocsExamined": 2964624,
+    "executionStages": {
+      "isCached": false,
+      "stage": "PROJECTION_DEFAULT",
+      "nReturned": 8766,
+      "executionTimeMillisEstimate": 2368,
+      "works": 2964625,
+      "advanced": 8766,
+      "needTime": 2955858,
+      "needYield": 0,
+      "saveState": 125,
+      "restoreState": 125,
+      "isEOF": 1,
+      "transformBy": {
+        "period": {
+          "$cond": [
+            {
+              "$gte": [
+                "$data.tpep_pickup_datetime",
+                {
+                  "$const": "2024-01-15T00:00:00"
+                }
+              ]
+            },
+            {
+              "$const": "current"
+            },
+            {
+              "$const": "reference"
+            }
+          ]
+        },
+        "source": "$source.file_id",
+        "flags": {
+          "$ifNull": [
+            "$quality_flags",
+            {
+              "$const": []
+            }
+          ]
+        },
+        "duration": "$duration_s",
+        "distance": "$data.trip_distance",
+        "hour": {
+          "$hour": {
+            "date": {
+              "$dateFromString": {
+                "dateString": "$data.tpep_pickup_datetime"
+              }
+            }
+          }
+        },
+        "weekday": {
+          "$isoDayOfWeek": {
+            "date": {
+              "$dateFromString": {
+                "dateString": "$data.tpep_pickup_datetime"
+              }
+            }
+          }
+        },
+        "_id": false
+      },
+      "inputStage": {
+        "stage": "COLLSCAN",
+        "filter": {
+          "$and": [
+            {
+              "$or": [
+                {
+                  "$and": [
+                    {
+                      "data.tpep_pickup_datetime": {
+                        "$lt": "2024-02-01T00:00:00"
+                      }
+                    },
+                    {
+                      "data.tpep_pickup_datetime": {
+                        "$gte": "2024-01-15T00:00:00"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "$and": [
+                    {
+                      "data.tpep_pickup_datetime": {
+                        "$lt": "2024-01-15T00:00:00"
+                      }
+                    },
+                    {
+                      "data.tpep_pickup_datetime": {
+                        "$gte": "2024-01-01T00:00:00"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "data.DOLocationID": {
+                "$eq": 236
+              }
+            },
+            {
+              "data.PULocationID": {
+                "$eq": 161
+              }
+            },
+            {
+              "source.file_id": {
+                "$eq": "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510"
+              }
+            }
+          ]
+        },
+        "nReturned": 8766,
+        "executionTimeMillisEstimate": 2282,
+        "works": 2964625,
+        "advanced": 8766,
+        "needTime": 2955858,
+        "needYield": 0,
+        "saveState": 125,
+        "restoreState": 125,
+        "isEOF": 1,
+        "direction": "forward",
+        "docsExamined": 2964624
+      }
+    }
+  },
+  "queryShapeHash": "65A84A48891BBFFA2E968B1123192AAF4428079DE84AC52C7DC3B7A89CFCEAB0",
+  "command": {
+    "aggregate": "trips",
+    "pipeline": [
+      {
+        "$match": {
+          "data.PULocationID": 161,
+          "data.DOLocationID": 236,
+          "source.file_id": {
+            "$in": [
+              "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510"
+            ]
+          },
+          "$or": [
+            {
+              "data.tpep_pickup_datetime": {
+                "$gte": "2024-01-15T00:00:00",
+                "$lt": "2024-02-01T00:00:00"
+              }
+            },
+            {
+              "data.tpep_pickup_datetime": {
+                "$gte": "2024-01-01T00:00:00",
+                "$lt": "2024-01-15T00:00:00"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "$project": {
+          "_id": 0,
+          "period": {
+            "$cond": [
+              {
+                "$gte": [
+                  "$data.tpep_pickup_datetime",
+                  "2024-01-15T00:00:00"
+                ]
+              },
+              "current",
+              "reference"
+            ]
+          },
+          "source": "$source.file_id",
+          "flags": {
+            "$ifNull": [
+              "$quality_flags",
+              []
+            ]
+          },
+          "duration": "$duration_s",
+          "distance": "$data.trip_distance",
+          "hour": {
+            "$hour": {
+              "$dateFromString": {
+                "dateString": "$data.tpep_pickup_datetime"
+              }
+            }
+          },
+          "weekday": {
+            "$isoDayOfWeek": {
+              "$dateFromString": {
+                "dateString": "$data.tpep_pickup_datetime"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "cursor": {},
+    "allowDiskUse": true,
+    "maxTimeMS": 120000,
+    "$db": "urbanflow_f4_benchmark"
+  },
+  "serverInfo": {
+    "host": "6e76c765dd63",
+    "port": 27017,
+    "version": "8.0.16",
+    "gitVersion": "ba70b6a13fda907977110bf46e6c8137f5de48f6"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}
