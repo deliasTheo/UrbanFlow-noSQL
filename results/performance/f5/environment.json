@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-05",
+  "java": "Temurin 21.0.9",
+  "springBoot": "3.5.7",
+  "cpuModel": "Intel Xeon Platinum 8370C 2.80 GHz",
+  "visibleLogicalCpus": 3,
+  "cgroupMemoryMaxBytes": 8589934592,
+  "cgroupCpuMax": "200000 100000",
+  "dockerContainerExplicitMemory": 0,
+  "dockerContainerExplicitNanoCpus": 0,
+  "sharing": "API et MongoDB partagent les ressources du même environnement"
+}
