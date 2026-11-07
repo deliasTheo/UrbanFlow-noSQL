@@ -52,7 +52,7 @@ public class ActivityService {
                 QualityProfiles.ACTIVITY.stream().map(flag -> new Reason(flag,
                         rows(result, "exclusionReasons").stream().filter(d -> flag.equals(d.getString("_id")))
                                 .mapToLong(d -> ((Number) d.get("count")).longValue()).sum())).toList(),
-                sources, "Imports complete uniquement ; la présence de fichiers ne garantit pas une couverture complète de l'intervalle, notamment pour les arrivées en bordure. Un zéro ne prouve pas l'absence d'activité. Les motifs d'exclusion peuvent se chevaucher.");
+                sources, "Seuls les imports complets comptent. Un zéro ne prouve pas l'absence d'activité, et les motifs d'exclusion peuvent se chevaucher.");
     }
 
     private static Counts counts(Document d) {

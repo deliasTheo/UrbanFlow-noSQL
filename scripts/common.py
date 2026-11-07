@@ -15,7 +15,8 @@ from pymongo import MongoClient
 
 ROOT = Path(__file__).resolve().parents[1]
 JAR = ROOT / "backend/target/urbanflow-api-0.1.0.jar"
-RESULTS = ROOT / "results"
+# Un essai écrit ailleurs, pour ne pas mélanger ses chiffres aux vraies mesures.
+RESULTS = Path(os.environ.get("URBANFLOW_RESULTS", ROOT / "results"))
 API_PORT = 8080
 API = f"http://127.0.0.1:{API_PORT}"
 
@@ -90,7 +91,7 @@ def wait_for_primary(port):
     raise RuntimeError(f"Le port {port} n'a pas de primaire : le déploiement est-il chargé ?")
 
 
-def start_api(name, log_path=None, debug_queries=False):
+def start_api(name, log_path=None, debug_queries=False, database=None):
     """Lance l'API sur un déploiement et attend qu'elle réponde."""
     # Une API restée allumée répondrait à la place de la nouvelle, peut-être sur un autre déploiement.
     with socket.socket() as probe:
@@ -102,6 +103,8 @@ def start_api(name, log_path=None, debug_queries=False):
         command.append("--logging.level.org.springframework.data.mongodb.core.MongoTemplate=DEBUG")
     uri = DEPLOYMENTS[name]["uri"] + "/?serverSelectionTimeoutMS=10000&connectTimeoutMS=10000"
     environment = {**os.environ, "MONGODB_URI": uri}
+    if database:
+        environment["MONGODB_DATABASE"] = database
     if log_path:
         # Java garde sa propre copie du fichier. Sous Windows, un fichier resté ouvert ici
         # empêcherait ensuite de supprimer le dossier qui le contient.

@@ -5,6 +5,7 @@ Déroulé, le même partout :
   (service F6) et réimporté pour vérifier que rien ne change, puis mai et juin.
 
 Sur le local, --measure relève aussi les latences à 1, 3 et 6 mois (E1).
+--quick sert d'essai : janvier, puis avril par F6, sans les autres mois.
 
 Usage :
     python scripts/load-deployment.py --deployment local --measure
@@ -141,8 +142,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--deployment", required=True, choices=list(common.DEPLOYMENTS))
     parser.add_argument("--measure", action="store_true", help="relever aussi les latences de E1")
+    parser.add_argument("--quick", action="store_true", help="essai : janvier et avril seulement")
     args = parser.parse_args()
     name = args.deployment
+    study_months = STUDY_MONTHS[:1] if args.quick else STUDY_MONTHS
+    later_months = [] if args.quick else EXPERIMENT_MONTHS
 
     common.start_deployment(name, initialized=False)
     subprocess.run([sys.executable, "-m", "urbanflow.deploy", "--placement", name], cwd=common.ROOT,
@@ -169,7 +173,7 @@ def main():
 
     f6 = None
     try:
-        for position, month in enumerate(STUDY_MONTHS, start=1):
+        for position, month in enumerate(study_months, start=1):
             print(f"Import de {month}", flush=True)
             months[month] = import_month(name, month)
             save()
@@ -189,14 +193,14 @@ def main():
         common.stop_api(api)
         api = None
 
-        for month in EXPERIMENT_MONTHS:
+        for month in later_months:
             print(f"Import de {month}", flush=True)
             months[month] = import_month(name, month)
             save()
 
         api = common.start_api(name)
         requests = {**E1_FIXED_WINDOW, **E1_WHOLE_BASE} if args.measure else None
-        checkpoints.append(checkpoint(name, 6, requests))
+        checkpoints.append(checkpoint(name, len(months), requests))
         save()
     finally:
         if api is not None:

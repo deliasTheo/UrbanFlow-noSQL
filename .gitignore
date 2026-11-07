@@ -28,6 +28,7 @@ env/
 
 # Résultats temporaires (les mesures brutes finales vont dans results/, versionné)
 tmp/
+results-test/
 *.log
 
 # IDE / OS

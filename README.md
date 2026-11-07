@@ -109,6 +109,7 @@ Le cache MongoDB est fixé à 1,4 Go au total dans les deux déploiements.
 | F4, durées et distances | `GET /api/journeys` | [F4](docs/f4-caracteristiques-trajets.md) |
 | F5, changements de parts des flux | `GET /api/flow-changes` | [F5](docs/f5-changements-flux.md) |
 | F6, mise à jour de l'archive | `POST /api/imports`, `GET /api/imports` | ci-dessous |
+| Traçabilité d'un résultat | `GET /api/trips` | ci-dessous |
 | Référentiel des zones | `GET /api/zones` | [F1](docs/f1-activite.md) |
 
 ### F6 : importer un mois ou un extrait
@@ -133,6 +134,31 @@ simultané 409.
 
 L'identité d'un trajet est expliquée dans
 [le modèle de données](docs/modele-donnees.md#identité-dun-trajet).
+
+### Remonter d'un résultat aux trajets
+
+`GET /api/trips` compte et liste les lignes qui justifient un résultat, avec leur
+fichier source et leur numéro de ligne.
+
+```text
+GET http://localhost:8080/api/trips?pickupZoneId=181&from=2024-01-01&to=2024-02-01
+GET http://localhost:8080/api/trips?pickupZoneId=181&dropoffZoneId=89&from=2024-01-01&to=2024-02-01&profile=flows
+GET http://localhost:8080/api/trips?dropoffZoneId=181&time=dropoff&from=2024-01-01&to=2024-02-01&status=excluded
+GET http://localhost:8080/api/trips?pickupZoneId=132&from=2024-01-22&to=2024-01-23&startHour=8&endHour=12
+```
+
+| Paramètre | Défaut | Rôle |
+|---|---:|---|
+| `pickupZoneId`, `dropoffZoneId` | | au moins une des deux zones |
+| `from`, `to` | | dates locales, début inclus et fin exclue |
+| `time` | `pickup` | date utilisée pour l'intervalle : `pickup` ou `dropoff` |
+| `startHour`, `endHour` | 0, 24 | créneau de chaque journée |
+| `profile` | `activity` | `activity`, `flows` ou `journey`, selon le service à vérifier |
+| `status` | `all` | `all`, `retained` ou `excluded` |
+| `limit`, `offset` | 100, 0 | pagination, 1000 lignes au plus |
+
+`totals` et `sources` donnent les mêmes comptes que le service, et `trips` les lignes,
+triées par date puis par identité.
 
 ## Choix de préparation des données
 
@@ -165,10 +191,25 @@ s'obtient avec `python -m urbanflow.quality_report` et s'écrit dans `results/qu
 
 ## Reproduire les expériences
 
-Chaque script démarre le déploiement voulu et arrête les autres. Le port 8080 doit
-être libre. Le chargement refuse une base non vide, car un mois déjà importé ne
-serait pas remesuré ; la commande pour repartir de volumes vides s'affiche alors.
-Elle efface les données du déploiement concerné.
+Le script `run-all.py` enchaîne tout, une étape à la fois. Docker Desktop doit être
+démarré, le jar compilé, et le port 8080 libre.
+
+```bash
+python scripts/run-all.py --quick --reset
+```
+
+```bash
+python scripts/run-all.py --reset
+```
+
+- `--quick` est un essai sur janvier et avril. Il lance aussi les vérifications sur
+  janvier, et écrit ses résultats dans `results-test/`, qui n'est pas versionné.
+- Sans `--quick`, le script charge les six mois et écrit dans `results/`.
+- `--reset` **efface les volumes Docker des trois déploiements**. Il faut repartir de
+  volumes vides, car un mois déjà importé ne serait pas remesuré.
+- Relancé sans `--reset`, le script reprend après la dernière étape réussie.
+
+Le journal de chaque étape est dans `results/experiments/logs/`. Le détail des étapes :
 
 ```bash
 # E1 et coût d'ingestion
@@ -223,7 +264,11 @@ lancée sur n'importe quel déploiement chargé :
 
 ```bash
 python scripts/verify-registered-period.py
+python scripts/verify-trips.py
 ```
+
+`verify-trips.py` relit dans les Parquet les lignes renvoyées par `/api/trips`, et
+compare ses comptes à ceux de F1 et de F2.
 
 **Résultats sur janvier seul.** Ces scripts attendent une base qui ne contient que
 janvier, et une API lancée sur cette base avec `MONGODB_DATABASE` et `PORT` :

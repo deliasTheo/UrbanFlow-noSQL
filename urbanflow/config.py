@@ -3,13 +3,15 @@
 Le périmètre (mois et zone d'étude) sont janvier, février, mars et Brooklyn
 """
 
+import os
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
 MANIFEST_PATH = DATA_DIR / "manifest.json"
-RESULTS_DIR = PROJECT_ROOT / "results"
+# Un essai écrit ailleurs, pour ne pas mélanger ses chiffres aux vraies mesures.
+RESULTS_DIR = Path(os.environ.get("URBANFLOW_RESULTS", PROJECT_ROOT / "results"))
 
 # Sources officielles TLC
 TRIP_URL_TEMPLATE = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_{month}.parquet"
