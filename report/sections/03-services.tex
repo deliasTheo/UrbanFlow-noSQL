@@ -1,0 +1,114 @@
+\section{Services analytiques F1 à F5}
+Les paramètres sont fournis à chaque appel ; les réponses JSON sont calculées
+sur les données stockées et renvoient les effectifs et sources. Les exemples
+numériques ci-dessous proviennent des réponses archivées du prototype sur janvier
+complet, à l'exception du contrôle DST sur des lignes de mars \cite{mesures}.
+Ils ne sont pas des résultats recalculés sur les six mois de la version intégrée.
+
+\subsection{F1 : activité au départ ou à l'arrivée}
+\code{GET /api/activity} reçoit une zone, \code{pickup} ou \code{dropoff} et un
+intervalle. Il renvoie les comptes avant/après qualité, les répartitions par heure,
+jour de semaine, date et source. Le filtre utilise la zone et l'horodatage du
+sens demandé : une arrivée de février peut provenir d'un départ de janvier.
+Après \code{$match} et \code{$project}, \code{$facet} calcule les différentes
+répartitions à partir des mêmes candidats ; chaque branche utilise
+\code{$group} puis \code{$sort}. Les comptes par motif passent par
+\code{$unwind}, qui produit une ligne par flag. Ils peuvent se chevaucher.
+Pour les départs de la zone 181 en janvier, le contrôle Parquet archivé donne
+983 candidats, 977 retenus et six exclus avec activity. Les distributions sont
+cumulées : ce ne sont pas des moyennes corrigées du nombre de lundis ou d'heures.
+
+\subsection{F2 : flux et directions opposées}
+\code{GET /api/flows} accepte une zone, un ensemble de zones ou un borough et
+une période. Il classe les destinations et paires, compare les retours et expose
+les séries hebdomadaires. Le filtre \code{$or} retient les départs \emph{ou}
+arrivées dans l'aire pour disposer des deux sens, sans doubler les trajets internes.
+Les groupes MongoDB sont définis par origine, destination, semaine et source.
+Java combine les petits comptes pour les parts, séries et tris.
+
+Les seuils par défaut demandent 20 trajets pour afficher un lien. Un lien régulier
+atteint cinq trajets dans au moins 75\,\% des semaines complètes ; sinon, une
+semaine représentant au moins 50\,\% du volume de référence peut le qualifier
+de pic. Moins de trois semaines complètes conduit à un historique insuffisant.
+Les seuils sont modifiables et les semaines partielles ne servent pas à cette
+classification. En janvier, Brooklyn représente 25\,258 candidats et
+24\,860 départs retenus par flows. La paire 181 $\to$ 89 compte 48 trajets retenus,
+contre 18 en sens inverse ; elle est classée régulière. Le petit retour n'est
+pas transformé en flux majeur par une simple variation relative.
+
+\subsection{F3 : activité inhabituelle et couverture}
+\code{GET /api/unusual-activity} compare une zone/date/créneau aux mêmes jours
+de semaine d'une période antérieure explicite. Il expose les jours retenus,
+la médiane $m$, la dispersion $\mathrm{MAD}=\operatorname{mediane}|x_i-m|$ et
+les écarts. Les défauts demandent trois références, $m\geq20$, un écart absolu
+au moins égal à 20, un écart relatif d'au moins 50\,\% et un score
+$|x-m|/(1{,}4826\,\mathrm{MAD})\geq3$. Si MAD vaut zéro, le score est absent,
+un avertissement est ajouté et les critères absolu/relatif restent applicables.
+C'est un critère descriptif, pas une p-value.
+
+Les jours fériés fédéraux 2024 et les journées entières de changement d'heure
+sont exclus des comparaisons usuelles. Le calendrier est embarqué avec sa source
+OPM \cite{calendrier}. Un second pipeline compte la ville par jour et créneau :
+une absence de mois source, de lignes ville, ou une forte variation générale
+peut limiter l'interprétation d'une baisse locale. Ce diagnostic ne prouve pas
+une lacune de collecte. Le prototype signale, par exemple, 55 départs retenus
+pour la zone 181 le 23 janvier contre une médiane de 20 sur ses références.
+La faible profondeur de cet historique et les jours exclus doivent accompagner
+cette hausse, sans en déduire une cause.
+
+L'intégration a optimisé le pipeline ville : sur une journée entière, il ne calcule
+plus l'heure ; sur un créneau, il extrait directement les deux caractères de
+l'heure ISO avec \code{$substrBytes} et \code{$toInt}. Le délai maximal des
+agrégations F3 est passé à 300 s. Les temps initiaux ne mesurent pas ces optimisations.
+
+\subsection{F4 : caractéristiques des trajets}
+\code{GET /api/journeys} reçoit deux zones et deux périodes non chevauchantes.
+Il renvoie médiane, quartiles, p90, moyenne, écart-type, min/max et effectifs pour
+la durée et la distance. Les moins fiables sont décrits séparément ; les
+montants négatifs et doublons restent hors des statistiques. Les valeurs hors
+bornes $[Q_1-1{,}5\,IQR,Q_3+1{,}5\,IQR]$ sont comptées mais pas supprimées à nouveau.
+
+MongoDB filtre la paire et projette durée stockée, distance, calendrier, source
+et flags. Un curseur fournit les lignes par lots de 2\,000. Java calcule les
+quantiles exacts par interpolation à l'indice $(n-1)p$. Le choix évite un quantile
+approximatif ou un grand tableau BSON, au prix d'un transfert et d'une mémoire
+proportionnels aux candidats. La limite est de 200\,000 lignes, avec erreur 422
+explicite au-delà.
+
+Pour tenir compte de trajets différents, une seconde comparaison utilise les
+strates semaine/week-end, créneaux de six heures et classes de distance. Les
+moyennes de durée des strates suffisamment représentées sont pondérées par les
+mêmes poids de référence ; les fractions couvertes sont affichées. Ce n'est pas
+une médiane standardisée ni une élimination de tous les facteurs de confusion.
+Pour 132 $\to$ 161, la médiane passe de 2\,678 à 2\,719 s entre les
+1--14 et 15--31 janvier, avec 1\,070 et 1\,359 retenus. L'écart médian est
+41 s ; la différence des moyennes standardisées vaut 49,76 s. Ces indicateurs
+ne suffisent pas à conclure à davantage de congestion.
+
+\subsection{F5 : changement de part face à la variation habituelle}
+\code{GET /api/flow-changes} compare des périodes de même durée, lundi à lundi,
+et utilise une période historique antérieure au courant. Le dénominateur $N$
+est l'ensemble des départs retenus de l'aire sélectionnée, pas seulement les
+flux du classement. Pour un flux, $p_A=n_A/N_A$ et $p_B=n_B/N_B$.
+La différence $p_B-p_A$ est comparée au p90 des variations absolues entre semaines
+historiques adjacentes, propres à ce flux. Le ratio est
+\[
+R=\frac{|p_B-p_A|}{\max\{q_{0,9}(|p_w-p_{w-1}|),\,\varepsilon\}}.
+\]
+Les défauts demandent 20 trajets dans au moins une période, 20 dans l'historique,
+trois semaines utilisables, un dénominateur hebdomadaire d'au moins 100,
+$\varepsilon=0{,}001$ et $R\geq2$. Les flux retenus sont classés par écart absolu
+de part, puis par identifiants ; les autres portent leur motif de non-qualification.
+Un dénominateur nul donne une part absente, pas un zéro concluant. Le plancher
+empêche un score infini sur un historique constant ; il ne rend pas le résultat
+statistiquement significatif.
+
+La décomposition $n_B-n_A=(p_A N_B-n_A)+(n_B-p_A N_B)$ distingue l'effet du
+volume global et le résidu du flux. Entre les semaines du 15 et du 22 janvier,
+les départs retenus de la zone 132 passent de 30\,263 à 26\,739. Pour
+132 $\to$ 123, les comptes passent pourtant de 29 à 146, soit de 0,0958\,\% à
+0,5460\,\% : +0,4502 point. L'attendu au seul effet volume est 25,62 ; le résidu
+est +120,38. La baseline du 1er au 22 janvier ne fournit que deux différences
+hebdomadaires, une limite importante. L'intégration construit désormais les
+preuves par source après le classement, seulement pour les flux renvoyés, et
+porte le délai maximal de l'agrégation à 300 s, sans changer ce principe de calcul.

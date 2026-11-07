@@ -1,0 +1,40 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\IfFileExists{french.ldf}{\usepackage[french]{babel}}{\usepackage[french,provide=*]{babel}}
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,tabularx,longtable,array}
+\usepackage[expansion=false]{microtype}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={UrbanFlow : données et services F1-F5},pdfauthor={Binôme UrbanFlow},pdfsubject={Contribution au rapport M2 SLCD}}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=*}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{2em}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{UrbanFlow --- Données et services F1--F5}\fancyfoot[C]{\thepage}
+\setlength{\headheight}{13pt}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,columns=fullflexible,keepspaces=true,frame=single,showstringspaces=false}
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\chemin}[1]{\texttt{\path{#1}}}
+\title{\vspace{-1.2cm}UrbanFlow\\\large Données, prototype local et services F1--F5}
+\author{Master 2 SLCD --- Big Data et NoSQL}
+\date{7 novembre 2026}
+\begin{document}
+\maketitle\vspace{-1.0cm}
+\input{sections/01-donnees}
+\input{sections/02-modele}
+\input{sections/03-services}
+% Le complément du second membre reste au même endroit dans le document final.
+\input{sections/04-complement-binome}
+\input{sections/05-mesures}
+\input{sections/06-references}
+\label{fin-corps}
+\clearpage\appendix
+\input{annexes/provenance}
+\input{annexes/qualite}
+\end{document}
