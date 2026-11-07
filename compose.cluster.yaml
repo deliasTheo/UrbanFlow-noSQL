@@ -1,0 +1,45 @@
+# Déploiement réparti : deux serveurs de données (shards), un serveur de
+# configuration et un routeur mongos sur lequel l'API se connecte.
+#
+# Le nom de projet donne des volumes séparés pour chaque stratégie de placement :
+#   docker compose -p urbanflow-zone -f compose.cluster.yaml up -d
+#   docker compose -p urbanflow-month -f compose.cluster.yaml up -d
+#
+# 0,7 Go de cache par shard, soit 1,4 Go en tout. C'est le cache que prend le
+# serveur local sur la VM Docker de 3,7 Go, pour comparer à mémoire égale.
+name: urbanflow-cluster
+services:
+  config:
+    image: mongo:8.0.16
+    command: mongod --configsvr --replSet cfg --port 27017 --bind_ip_all --wiredTigerCacheSizeGB 0.25
+    ports:
+      - "127.0.0.1:27020:27017"
+    volumes:
+      - config-data:/data/configdb
+  shard1:
+    image: mongo:8.0.16
+    command: mongod --shardsvr --replSet shard1 --port 27017 --bind_ip_all --wiredTigerCacheSizeGB 0.7
+    ports:
+      - "127.0.0.1:27021:27017"
+    volumes:
+      - shard1-data:/data/db
+  shard2:
+    image: mongo:8.0.16
+    command: mongod --shardsvr --replSet shard2 --port 27017 --bind_ip_all --wiredTigerCacheSizeGB 0.7
+    ports:
+      - "127.0.0.1:27022:27017"
+    volumes:
+      - shard2-data:/data/db
+  mongos:
+    image: mongo:8.0.16
+    command: mongos --configdb cfg/config:27017 --port 27017 --bind_ip_all
+    ports:
+      - "127.0.0.1:27019:27017"
+    depends_on:
+      - config
+      - shard1
+      - shard2
+volumes:
+  config-data:
+  shard1-data:
+  shard2-data:
