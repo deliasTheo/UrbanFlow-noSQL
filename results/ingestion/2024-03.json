@@ -2,6 +2,9 @@
   "file": "yellow_tripdata_2024-03.parquet",
   "file_id": "2d4cdc8fb96726cdd3803b13b02d2e61e71d45720aff0ebc693a8bdd1f249823",
   "num_rows": 3582628,
+  "inserted": 3582628,
+  "already_present": 0,
+  "seconds": 150.9,
   "anomalies": {
     "PICKUP_OUTSIDE_FILE_MONTH": 23,
     "NON_POSITIVE_DURATION": 1128,

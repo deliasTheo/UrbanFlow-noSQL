@@ -1,0 +1,103 @@
+{
+  "une_zone_chargee": {
+    "path": "/api/activity?zoneId=132&direction=pickup&from=2024-03-01&to=2024-04-01",
+    "status": 200,
+    "seconds": 2.651,
+    "contactes": [
+      "shard1",
+      "shard2"
+    ],
+    "par_serveur": {
+      "shard2": {
+        "documents_lus": 0,
+        "cles_lues": 0,
+        "documents_rendus": 0,
+        "millisecondes": 0
+      },
+      "shard1": {
+        "documents_lus": 157704,
+        "cles_lues": 157704,
+        "documents_rendus": 157704,
+        "millisecondes": 2199
+      }
+    },
+    "calcul_local": [
+      "$match",
+      "$project"
+    ],
+    "fusion": [
+      "$mergeCursors",
+      "$facet"
+    ],
+    "lieu_de_fusion": "anyShard",
+    "serveur_de_fusion": null
+  },
+  "plusieurs_zones": {
+    "path": "/api/flows?zoneIds=181,189,33,52,97&from=2024-01-01&to=2024-07-01",
+    "status": 200,
+    "seconds": 10.717,
+    "contactes": [
+      "shard1",
+      "shard2"
+    ],
+    "par_serveur": {
+      "shard1": {
+        "documents_lus": 86743,
+        "cles_lues": 89354,
+        "documents_rendus": 86743,
+        "millisecondes": 3032
+      },
+      "shard2": {
+        "documents_lus": 103195,
+        "cles_lues": 106585,
+        "documents_rendus": 103195,
+        "millisecondes": 3459
+      }
+    },
+    "calcul_local": [
+      "$match",
+      "$project",
+      "$group"
+    ],
+    "fusion": [
+      "$mergeCursors",
+      "$group"
+    ],
+    "lieu_de_fusion": "anyShard",
+    "serveur_de_fusion": null
+  },
+  "origine_destination_ville": {
+    "path": "/api/flow-changes?from=2024-04-01&to=2024-04-08&referenceFrom=2024-03-25&referenceTo=2024-04-01&baselineFrom=2024-03-04&baselineTo=2024-04-01",
+    "status": 200,
+    "seconds": 59.152,
+    "contactes": [
+      "shard1",
+      "shard2"
+    ],
+    "par_serveur": {
+      "shard2": {
+        "documents_lus": 874425,
+        "cles_lues": 875208,
+        "documents_rendus": 874425,
+        "millisecondes": 6290
+      },
+      "shard1": {
+        "documents_lus": 3245508,
+        "cles_lues": 4110375,
+        "documents_rendus": 3245508,
+        "millisecondes": 54697
+      }
+    },
+    "calcul_local": [
+      "$match",
+      "$project",
+      "$group"
+    ],
+    "fusion": [
+      "$mergeCursors",
+      "$group"
+    ],
+    "lieu_de_fusion": "anyShard",
+    "serveur_de_fusion": null
+  }
+}

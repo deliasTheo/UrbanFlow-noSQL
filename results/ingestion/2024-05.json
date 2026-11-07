@@ -1,0 +1,29 @@
+{
+  "file": "yellow_tripdata_2024-05.parquet",
+  "file_id": "1974230be2b5a3ea92e47b5eb77f32dbf1de896d81ad8df4ab6faba52749ad23",
+  "num_rows": 3723833,
+  "inserted": 3723833,
+  "already_present": 0,
+  "seconds": 140.9,
+  "anomalies": {
+    "PICKUP_OUTSIDE_FILE_MONTH": 33,
+    "NON_POSITIVE_DURATION": 1147,
+    "EXCESSIVE_DURATION": 1982,
+    "ZERO_DISTANCE": 49791,
+    "IMPLAUSIBLE_DISTANCE": 154,
+    "IMPLAUSIBLE_SPEED": 1158,
+    "NEGATIVE_AMOUNT": 48992,
+    "REVERSAL_RECORD": 42606,
+    "REVERSED_ORIGINAL": 42606,
+    "UNKNOWN_ZONE": 38725,
+    "EXACT_DUPLICATE": 0,
+    "MISSING_PASSENGER_INFO": 404666,
+    "DST_SPANNING": 0,
+    "DST_UNRESOLVED": 0
+  },
+  "profiles": {
+    "activity": 3674841,
+    "flows": 3636771,
+    "journey": 3591918
+  }
+}

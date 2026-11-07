@@ -1,0 +1,63 @@
+{
+  "deployment": "zone",
+  "shard2_arrete": {
+    "f1_zone_sur_les_deux_shards": {
+      "path": "/api/activity?zoneId=181&direction=dropoff&from=2024-01-01&to=2024-07-01",
+      "http": 503,
+      "seconds": 19.1,
+      "message": "MongoDB indisponible ou requête interrompue. Aucun résultat complet ne peut être fourni."
+    },
+    "f5_ville": {
+      "path": "/api/flow-changes?from=2024-04-01&to=2024-04-08&referenceFrom=2024-03-25&referenceTo=2024-04-01&baselineFrom=2024-03-04&baselineTo=2024-04-01",
+      "http": 503,
+      "seconds": 15.0,
+      "message": "MongoDB indisponible ou requête interrompue. Aucun résultat complet ne peut être fourni."
+    },
+    "f1_depart_zone_du_shard1": {
+      "path": "/api/activity?zoneId=1&direction=pickup&from=2024-01-01&to=2024-07-01",
+      "http": 200,
+      "seconds": 0.1,
+      "identique_a_la_reference": true
+    }
+  },
+  "shard1_arrete": {
+    "f1_zone_sur_les_deux_shards": {
+      "path": "/api/activity?zoneId=181&direction=dropoff&from=2024-01-01&to=2024-07-01",
+      "http": 503,
+      "seconds": 19.0,
+      "message": "MongoDB indisponible ou requête interrompue. Aucun résultat complet ne peut être fourni."
+    },
+    "f5_ville": {
+      "path": "/api/flow-changes?from=2024-04-01&to=2024-04-08&referenceFrom=2024-03-25&referenceTo=2024-04-01&baselineFrom=2024-03-04&baselineTo=2024-04-01",
+      "http": 503,
+      "seconds": 15.0,
+      "message": "MongoDB indisponible ou requête interrompue. Aucun résultat complet ne peut être fourni."
+    },
+    "f1_depart_zone_du_shard1": {
+      "path": "/api/activity?zoneId=1&direction=pickup&from=2024-01-01&to=2024-07-01",
+      "http": 503,
+      "seconds": 15.0,
+      "message": "MongoDB indisponible ou requête interrompue. Aucun résultat complet ne peut être fourni."
+    }
+  },
+  "apres_redemarrage": {
+    "f1_zone_sur_les_deux_shards": {
+      "path": "/api/activity?zoneId=181&direction=dropoff&from=2024-01-01&to=2024-07-01",
+      "http": 200,
+      "seconds": 0.8,
+      "identique_a_la_reference": true
+    },
+    "f5_ville": {
+      "path": "/api/flow-changes?from=2024-04-01&to=2024-04-08&referenceFrom=2024-03-25&referenceTo=2024-04-01&baselineFrom=2024-03-04&baselineTo=2024-04-01",
+      "http": 200,
+      "seconds": 20.0,
+      "identique_a_la_reference": true
+    },
+    "f1_depart_zone_du_shard1": {
+      "path": "/api/activity?zoneId=1&direction=pickup&from=2024-01-01&to=2024-07-01",
+      "http": 200,
+      "seconds": 0.1,
+      "identique_a_la_reference": true
+    }
+  }
+}

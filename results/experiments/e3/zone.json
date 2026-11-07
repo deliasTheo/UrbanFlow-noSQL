@@ -1,0 +1,1572 @@
+{
+  "deployment": "zone",
+  "clients": 3,
+  "requests_per_mix": 60,
+  "seed": 2024,
+  "mixes": {
+    "100A": {
+      "wall_seconds": 7.9,
+      "requests_per_minute": 454.41,
+      "errors": 0,
+      "work_per_instance": {
+        "shard1": {
+          "keys_scanned": 567581,
+          "docs_scanned": 567941,
+          "bytes_sent": 26401474,
+          "cpu_seconds": 9.459,
+          "memory_mb": 1241.4
+        },
+        "shard2": {
+          "keys_scanned": 796935,
+          "docs_scanned": 796935,
+          "bytes_sent": 27531730,
+          "cpu_seconds": 12.345,
+          "memory_mb": 1255.6
+        },
+        "mongos": {
+          "bytes_sent": 53600162,
+          "cpu_seconds": 0.32,
+          "memory_mb": 132.5
+        }
+      },
+      "calls": [
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=161&direction=pickup&from=2024-05-27&to=2024-06-03",
+          "status": 200,
+          "seconds": 0.582
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=237&destinationId=236&from=2024-03-04&to=2024-03-11&referenceFrom=2024-02-19&referenceTo=2024-03-04",
+          "status": 200,
+          "seconds": 0.454
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-03-25&to=2024-04-01",
+          "status": 200,
+          "seconds": 0.462
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=236&direction=pickup&from=2024-04-22&to=2024-04-29",
+          "status": 200,
+          "seconds": 0.415
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=237&destinationId=236&from=2024-03-04&to=2024-03-11&referenceFrom=2024-02-19&referenceTo=2024-03-04",
+          "status": 200,
+          "seconds": 0.339
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=236&destinationId=237&from=2024-04-22&to=2024-04-29&referenceFrom=2024-04-08&referenceTo=2024-04-22",
+          "status": 200,
+          "seconds": 0.383
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-03-18&to=2024-03-25",
+          "status": 200,
+          "seconds": 0.388
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=161&direction=pickup&from=2024-05-06&to=2024-05-13",
+          "status": 200,
+          "seconds": 0.603
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=161&destinationId=236&from=2024-02-19&to=2024-02-26&referenceFrom=2024-02-05&referenceTo=2024-02-19",
+          "status": 200,
+          "seconds": 0.246
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-02-19&to=2024-02-26",
+          "status": 200,
+          "seconds": 0.444
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=161&destinationId=236&from=2024-02-12&to=2024-02-19&referenceFrom=2024-01-29&referenceTo=2024-02-12",
+          "status": 200,
+          "seconds": 0.198
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-02-19&to=2024-02-26",
+          "status": 200,
+          "seconds": 0.302
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-06-17&to=2024-06-24",
+          "status": 200,
+          "seconds": 0.75
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-05-06&to=2024-05-13&referenceFrom=2024-04-22&referenceTo=2024-05-06",
+          "status": 200,
+          "seconds": 0.113
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=132&direction=pickup&from=2024-05-20&to=2024-05-27",
+          "status": 200,
+          "seconds": 0.564
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-02-26&to=2024-03-04",
+          "status": 200,
+          "seconds": 0.465
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=161&destinationId=236&from=2024-03-18&to=2024-03-25&referenceFrom=2024-03-04&referenceTo=2024-03-18",
+          "status": 200,
+          "seconds": 0.219
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=161&direction=pickup&from=2024-02-26&to=2024-03-04",
+          "status": 200,
+          "seconds": 0.602
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=236&destinationId=237&from=2024-05-27&to=2024-06-03&referenceFrom=2024-05-13&referenceTo=2024-05-27",
+          "status": 200,
+          "seconds": 0.465
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=132&direction=pickup&from=2024-02-19&to=2024-02-26",
+          "status": 200,
+          "seconds": 0.294
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=161&destinationId=236&from=2024-02-19&to=2024-02-26&referenceFrom=2024-02-05&referenceTo=2024-02-19",
+          "status": 200,
+          "seconds": 0.161
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=237&destinationId=236&from=2024-06-10&to=2024-06-17&referenceFrom=2024-05-27&referenceTo=2024-06-10",
+          "status": 200,
+          "seconds": 0.582
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-02-12&to=2024-02-19",
+          "status": 200,
+          "seconds": 0.707
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=161&destinationId=236&from=2024-02-19&to=2024-02-26&referenceFrom=2024-02-05&referenceTo=2024-02-19",
+          "status": 200,
+          "seconds": 0.12
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-06-10&to=2024-06-17&referenceFrom=2024-05-27&referenceTo=2024-06-10",
+          "status": 200,
+          "seconds": 0.09
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=132&direction=pickup&from=2024-04-22&to=2024-04-29",
+          "status": 200,
+          "seconds": 0.495
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-03-25&to=2024-04-01&referenceFrom=2024-03-11&referenceTo=2024-03-25",
+          "status": 200,
+          "seconds": 0.111
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=161&destinationId=236&from=2024-04-15&to=2024-04-22&referenceFrom=2024-04-01&referenceTo=2024-04-15",
+          "status": 200,
+          "seconds": 0.246
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=161&direction=pickup&from=2024-03-25&to=2024-04-01",
+          "status": 200,
+          "seconds": 0.635
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-04-01&to=2024-04-08&referenceFrom=2024-03-18&referenceTo=2024-04-01",
+          "status": 200,
+          "seconds": 0.088
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-06-03&to=2024-06-10",
+          "status": 200,
+          "seconds": 0.458
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=236&direction=pickup&from=2024-01-29&to=2024-02-05",
+          "status": 200,
+          "seconds": 0.507
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-02-12&to=2024-02-19",
+          "status": 200,
+          "seconds": 0.267
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-04-22&to=2024-04-29&referenceFrom=2024-04-08&referenceTo=2024-04-22",
+          "status": 200,
+          "seconds": 0.115
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=236&direction=pickup&from=2024-01-22&to=2024-01-29",
+          "status": 200,
+          "seconds": 0.506
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=236&destinationId=237&from=2024-05-13&to=2024-05-20&referenceFrom=2024-04-29&referenceTo=2024-05-13",
+          "status": 200,
+          "seconds": 0.504
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=161&destinationId=236&from=2024-05-06&to=2024-05-13&referenceFrom=2024-04-22&referenceTo=2024-05-06",
+          "status": 200,
+          "seconds": 0.236
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-05-06&to=2024-05-13&referenceFrom=2024-04-22&referenceTo=2024-05-06",
+          "status": 200,
+          "seconds": 0.101
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=161&direction=pickup&from=2024-02-26&to=2024-03-04",
+          "status": 200,
+          "seconds": 0.412
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=132&direction=pickup&from=2024-01-29&to=2024-02-05",
+          "status": 200,
+          "seconds": 0.403
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=132&direction=pickup&from=2024-01-29&to=2024-02-05",
+          "status": 200,
+          "seconds": 0.361
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=236&direction=pickup&from=2024-05-13&to=2024-05-20",
+          "status": 200,
+          "seconds": 0.505
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=132&direction=pickup&from=2024-04-15&to=2024-04-22",
+          "status": 200,
+          "seconds": 0.374
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=236&destinationId=237&from=2024-03-11&to=2024-03-18&referenceFrom=2024-02-26&referenceTo=2024-03-11",
+          "status": 200,
+          "seconds": 0.351
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-04-22&to=2024-04-29",
+          "status": 200,
+          "seconds": 0.582
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-03-25&to=2024-04-01",
+          "status": 200,
+          "seconds": 0.535
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=236&destinationId=237&from=2024-06-10&to=2024-06-17&referenceFrom=2024-05-27&referenceTo=2024-06-10",
+          "status": 200,
+          "seconds": 0.421
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=236&destinationId=237&from=2024-02-26&to=2024-03-04&referenceFrom=2024-02-12&referenceTo=2024-02-26",
+          "status": 200,
+          "seconds": 0.395
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=237&destinationId=236&from=2024-04-22&to=2024-04-29&referenceFrom=2024-04-08&referenceTo=2024-04-22",
+          "status": 200,
+          "seconds": 0.504
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=161&destinationId=236&from=2024-03-18&to=2024-03-25&referenceFrom=2024-03-04&referenceTo=2024-03-18",
+          "status": 200,
+          "seconds": 0.231
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=236&direction=pickup&from=2024-06-10&to=2024-06-17",
+          "status": 200,
+          "seconds": 0.291
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=132&direction=pickup&from=2024-03-04&to=2024-03-11",
+          "status": 200,
+          "seconds": 0.503
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=236&direction=pickup&from=2024-02-12&to=2024-02-19",
+          "status": 200,
+          "seconds": 0.43
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-02-26&to=2024-03-04",
+          "status": 200,
+          "seconds": 0.616
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-04-01&to=2024-04-08&referenceFrom=2024-03-18&referenceTo=2024-04-01",
+          "status": 200,
+          "seconds": 0.108
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=237&destinationId=236&from=2024-02-05&to=2024-02-12&referenceFrom=2024-01-22&referenceTo=2024-02-05",
+          "status": 200,
+          "seconds": 0.425
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=237&destinationId=236&from=2024-04-22&to=2024-04-29&referenceFrom=2024-04-08&referenceTo=2024-04-22",
+          "status": 200,
+          "seconds": 0.483
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=236&direction=pickup&from=2024-05-27&to=2024-06-03",
+          "status": 200,
+          "seconds": 0.565
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=237&destinationId=236&from=2024-04-15&to=2024-04-22&referenceFrom=2024-04-01&referenceTo=2024-04-15",
+          "status": 200,
+          "seconds": 0.422
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=237&destinationId=236&from=2024-04-22&to=2024-04-29&referenceFrom=2024-04-08&referenceTo=2024-04-22",
+          "status": 200,
+          "seconds": 0.4
+        }
+      ],
+      "median_A": 0.418,
+      "max_A": 0.75
+    },
+    "70A_30B": {
+      "wall_seconds": 50.9,
+      "requests_per_minute": 70.78,
+      "errors": 0,
+      "work_per_instance": {
+        "shard1": {
+          "keys_scanned": 3951039,
+          "docs_scanned": 3724125,
+          "bytes_sent": 99231377,
+          "cpu_seconds": 100.722,
+          "memory_mb": 1281.3
+        },
+        "shard2": {
+          "keys_scanned": 5002214,
+          "docs_scanned": 4789391,
+          "bytes_sent": 106078087,
+          "cpu_seconds": 130.161,
+          "memory_mb": 1277.1
+        },
+        "mongos": {
+          "bytes_sent": 82081849,
+          "cpu_seconds": 0.864,
+          "memory_mb": 112.8
+        }
+      },
+      "calls": [
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-03-04&to=2024-03-11",
+          "status": 200,
+          "seconds": 0.692
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=237&destinationId=236&from=2024-05-20&to=2024-05-27&referenceFrom=2024-05-06&referenceTo=2024-05-20",
+          "status": 200,
+          "seconds": 0.51
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-04-08&to=2024-04-15&referenceFrom=2024-04-01&referenceTo=2024-04-08&baselineFrom=2024-03-04&baselineTo=2024-04-08",
+          "status": 200,
+          "seconds": 0.986
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-05-20&to=2024-05-27",
+          "status": 200,
+          "seconds": 0.782
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-04-01&to=2024-04-08&referenceFrom=2024-03-25&referenceTo=2024-04-01&baselineFrom=2024-02-26&baselineTo=2024-04-01",
+          "status": 200,
+          "seconds": 1.027
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-06-17&to=2024-06-24&referenceFrom=2024-06-03&referenceTo=2024-06-17",
+          "status": 200,
+          "seconds": 0.146
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-04-29&to=2024-05-06",
+          "status": 200,
+          "seconds": 0.733
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-03-04&to=2024-04-01",
+          "status": 200,
+          "seconds": 13.996
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-02-19&to=2024-02-26&referenceFrom=2024-02-05&referenceTo=2024-02-19",
+          "status": 200,
+          "seconds": 0.082
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=132&direction=pickup&from=2024-01-22&to=2024-01-29",
+          "status": 200,
+          "seconds": 0.64
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-03-25&to=2024-04-01&referenceFrom=2024-03-18&referenceTo=2024-03-25&baselineFrom=2024-02-19&baselineTo=2024-03-25",
+          "status": 200,
+          "seconds": 1.064
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-06-03&to=2024-06-10&referenceFrom=2024-05-20&referenceTo=2024-06-03",
+          "status": 200,
+          "seconds": 0.109
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=161&direction=pickup&from=2024-06-03&to=2024-06-10",
+          "status": 200,
+          "seconds": 0.877
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=237&destinationId=236&from=2024-05-06&to=2024-05-13&referenceFrom=2024-04-22&referenceTo=2024-05-06",
+          "status": 200,
+          "seconds": 0.448
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=237&destinationId=236&from=2024-03-11&to=2024-03-18&referenceFrom=2024-02-26&referenceTo=2024-03-11",
+          "status": 200,
+          "seconds": 0.555
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-04-29&to=2024-05-06",
+          "status": 200,
+          "seconds": 0.724
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=161&destinationId=236&from=2024-04-22&to=2024-04-29&referenceFrom=2024-04-08&referenceTo=2024-04-22",
+          "status": 200,
+          "seconds": 0.214
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-05-27&to=2024-06-03&referenceFrom=2024-05-20&referenceTo=2024-05-27&baselineFrom=2024-04-22&baselineTo=2024-05-27",
+          "status": 200,
+          "seconds": 1.25
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=161&destinationId=236&from=2024-04-22&to=2024-04-29&referenceFrom=2024-04-08&referenceTo=2024-04-22",
+          "status": 200,
+          "seconds": 0.2
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=236&direction=pickup&from=2024-04-08&to=2024-04-15",
+          "status": 200,
+          "seconds": 0.689
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=161&destinationId=236&from=2024-03-25&to=2024-04-01&referenceFrom=2024-03-11&referenceTo=2024-03-25",
+          "status": 200,
+          "seconds": 0.204
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-03-25&to=2024-04-01",
+          "status": 200,
+          "seconds": 0.68
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-02-05&to=2024-02-12",
+          "status": 200,
+          "seconds": 0.701
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-05-13&to=2024-06-10",
+          "status": 200,
+          "seconds": 13.579
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-01-08&to=2024-02-05",
+          "status": 200,
+          "seconds": 13.299
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=74&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 2.718
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=236&destinationId=237&from=2024-05-13&to=2024-05-20&referenceFrom=2024-04-29&referenceTo=2024-05-13",
+          "status": 200,
+          "seconds": 0.454
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=189&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.39
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=52&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.272
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-03-11&to=2024-03-18&referenceFrom=2024-02-26&referenceTo=2024-03-11",
+          "status": 200,
+          "seconds": 0.088
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=161&direction=pickup&from=2024-02-26&to=2024-03-04",
+          "status": 200,
+          "seconds": 0.49
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=161&direction=pickup&from=2024-06-17&to=2024-06-24",
+          "status": 200,
+          "seconds": 0.665
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=161&direction=pickup&from=2024-06-03&to=2024-06-10",
+          "status": 200,
+          "seconds": 0.661
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=236&direction=pickup&from=2024-05-06&to=2024-05-13",
+          "status": 200,
+          "seconds": 0.647
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-02-12&to=2024-02-19",
+          "status": 200,
+          "seconds": 0.783
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-02-19&to=2024-02-26",
+          "status": 200,
+          "seconds": 0.805
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=129&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.494
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-05-27&to=2024-06-03",
+          "status": 200,
+          "seconds": 0.85
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-04-15&to=2024-04-22",
+          "status": 200,
+          "seconds": 0.899
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Queens&from=2024-03-11&to=2024-04-08",
+          "status": 200,
+          "seconds": 16.946
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Queens&from=2024-02-19&to=2024-03-18",
+          "status": 200,
+          "seconds": 16.223
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=161&direction=pickup&from=2024-03-11&to=2024-03-18",
+          "status": 200,
+          "seconds": 0.472
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-06-17&to=2024-06-24",
+          "status": 200,
+          "seconds": 0.604
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=237&destinationId=236&from=2024-01-29&to=2024-02-05&referenceFrom=2024-01-15&referenceTo=2024-01-29",
+          "status": 200,
+          "seconds": 0.564
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-06-17&to=2024-07-15",
+          "status": 200,
+          "seconds": 13.663
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=237&destinationId=236&from=2024-06-03&to=2024-06-10&referenceFrom=2024-05-20&referenceTo=2024-06-03",
+          "status": 200,
+          "seconds": 0.475
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=189&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.377
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-03-11&to=2024-04-08",
+          "status": 200,
+          "seconds": 12.965
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-05-20&to=2024-05-27",
+          "status": 200,
+          "seconds": 0.651
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-05-13&to=2024-05-20&referenceFrom=2024-05-06&referenceTo=2024-05-13&baselineFrom=2024-04-08&baselineTo=2024-05-13",
+          "status": 200,
+          "seconds": 6.34
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=236&direction=pickup&from=2024-03-04&to=2024-03-11",
+          "status": 200,
+          "seconds": 0.712
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=236&direction=pickup&from=2024-05-06&to=2024-05-13",
+          "status": 200,
+          "seconds": 0.916
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=161&direction=pickup&from=2024-03-04&to=2024-03-11",
+          "status": 200,
+          "seconds": 0.978
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=132&direction=pickup&from=2024-06-03&to=2024-06-10",
+          "status": 200,
+          "seconds": 1.133
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-06-10&to=2024-06-17",
+          "status": 200,
+          "seconds": 0.905
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=132&direction=pickup&from=2024-03-18&to=2024-03-25",
+          "status": 200,
+          "seconds": 0.836
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=236&destinationId=237&from=2024-03-25&to=2024-04-01&referenceFrom=2024-03-11&referenceTo=2024-03-25",
+          "status": 200,
+          "seconds": 0.499
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=25&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.638
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=237&direction=pickup&from=2024-02-12&to=2024-02-19",
+          "status": 200,
+          "seconds": 0.819
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=236&destinationId=237&from=2024-03-25&to=2024-04-01&referenceFrom=2024-03-11&referenceTo=2024-03-25",
+          "status": 200,
+          "seconds": 0.359
+        }
+      ],
+      "median_A": 0.656,
+      "max_A": 1.133,
+      "median_B": 1.984,
+      "max_B": 16.946
+    },
+    "30A_70B": {
+      "wall_seconds": 102.4,
+      "requests_per_minute": 35.17,
+      "errors": 0,
+      "work_per_instance": {
+        "shard1": {
+          "keys_scanned": 8931089,
+          "docs_scanned": 8179757,
+          "bytes_sent": 382858863,
+          "cpu_seconds": 230.453,
+          "memory_mb": 1265.0
+        },
+        "shard2": {
+          "keys_scanned": 10564367,
+          "docs_scanned": 9923195,
+          "bytes_sent": 375780449,
+          "cpu_seconds": 275.983,
+          "memory_mb": 1265.1
+        },
+        "mongos": {
+          "bytes_sent": 156216656,
+          "cpu_seconds": 4.672,
+          "memory_mb": 133.2
+        }
+      },
+      "calls": [
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-05-27&to=2024-06-03&referenceFrom=2024-05-13&referenceTo=2024-05-27",
+          "status": 200,
+          "seconds": 0.092
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-01-15&to=2024-02-12",
+          "status": 200,
+          "seconds": 14.505
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-04-15&to=2024-04-22&referenceFrom=2024-04-08&referenceTo=2024-04-15&baselineFrom=2024-03-11&baselineTo=2024-04-15",
+          "status": 200,
+          "seconds": 1.137
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-05-27&to=2024-06-03&referenceFrom=2024-05-20&referenceTo=2024-05-27&baselineFrom=2024-04-22&baselineTo=2024-05-27",
+          "status": 200,
+          "seconds": 1.284
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Queens&from=2024-02-19&to=2024-03-18",
+          "status": 200,
+          "seconds": 17.369
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=79&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 6.673
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-02-26&to=2024-03-25",
+          "status": 200,
+          "seconds": 13.48
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-05-27&to=2024-06-03&referenceFrom=2024-05-20&referenceTo=2024-05-27&baselineFrom=2024-04-22&baselineTo=2024-05-27",
+          "status": 200,
+          "seconds": 1.278
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=236&destinationId=237&from=2024-04-29&to=2024-05-06&referenceFrom=2024-04-15&referenceTo=2024-04-29",
+          "status": 200,
+          "seconds": 0.446
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-04-08&to=2024-05-06",
+          "status": 200,
+          "seconds": 14.099
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=236&destinationId=237&from=2024-03-18&to=2024-03-25&referenceFrom=2024-03-04&referenceTo=2024-03-18",
+          "status": 200,
+          "seconds": 0.514
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=79&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 5.761
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-03-18&to=2024-04-15",
+          "status": 200,
+          "seconds": 13.985
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-06-17&to=2024-06-24&referenceFrom=2024-06-10&referenceTo=2024-06-17&baselineFrom=2024-05-13&baselineTo=2024-06-17",
+          "status": 200,
+          "seconds": 1.533
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=129&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.515
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-01-29&to=2024-02-26",
+          "status": 200,
+          "seconds": 13.753
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=42&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 1.708
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=161&destinationId=236&from=2024-04-08&to=2024-04-15&referenceFrom=2024-03-25&referenceTo=2024-04-08",
+          "status": 200,
+          "seconds": 0.203
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-05-20&to=2024-05-27&referenceFrom=2024-05-13&referenceTo=2024-05-20&baselineFrom=2024-04-15&baselineTo=2024-05-20",
+          "status": 200,
+          "seconds": 5.195
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-05-27&to=2024-06-24",
+          "status": 200,
+          "seconds": 14.411
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-02-05&to=2024-03-04",
+          "status": 200,
+          "seconds": 14.033
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-03-04&to=2024-04-01",
+          "status": 200,
+          "seconds": 13.73
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-05-27&to=2024-06-03&referenceFrom=2024-05-20&referenceTo=2024-05-27&baselineFrom=2024-04-22&baselineTo=2024-05-27",
+          "status": 200,
+          "seconds": 5.631
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=161&direction=pickup&from=2024-05-20&to=2024-05-27",
+          "status": 200,
+          "seconds": 0.456
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=189&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.347
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-04-22&to=2024-04-29&referenceFrom=2024-04-15&referenceTo=2024-04-22&baselineFrom=2024-03-18&baselineTo=2024-04-22",
+          "status": 200,
+          "seconds": 5.291
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-04-08&to=2024-04-15&referenceFrom=2024-04-01&referenceTo=2024-04-08&baselineFrom=2024-03-04&baselineTo=2024-04-08",
+          "status": 200,
+          "seconds": 4.602
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Queens&from=2024-01-15&to=2024-02-12",
+          "status": 200,
+          "seconds": 16.491
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=132&direction=pickup&from=2024-02-12&to=2024-02-19",
+          "status": 200,
+          "seconds": 0.437
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=129&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.484
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-05-27&to=2024-06-03&referenceFrom=2024-05-20&referenceTo=2024-05-27&baselineFrom=2024-04-22&baselineTo=2024-05-27",
+          "status": 200,
+          "seconds": 1.251
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=236&destinationId=237&from=2024-03-04&to=2024-03-11&referenceFrom=2024-02-19&referenceTo=2024-03-04",
+          "status": 200,
+          "seconds": 0.453
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-05-27&to=2024-06-03&referenceFrom=2024-05-20&referenceTo=2024-05-27&baselineFrom=2024-04-22&baselineTo=2024-05-27",
+          "status": 200,
+          "seconds": 1.355
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=236&direction=pickup&from=2024-01-29&to=2024-02-05",
+          "status": 200,
+          "seconds": 0.712
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-05-06&to=2024-06-03",
+          "status": 200,
+          "seconds": 13.536
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-05-13&to=2024-05-20&referenceFrom=2024-05-06&referenceTo=2024-05-13&baselineFrom=2024-04-08&baselineTo=2024-05-13",
+          "status": 200,
+          "seconds": 1.344
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=97&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.524
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-06-17&to=2024-06-24&referenceFrom=2024-06-10&referenceTo=2024-06-17&baselineFrom=2024-05-13&baselineTo=2024-06-17",
+          "status": 200,
+          "seconds": 5.862
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-04-01&to=2024-04-08&referenceFrom=2024-03-25&referenceTo=2024-04-01&baselineFrom=2024-02-26&baselineTo=2024-04-01",
+          "status": 200,
+          "seconds": 1.29
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-02-05&to=2024-02-12&referenceFrom=2024-01-22&referenceTo=2024-02-05",
+          "status": 200,
+          "seconds": 0.075
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-02-05&to=2024-02-12&referenceFrom=2024-01-22&referenceTo=2024-02-05",
+          "status": 200,
+          "seconds": 0.079
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=236&direction=pickup&from=2024-02-19&to=2024-02-26",
+          "status": 200,
+          "seconds": 0.566
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=236&destinationId=237&from=2024-03-18&to=2024-03-25&referenceFrom=2024-03-04&referenceTo=2024-03-18",
+          "status": 200,
+          "seconds": 0.325
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-02-05&to=2024-02-12&referenceFrom=2024-01-22&referenceTo=2024-02-05",
+          "status": 200,
+          "seconds": 0.059
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-04-01&to=2024-04-08&referenceFrom=2024-03-25&referenceTo=2024-04-01&baselineFrom=2024-02-26&baselineTo=2024-04-01",
+          "status": 200,
+          "seconds": 0.976
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-03-18&to=2024-03-25&referenceFrom=2024-03-11&referenceTo=2024-03-18&baselineFrom=2024-02-12&baselineTo=2024-03-18",
+          "status": 200,
+          "seconds": 0.808
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Queens&from=2024-02-26&to=2024-03-25",
+          "status": 200,
+          "seconds": 17.401
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=132&direction=pickup&from=2024-03-18&to=2024-03-25",
+          "status": 200,
+          "seconds": 0.739
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-06-10&to=2024-06-17&referenceFrom=2024-06-03&referenceTo=2024-06-10&baselineFrom=2024-05-06&baselineTo=2024-06-10",
+          "status": 200,
+          "seconds": 1.447
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-05-13&to=2024-05-20&referenceFrom=2024-04-29&referenceTo=2024-05-13",
+          "status": 200,
+          "seconds": 0.117
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=107&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 6.924
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=79&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 6.532
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-05-27&to=2024-06-03&referenceFrom=2024-05-20&referenceTo=2024-05-27&baselineFrom=2024-04-22&baselineTo=2024-05-27",
+          "status": 200,
+          "seconds": 5.755
+        },
+        {
+          "kind": "A",
+          "path": "/api/journeys?originId=132&destinationId=161&from=2024-05-20&to=2024-05-27&referenceFrom=2024-05-06&referenceTo=2024-05-20",
+          "status": 200,
+          "seconds": 0.11
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=161&direction=pickup&from=2024-05-13&to=2024-05-20",
+          "status": 200,
+          "seconds": 0.818
+        },
+        {
+          "kind": "A",
+          "path": "/api/activity?zoneId=236&direction=pickup&from=2024-01-22&to=2024-01-29",
+          "status": 200,
+          "seconds": 0.606
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-06-17&to=2024-06-24&referenceFrom=2024-06-10&referenceTo=2024-06-17&baselineFrom=2024-05-13&baselineTo=2024-06-17",
+          "status": 200,
+          "seconds": 5.864
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=129&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.477
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Queens&from=2024-06-10&to=2024-07-08",
+          "status": 200,
+          "seconds": 15.107
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=52&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.397
+        }
+      ],
+      "median_A": 0.442,
+      "max_A": 0.818,
+      "median_B": 5.461,
+      "max_B": 17.401
+    },
+    "100B": {
+      "wall_seconds": 146.2,
+      "requests_per_minute": 24.62,
+      "errors": 0,
+      "work_per_instance": {
+        "shard1": {
+          "keys_scanned": 12281126,
+          "docs_scanned": 11324979,
+          "bytes_sent": 620346018,
+          "cpu_seconds": 354.684,
+          "memory_mb": 1288.7
+        },
+        "shard2": {
+          "keys_scanned": 14937002,
+          "docs_scanned": 14067858,
+          "bytes_sent": 611137833,
+          "cpu_seconds": 424.621,
+          "memory_mb": 1287.0
+        },
+        "mongos": {
+          "bytes_sent": 167416025,
+          "cpu_seconds": 7.989,
+          "memory_mb": 142.6
+        }
+      },
+      "calls": [
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=74&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 3.112
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-05-20&to=2024-05-27&referenceFrom=2024-05-13&referenceTo=2024-05-20&baselineFrom=2024-04-15&baselineTo=2024-05-20",
+          "status": 200,
+          "seconds": 5.741
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=189&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.467
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Queens&from=2024-04-08&to=2024-05-06",
+          "status": 200,
+          "seconds": 18.859
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=33&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 1.16
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-04-22&to=2024-04-29&referenceFrom=2024-04-15&referenceTo=2024-04-22&baselineFrom=2024-03-18&baselineTo=2024-04-22",
+          "status": 200,
+          "seconds": 6.593
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=7&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 1.06
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-04-22&to=2024-04-29&referenceFrom=2024-04-15&referenceTo=2024-04-22&baselineFrom=2024-03-18&baselineTo=2024-04-22",
+          "status": 200,
+          "seconds": 6.164
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=95&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.578
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-04-29&to=2024-05-27",
+          "status": 200,
+          "seconds": 15.3
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-03-25&to=2024-04-01&referenceFrom=2024-03-18&referenceTo=2024-03-25&baselineFrom=2024-02-19&baselineTo=2024-03-25",
+          "status": 200,
+          "seconds": 6.207
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-02-26&to=2024-03-25",
+          "status": 200,
+          "seconds": 15.456
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=97&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.601
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-05-27&to=2024-06-03&referenceFrom=2024-05-20&referenceTo=2024-05-27&baselineFrom=2024-04-22&baselineTo=2024-05-27",
+          "status": 200,
+          "seconds": 7.329
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-03-25&to=2024-04-01&referenceFrom=2024-03-18&referenceTo=2024-03-25&baselineFrom=2024-02-19&baselineTo=2024-03-25",
+          "status": 200,
+          "seconds": 1.158
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-04-15&to=2024-04-22&referenceFrom=2024-04-08&referenceTo=2024-04-15&baselineFrom=2024-03-11&baselineTo=2024-04-15",
+          "status": 200,
+          "seconds": 1.382
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-01-08&to=2024-02-05",
+          "status": 200,
+          "seconds": 15.1
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=48&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 8.282
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=68&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 8.266
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-03-25&to=2024-04-22",
+          "status": 200,
+          "seconds": 15.249
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=7&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 1.019
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Queens&from=2024-06-03&to=2024-07-01",
+          "status": 200,
+          "seconds": 18.143
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-06-03&to=2024-07-01",
+          "status": 200,
+          "seconds": 15.109
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=42&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 1.679
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-04-01&to=2024-04-08&referenceFrom=2024-03-25&referenceTo=2024-04-01&baselineFrom=2024-02-26&baselineTo=2024-04-01",
+          "status": 200,
+          "seconds": 1.6
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-04-08&to=2024-04-15&referenceFrom=2024-04-01&referenceTo=2024-04-08&baselineFrom=2024-03-04&baselineTo=2024-04-08",
+          "status": 200,
+          "seconds": 1.211
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-05-13&to=2024-06-10",
+          "status": 200,
+          "seconds": 14.764
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-06-17&to=2024-07-15",
+          "status": 200,
+          "seconds": 14.29
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-03-25&to=2024-04-01&referenceFrom=2024-03-18&referenceTo=2024-03-25&baselineFrom=2024-02-19&baselineTo=2024-03-25",
+          "status": 200,
+          "seconds": 1.133
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=42&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 1.642
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-02-19&to=2024-03-18",
+          "status": 200,
+          "seconds": 14.812
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=138&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 4.305
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=74&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 3.187
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=48&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 7.729
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Queens&from=2024-04-15&to=2024-05-13",
+          "status": 200,
+          "seconds": 19.322
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=129&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.592
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-03-25&to=2024-04-01&referenceFrom=2024-03-18&referenceTo=2024-03-25&baselineFrom=2024-02-19&baselineTo=2024-03-25",
+          "status": 200,
+          "seconds": 5.876
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-06-17&to=2024-06-24&referenceFrom=2024-06-10&referenceTo=2024-06-17&baselineFrom=2024-05-13&baselineTo=2024-06-17",
+          "status": 200,
+          "seconds": 1.737
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=181&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 1.063
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-05-20&to=2024-05-27&referenceFrom=2024-05-13&referenceTo=2024-05-20&baselineFrom=2024-04-15&baselineTo=2024-05-20",
+          "status": 200,
+          "seconds": 1.481
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-05-06&to=2024-06-03",
+          "status": 200,
+          "seconds": 14.996
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=42&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 1.817
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-05-27&to=2024-06-03&referenceFrom=2024-05-20&referenceTo=2024-05-27&baselineFrom=2024-04-22&baselineTo=2024-05-27",
+          "status": 200,
+          "seconds": 6.418
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=68&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 8.014
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Queens&from=2024-03-18&to=2024-04-15",
+          "status": 200,
+          "seconds": 19.809
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-03-25&to=2024-04-22",
+          "status": 200,
+          "seconds": 15.84
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-04-08&to=2024-04-15&referenceFrom=2024-04-01&referenceTo=2024-04-08&baselineFrom=2024-03-04&baselineTo=2024-04-08",
+          "status": 200,
+          "seconds": 7.41
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=68&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 8.136
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Queens&from=2024-01-29&to=2024-02-26",
+          "status": 200,
+          "seconds": 17.901
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-05-27&to=2024-06-03&referenceFrom=2024-05-20&referenceTo=2024-05-27&baselineFrom=2024-04-22&baselineTo=2024-05-27",
+          "status": 200,
+          "seconds": 6.256
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-05-27&to=2024-06-03&referenceFrom=2024-05-20&referenceTo=2024-05-27&baselineFrom=2024-04-22&baselineTo=2024-05-27",
+          "status": 200,
+          "seconds": 1.264
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=138&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 3.465
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-06-17&to=2024-07-15",
+          "status": 200,
+          "seconds": 13.976
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-04-22&to=2024-04-29&referenceFrom=2024-04-15&referenceTo=2024-04-22&baselineFrom=2024-03-18&baselineTo=2024-04-22",
+          "status": 200,
+          "seconds": 1.405
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=129&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.593
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-01-15&to=2024-02-12",
+          "status": 200,
+          "seconds": 14.016
+        },
+        {
+          "kind": "B",
+          "path": "/api/flows?borough=Brooklyn&from=2024-06-10&to=2024-07-08",
+          "status": 200,
+          "seconds": 12.682
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Brooklyn&from=2024-03-11&to=2024-03-18&referenceFrom=2024-03-04&referenceTo=2024-03-11&baselineFrom=2024-02-05&baselineTo=2024-03-11",
+          "status": 200,
+          "seconds": 0.961
+        },
+        {
+          "kind": "B",
+          "path": "/api/activity?zoneId=52&direction=dropoff&from=2024-01-01&to=2024-07-01",
+          "status": 200,
+          "seconds": 0.288
+        },
+        {
+          "kind": "B",
+          "path": "/api/flow-changes?borough=Queens&from=2024-04-01&to=2024-04-08&referenceFrom=2024-03-25&referenceTo=2024-04-01&baselineFrom=2024-02-26&baselineTo=2024-04-01",
+          "status": 200,
+          "seconds": 4.515
+        }
+      ],
+      "median_B": 6.02,
+      "max_B": 19.809
+    }
+  }
+}

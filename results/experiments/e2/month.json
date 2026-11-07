@@ -1,0 +1,336 @@
+{
+  "deployment": "month",
+  "repetitions": 5,
+  "protocol": "premier appel après redémarrage des serveurs, un échauffement, puis cinq appels à la suite ; un seul client",
+  "failures": 0,
+  "requests": {
+    "f1_jfk_pickup_march": {
+      "path": "/api/activity?zoneId=132&direction=pickup&from=2024-03-01&to=2024-04-01",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 2.449
+      },
+      "times": [
+        2.428,
+        1.808,
+        2.342,
+        1.75,
+        1.679
+      ],
+      "median": 1.808,
+      "min": 1.679,
+      "max": 2.428,
+      "stdev": 0.355,
+      "work_per_instance_for_all_repetitions": {
+        "shard1": {
+          "keys_scanned": 788525,
+          "docs_scanned": 788555,
+          "bytes_sent": 170030178,
+          "cpu_seconds": 9.333,
+          "memory_mb": 1683.7
+        },
+        "shard2": {
+          "keys_scanned": 0,
+          "docs_scanned": 0,
+          "bytes_sent": 118328,
+          "cpu_seconds": 0.123,
+          "memory_mb": 1097.5
+        },
+        "mongos": {
+          "bytes_sent": 90375,
+          "cpu_seconds": 1.104,
+          "memory_mb": 158.8
+        }
+      }
+    },
+    "f1_parkslope_dropoff_semester": {
+      "path": "/api/activity?zoneId=181&direction=dropoff&from=2024-01-01&to=2024-07-01",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 1.467
+      },
+      "times": [
+        0.824,
+        0.809,
+        0.843,
+        0.994,
+        0.859
+      ],
+      "median": 0.843,
+      "min": 0.809,
+      "max": 0.994,
+      "stdev": 0.074,
+      "work_per_instance_for_all_repetitions": {
+        "shard1": {
+          "keys_scanned": 118920,
+          "docs_scanned": 118950,
+          "bytes_sent": 25579400,
+          "cpu_seconds": 3.714,
+          "memory_mb": 1655.9
+        },
+        "shard2": {
+          "keys_scanned": 131405,
+          "docs_scanned": 131405,
+          "bytes_sent": 28351397,
+          "cpu_seconds": 4.241,
+          "memory_mb": 1124.1
+        },
+        "mongos": {
+          "bytes_sent": 132155,
+          "cpu_seconds": 0.37,
+          "memory_mb": 104.4
+        }
+      }
+    },
+    "f2_several_zones_semester": {
+      "path": "/api/flows?zoneIds=181,189,33,52,97&from=2024-01-01&to=2024-07-01",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 3.858
+      },
+      "times": [
+        3.361,
+        3.501,
+        3.524,
+        3.792,
+        3.909
+      ],
+      "median": 3.524,
+      "min": 3.361,
+      "max": 3.909,
+      "stdev": 0.226,
+      "work_per_instance_for_all_repetitions": {
+        "shard1": {
+          "keys_scanned": 448095,
+          "docs_scanned": 435070,
+          "bytes_sent": 19412048,
+          "cpu_seconds": 15.474,
+          "memory_mb": 1641.7
+        },
+        "shard2": {
+          "keys_scanned": 532925,
+          "docs_scanned": 515975,
+          "bytes_sent": 35500896,
+          "cpu_seconds": 18.551,
+          "memory_mb": 1103.0
+        },
+        "mongos": {
+          "bytes_sent": 23519290,
+          "cpu_seconds": 0.132,
+          "memory_mb": 100.0
+        }
+      }
+    },
+    "f2_brooklyn_quarter": {
+      "path": "/api/flows?borough=Brooklyn&from=2024-01-01&to=2024-04-01",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 15.06
+      },
+      "times": [
+        12.58,
+        12.545,
+        12.371,
+        12.741,
+        12.529
+      ],
+      "median": 12.545,
+      "min": 12.371,
+      "max": 12.741,
+      "stdev": 0.132,
+      "work_per_instance_for_all_repetitions": {
+        "shard1": {
+          "keys_scanned": 2241130,
+          "docs_scanned": 1987400,
+          "bytes_sent": 126879570,
+          "cpu_seconds": 63.366,
+          "memory_mb": 1634.6
+        },
+        "shard2": {
+          "keys_scanned": 0,
+          "docs_scanned": 0,
+          "bytes_sent": 43520914,
+          "cpu_seconds": 1.624,
+          "memory_mb": 1114.1
+        },
+        "mongos": {
+          "bytes_sent": 72676190,
+          "cpu_seconds": 0.316,
+          "memory_mb": 89.0
+        }
+      }
+    },
+    "f3_brooklyn_march": {
+      "path": "/api/unusual-activity?borough=Brooklyn&from=2024-03-11&to=2024-03-18&referenceFrom=2024-01-08&referenceTo=2024-03-10",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 37.147
+      },
+      "times": [
+        34.913,
+        35.766,
+        35.297,
+        35.797,
+        35.586
+      ],
+      "median": 35.586,
+      "min": 34.913,
+      "max": 35.797,
+      "stdev": 0.37,
+      "work_per_instance_for_all_repetitions": {
+        "shard1": {
+          "keys_scanned": 36676820,
+          "docs_scanned": 36606900,
+          "bytes_sent": 3631583,
+          "cpu_seconds": 180.59,
+          "memory_mb": 1727.9
+        },
+        "shard2": {
+          "keys_scanned": 17,
+          "docs_scanned": 17,
+          "bytes_sent": 190991,
+          "cpu_seconds": 1.434,
+          "memory_mb": 1125.4
+        },
+        "mongos": {
+          "bytes_sent": 3490819,
+          "cpu_seconds": 0.25,
+          "memory_mb": 78.9
+        }
+      }
+    },
+    "f4_jfk_midtown": {
+      "path": "/api/journeys?originId=132&destinationId=161&from=2024-03-11&to=2024-04-01&referenceFrom=2024-02-12&referenceTo=2024-03-04",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 0.243
+      },
+      "times": [
+        0.134,
+        0.098,
+        0.099,
+        0.052,
+        0.059
+      ],
+      "median": 0.098,
+      "min": 0.052,
+      "max": 0.134,
+      "stdev": 0.033,
+      "work_per_instance_for_all_repetitions": {
+        "shard1": {
+          "keys_scanned": 20500,
+          "docs_scanned": 20530,
+          "bytes_sent": 3858103,
+          "cpu_seconds": 0.32,
+          "memory_mb": 1710.1
+        },
+        "shard2": {
+          "keys_scanned": 0,
+          "docs_scanned": 0,
+          "bytes_sent": 113556,
+          "cpu_seconds": 0.045,
+          "memory_mb": 1124.8
+        },
+        "mongos": {
+          "bytes_sent": 3779090,
+          "cpu_seconds": 0.056,
+          "memory_mb": 78.3
+        }
+      }
+    },
+    "f5_brooklyn_march": {
+      "path": "/api/flow-changes?borough=Brooklyn&from=2024-03-25&to=2024-04-01&referenceFrom=2024-03-18&referenceTo=2024-03-25&baselineFrom=2024-01-08&baselineTo=2024-03-25",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 2.98
+      },
+      "times": [
+        2.803,
+        2.762,
+        2.807,
+        2.741,
+        2.695
+      ],
+      "median": 2.762,
+      "min": 2.695,
+      "max": 2.807,
+      "stdev": 0.046,
+      "work_per_instance_for_all_repetitions": {
+        "shard1": {
+          "keys_scanned": 620140,
+          "docs_scanned": 458545,
+          "bytes_sent": 56158967,
+          "cpu_seconds": 13.124,
+          "memory_mb": 1723.2
+        },
+        "shard2": {
+          "keys_scanned": 15,
+          "docs_scanned": 0,
+          "bytes_sent": 28886122,
+          "cpu_seconds": 0.809,
+          "memory_mb": 1125.8
+        },
+        "mongos": {
+          "bytes_sent": 36322930,
+          "cpu_seconds": 0.158,
+          "memory_mb": 77.6
+        }
+      }
+    },
+    "f5_city_across_april": {
+      "path": "/api/flow-changes?from=2024-04-01&to=2024-04-08&referenceFrom=2024-03-25&referenceTo=2024-04-01&baselineFrom=2024-03-04&baselineTo=2024-04-01",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 59.646
+      },
+      "times": [
+        61.449,
+        57.977,
+        59.115,
+        60.015,
+        57.851
+      ],
+      "median": 59.115,
+      "min": 57.851,
+      "max": 61.449,
+      "stdev": 1.501,
+      "work_per_instance_for_all_repetitions": {
+        "shard1": {
+          "keys_scanned": 20553211,
+          "docs_scanned": 16228905,
+          "bytes_sent": 100228666,
+          "cpu_seconds": 307.018,
+          "memory_mb": 1718.9
+        },
+        "shard2": {
+          "keys_scanned": 4376045,
+          "docs_scanned": 4372130,
+          "bytes_sent": 84706891,
+          "cpu_seconds": 36.883,
+          "memory_mb": 1125.6
+        },
+        "mongos": {
+          "bytes_sent": 78796910,
+          "cpu_seconds": 0.584,
+          "memory_mb": 76.1
+        }
+      }
+    }
+  }
+}

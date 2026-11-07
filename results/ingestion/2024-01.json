@@ -4,7 +4,7 @@
   "num_rows": 2964624,
   "inserted": 2964624,
   "already_present": 0,
-  "seconds": 283.0,
+  "seconds": 105.3,
   "anomalies": {
     "PICKUP_OUTSIDE_FILE_MONTH": 18,
     "NON_POSITIVE_DURATION": 870,

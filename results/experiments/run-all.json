@@ -1,0 +1,78 @@
+{
+  "chargement-local": {
+    "status": "ok",
+    "seconds": 1346
+  },
+  "chargement-zone": {
+    "status": "ok",
+    "seconds": 676
+  },
+  "chargement-month": {
+    "status": "ok",
+    "seconds": 813
+  },
+  "explain-local": {
+    "status": "ok",
+    "seconds": 101
+  },
+  "explain-zone": {
+    "status": "ok",
+    "seconds": 68
+  },
+  "explain-month": {
+    "status": "ok",
+    "seconds": 143
+  },
+  "e2-local": {
+    "status": "ok",
+    "seconds": 772
+  },
+  "e2-zone": {
+    "status": "ok",
+    "seconds": 502
+  },
+  "e2-month": {
+    "status": "ok",
+    "seconds": 891
+  },
+  "comparaison": {
+    "status": "ok",
+    "seconds": 0
+  },
+  "e3-local": {
+    "status": "ok",
+    "seconds": 605
+  },
+  "e3-zone": {
+    "status": "ok",
+    "seconds": 434
+  },
+  "e3-month": {
+    "status": "ok",
+    "seconds": 435
+  },
+  "panne-zone": {
+    "status": "ok",
+    "seconds": 146
+  },
+  "panne-month": {
+    "status": "ok",
+    "seconds": 223
+  },
+  "verification-six-mois": {
+    "status": "ok",
+    "seconds": 69
+  },
+  "f6-local": {
+    "status": "ok",
+    "seconds": 6
+  },
+  "f6-zone": {
+    "status": "ok",
+    "seconds": 13
+  },
+  "f6-month": {
+    "status": "ok",
+    "seconds": 12
+  }
+}

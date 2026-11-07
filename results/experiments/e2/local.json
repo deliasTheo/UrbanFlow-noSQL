@@ -1,0 +1,240 @@
+{
+  "deployment": "local",
+  "repetitions": 5,
+  "protocol": "premier appel après redémarrage des serveurs, un échauffement, puis cinq appels à la suite ; un seul client",
+  "failures": 0,
+  "requests": {
+    "f1_jfk_pickup_march": {
+      "path": "/api/activity?zoneId=132&direction=pickup&from=2024-03-01&to=2024-04-01",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 2.645
+      },
+      "times": [
+        1.584,
+        2.269,
+        1.517,
+        1.484,
+        1.597
+      ],
+      "median": 1.584,
+      "min": 1.484,
+      "max": 2.269,
+      "stdev": 0.327,
+      "work_per_instance_for_all_repetitions": {
+        "server": {
+          "keys_scanned": 788525,
+          "docs_scanned": 788555,
+          "bytes_sent": 173083,
+          "cpu_seconds": 9.39,
+          "memory_mb": 2277.1
+        }
+      }
+    },
+    "f1_parkslope_dropoff_semester": {
+      "path": "/api/activity?zoneId=181&direction=dropoff&from=2024-01-01&to=2024-07-01",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 1.939
+      },
+      "times": [
+        1.389,
+        1.257,
+        1.281,
+        1.32,
+        1.309
+      ],
+      "median": 1.309,
+      "min": 1.257,
+      "max": 1.389,
+      "stdev": 0.05,
+      "work_per_instance_for_all_repetitions": {
+        "server": {
+          "keys_scanned": 250325,
+          "docs_scanned": 250355,
+          "bytes_sent": 206520,
+          "cpu_seconds": 7.226,
+          "memory_mb": 2271.1
+        }
+      }
+    },
+    "f2_several_zones_semester": {
+      "path": "/api/flows?zoneIds=181,189,33,52,97&from=2024-01-01&to=2024-07-01",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 5.759
+      },
+      "times": [
+        5.327,
+        5.453,
+        5.396,
+        5.381,
+        5.612
+      ],
+      "median": 5.396,
+      "min": 5.327,
+      "max": 5.612,
+      "stdev": 0.11,
+      "work_per_instance_for_all_repetitions": {
+        "server": {
+          "keys_scanned": 980970,
+          "docs_scanned": 951045,
+          "bytes_sent": 23625820,
+          "cpu_seconds": 30.243,
+          "memory_mb": 2246.7
+        }
+      }
+    },
+    "f2_brooklyn_quarter": {
+      "path": "/api/flows?borough=Brooklyn&from=2024-01-01&to=2024-04-01",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 22.354
+      },
+      "times": [
+        20.976,
+        20.713,
+        20.804,
+        20.998,
+        21.221
+      ],
+      "median": 20.976,
+      "min": 20.713,
+      "max": 21.221,
+      "stdev": 0.196,
+      "work_per_instance_for_all_repetitions": {
+        "server": {
+          "keys_scanned": 4343940,
+          "docs_scanned": 4089910,
+          "bytes_sent": 72909686,
+          "cpu_seconds": 116.692,
+          "memory_mb": 2239.4
+        }
+      }
+    },
+    "f3_brooklyn_march": {
+      "path": "/api/unusual-activity?borough=Brooklyn&from=2024-03-11&to=2024-03-18&referenceFrom=2024-01-08&referenceTo=2024-03-10",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 28.51
+      },
+      "times": [
+        27.493,
+        28.008,
+        28.109,
+        29.988,
+        27.639
+      ],
+      "median": 28.008,
+      "min": 27.493,
+      "max": 29.988,
+      "stdev": 1.006,
+      "work_per_instance_for_all_repetitions": {
+        "server": {
+          "keys_scanned": 36700810,
+          "docs_scanned": 36606875,
+          "bytes_sent": 3773331,
+          "cpu_seconds": 152.983,
+          "memory_mb": 2330.0
+        }
+      }
+    },
+    "f4_jfk_midtown": {
+      "path": "/api/journeys?originId=132&destinationId=161&from=2024-03-11&to=2024-04-01&referenceFrom=2024-02-12&referenceTo=2024-03-04",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 0.186
+      },
+      "times": [
+        0.101,
+        0.045,
+        0.088,
+        0.074,
+        0.046
+      ],
+      "median": 0.074,
+      "min": 0.045,
+      "max": 0.101,
+      "stdev": 0.025,
+      "work_per_instance_for_all_repetitions": {
+        "server": {
+          "keys_scanned": 20500,
+          "docs_scanned": 20530,
+          "bytes_sent": 3843622,
+          "cpu_seconds": 0.279,
+          "memory_mb": 2327.4
+        }
+      }
+    },
+    "f5_brooklyn_march": {
+      "path": "/api/flow-changes?borough=Brooklyn&from=2024-03-25&to=2024-04-01&referenceFrom=2024-03-18&referenceTo=2024-03-25&baselineFrom=2024-01-08&baselineTo=2024-03-25",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 2.342
+      },
+      "times": [
+        2.184,
+        1.804,
+        1.93,
+        1.965,
+        1.893
+      ],
+      "median": 1.93,
+      "min": 1.804,
+      "max": 2.184,
+      "stdev": 0.141,
+      "work_per_instance_for_all_repetitions": {
+        "server": {
+          "keys_scanned": 514075,
+          "docs_scanned": 458545,
+          "bytes_sent": 36404392,
+          "cpu_seconds": 10.578,
+          "memory_mb": 2353.1
+        }
+      }
+    },
+    "f5_city_across_april": {
+      "path": "/api/flow-changes?from=2024-04-01&to=2024-04-08&referenceFrom=2024-03-25&referenceTo=2024-04-01&baselineFrom=2024-03-04&baselineTo=2024-04-01",
+      "status": 200,
+      "errors": [],
+      "cold": {
+        "status": 200,
+        "seconds": 38.624
+      },
+      "times": [
+        38.557,
+        38.145,
+        37.523,
+        37.174,
+        39.337
+      ],
+      "median": 38.145,
+      "min": 37.174,
+      "max": 39.337,
+      "stdev": 0.854,
+      "work_per_instance_for_all_repetitions": {
+        "server": {
+          "keys_scanned": 24563936,
+          "docs_scanned": 20601021,
+          "bytes_sent": 79147711,
+          "cpu_seconds": 208.623,
+          "memory_mb": 2333.0
+        }
+      }
+    }
+  }
+}

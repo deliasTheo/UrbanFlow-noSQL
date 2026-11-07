@@ -1,0 +1,65 @@
+{
+  "une_zone_chargee": {
+    "path": "/api/activity?zoneId=132&direction=pickup&from=2024-03-01&to=2024-04-01",
+    "status": 200,
+    "seconds": 2.426,
+    "contactes": [
+      "server"
+    ],
+    "par_serveur": {
+      "server": {
+        "documents_lus": 157704,
+        "cles_lues": 157704,
+        "documents_rendus": 157704,
+        "millisecondes": 2051
+      }
+    },
+    "calcul_local": [
+      "$cursor",
+      "$facet"
+    ],
+    "fusion": null
+  },
+  "plusieurs_zones": {
+    "path": "/api/flows?zoneIds=181,189,33,52,97&from=2024-01-01&to=2024-07-01",
+    "status": 200,
+    "seconds": 6.781,
+    "contactes": [
+      "server"
+    ],
+    "par_serveur": {
+      "server": {
+        "documents_lus": 189938,
+        "cles_lues": 195929,
+        "documents_rendus": 189938,
+        "millisecondes": 5362
+      }
+    },
+    "calcul_local": [
+      "$cursor",
+      "$group"
+    ],
+    "fusion": null
+  },
+  "origine_destination_ville": {
+    "path": "/api/flow-changes?from=2024-04-01&to=2024-04-08&referenceFrom=2024-03-25&referenceTo=2024-04-01&baselineFrom=2024-03-04&baselineTo=2024-04-01",
+    "status": 200,
+    "seconds": 38.049,
+    "contactes": [
+      "server"
+    ],
+    "par_serveur": {
+      "server": {
+        "documents_lus": 4119933,
+        "cles_lues": 4912522,
+        "documents_rendus": 4119933,
+        "millisecondes": 36281
+      }
+    },
+    "calcul_local": [
+      "$cursor",
+      "$group"
+    ],
+    "fusion": null
+  }
+}

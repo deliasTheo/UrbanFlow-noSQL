@@ -1,0 +1,97 @@
+{
+  "same_trips_everywhere": true,
+  "failures": 0,
+  "requests": [
+    {
+      "request": "f1_jfk_pickup_across_april",
+      "status": 200,
+      "sha256": "aef223701f53280a2d4b7b84acf0e7bbb95741bf8369ecaa44d341ee859cc12b",
+      "zone": "identique",
+      "month": "identique"
+    },
+    {
+      "request": "f1_jfk_pickup_march",
+      "status": 200,
+      "sha256": "dc86e4d783de3f0eb565e1eb53a9dc223dc60d3261b8c5800a3379c8f536b1e0",
+      "zone": "identique",
+      "month": "identique"
+    },
+    {
+      "request": "f1_parkslope_dropoff_semester",
+      "status": 200,
+      "sha256": "ddcbc85ec3a610b3bb5266b311dba4eb45fe362265758484d729c3045c8a79ac",
+      "zone": "identique",
+      "month": "identique"
+    },
+    {
+      "request": "f2_brooklyn_quarter",
+      "status": 200,
+      "sha256": "6a948100c9c51c84558e10934a6a1c65709956aa444176486746db872b9f56ac",
+      "zone": "identique",
+      "month": "identique"
+    },
+    {
+      "request": "f2_several_zones_across_april",
+      "status": 200,
+      "sha256": "cfb455990063be0b8d15c9a3596fd44ea61f39ab36f2e48a6ff343dbe27d8e9b",
+      "zone": "identique",
+      "month": "identique"
+    },
+    {
+      "request": "f2_several_zones_semester",
+      "status": 200,
+      "sha256": "f823962a92da74647e44358e119ba624884aa7772317bd2865e574172a361430",
+      "zone": "identique",
+      "month": "identique"
+    },
+    {
+      "request": "f3_brooklyn_march",
+      "status": 200,
+      "sha256": "560577d7dacc2776c6ec7a3c33d36f0cab0f4c2886eb623223b5e860e754d398",
+      "zone": "identique",
+      "month": "identique"
+    },
+    {
+      "request": "f3_several_zones_april",
+      "status": 200,
+      "sha256": "7db1656935f625ae7f563ec94c3a1a96a63f4c3983530b8554ceec7843a94df9",
+      "zone": "identique",
+      "month": "identique"
+    },
+    {
+      "request": "f4_across_april",
+      "status": 200,
+      "sha256": "0901306d86001b291438b30f79be871f2fa8ac5fdf70e9a0a1ade86929db6b0b",
+      "zone": "identique",
+      "month": "identique"
+    },
+    {
+      "request": "f4_jfk_midtown",
+      "status": 200,
+      "sha256": "e6941f0a30348ed5d414af5dc68df158c3db66f734f2ccc846ff9240dfa9e663",
+      "zone": "identique",
+      "month": "identique"
+    },
+    {
+      "request": "f5_brooklyn_march",
+      "status": 200,
+      "sha256": "2b6cba1cce338b7d7563697b1241bedc31322a432f7f6ffc8e90baaf901888bf",
+      "zone": "identique",
+      "month": "identique"
+    },
+    {
+      "request": "f5_city_across_april",
+      "status": 200,
+      "sha256": "62501354d81886d3c22d7bdb579e6bc00b86b539650321cadba4ac554fb88b5f",
+      "zone": "identique",
+      "month": "identique"
+    },
+    {
+      "request": "f5_several_zones_may",
+      "status": 200,
+      "sha256": "d3ffe12cfde67fb362abcab8691f68d5d990748b4899004bd7e80c808de90f69",
+      "zone": "identique",
+      "month": "identique"
+    }
+  ]
+}

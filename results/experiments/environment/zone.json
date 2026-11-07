@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-07",
+  "machine": {
+    "system": "Windows-11-10.0.26300-SP0",
+    "processor": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+    "logical_cpus": 12
+  },
+  "docker": {
+    "version": "28.5.1",
+    "cpus": 12,
+    "memory_gb": 16.4,
+    "kernel": "6.18.54.1-microsoft-standard-WSL2"
+  },
+  "python": "3.12.10",
+  "java": "java version \"24.0.1\" 2025-04-15",
+  "api_heap": "-Xmx768m",
+  "instances": {
+    "shard1": {
+      "mongodb": "8.0.16",
+      "cache_bytes": 750780416
+    },
+    "shard2": {
+      "mongodb": "8.0.16",
+      "cache_bytes": 750780416
+    }
+  }
+}

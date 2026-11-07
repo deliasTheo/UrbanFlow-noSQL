@@ -7,7 +7,7 @@
       "num_rows": 2964624,
       "inserted": 2964624,
       "already_present": 0,
-      "seconds": 283.0,
+      "seconds": 90.4,
       "anomalies": {
         "PICKUP_OUTSIDE_FILE_MONTH": 18,
         "NON_POSITIVE_DURATION": 870,
@@ -29,9 +29,601 @@
         "flows": 2898055,
         "journey": 2841251
       }
+    },
+    "2024-02": {
+      "file": "yellow_tripdata_2024-02.parquet",
+      "file_id": "c76c43c18c6c6664080dd920baab4928988d5786a6b65980792ca7cd796f9f20",
+      "num_rows": 3007526,
+      "inserted": 3007526,
+      "already_present": 0,
+      "seconds": 96.9,
+      "anomalies": {
+        "PICKUP_OUTSIDE_FILE_MONTH": 15,
+        "NON_POSITIVE_DURATION": 803,
+        "EXCESSIVE_DURATION": 1736,
+        "ZERO_DISTANCE": 68225,
+        "IMPLAUSIBLE_DISTANCE": 71,
+        "IMPLAUSIBLE_SPEED": 953,
+        "NEGATIVE_AMOUNT": 36080,
+        "REVERSAL_RECORD": 31183,
+        "REVERSED_ORIGINAL": 31183,
+        "UNKNOWN_ZONE": 28974,
+        "EXACT_DUPLICATE": 1,
+        "MISSING_PASSENGER_INFO": 185610,
+        "DST_SPANNING": 0,
+        "DST_UNRESOLVED": 0
+      },
+      "profiles": {
+        "activity": 2971445,
+        "flows": 2942952,
+        "journey": 2878111
+      }
+    },
+    "2024-03": {
+      "file": "yellow_tripdata_2024-03.parquet",
+      "file_id": "2d4cdc8fb96726cdd3803b13b02d2e61e71d45720aff0ebc693a8bdd1f249823",
+      "num_rows": 3582628,
+      "inserted": 3582628,
+      "already_present": 0,
+      "seconds": 115.5,
+      "anomalies": {
+        "PICKUP_OUTSIDE_FILE_MONTH": 23,
+        "NON_POSITIVE_DURATION": 1128,
+        "EXCESSIVE_DURATION": 1927,
+        "ZERO_DISTANCE": 87168,
+        "IMPLAUSIBLE_DISTANCE": 122,
+        "IMPLAUSIBLE_SPEED": 1241,
+        "NEGATIVE_AMOUNT": 44311,
+        "REVERSAL_RECORD": 38391,
+        "REVERSED_ORIGINAL": 38391,
+        "UNKNOWN_ZONE": 35374,
+        "EXACT_DUPLICATE": 0,
+        "MISSING_PASSENGER_INFO": 426190,
+        "DST_SPANNING": 1153,
+        "DST_UNRESOLVED": 3
+      },
+      "profiles": {
+        "activity": 3538317,
+        "flows": 3503542,
+        "journey": 3420628
+      }
+    },
+    "2024-04": {
+      "file": "yellow_tripdata_2024-04.parquet",
+      "file_id": "ce37f736c7cf9e92164c850ef2b502a8f7bb590fc1804b6edbcb80293da01b89",
+      "num_rows": 3514289,
+      "inserted": 3514289,
+      "already_present": 0,
+      "seconds": 113.0,
+      "anomalies": {
+        "PICKUP_OUTSIDE_FILE_MONTH": 9,
+        "NON_POSITIVE_DURATION": 1089,
+        "EXCESSIVE_DURATION": 1982,
+        "ZERO_DISTANCE": 45813,
+        "IMPLAUSIBLE_DISTANCE": 150,
+        "IMPLAUSIBLE_SPEED": 1141,
+        "NEGATIVE_AMOUNT": 43749,
+        "REVERSAL_RECORD": 37825,
+        "REVERSED_ORIGINAL": 37825,
+        "UNKNOWN_ZONE": 35759,
+        "EXACT_DUPLICATE": 0,
+        "MISSING_PASSENGER_INFO": 408576,
+        "DST_SPANNING": 0,
+        "DST_UNRESOLVED": 0
+      },
+      "profiles": {
+        "activity": 3470540,
+        "flows": 3435410,
+        "journey": 3394040
+      }
+    },
+    "2024-05": {
+      "file": "yellow_tripdata_2024-05.parquet",
+      "file_id": "1974230be2b5a3ea92e47b5eb77f32dbf1de896d81ad8df4ab6faba52749ad23",
+      "num_rows": 3723833,
+      "inserted": 3723833,
+      "already_present": 0,
+      "seconds": 118.7,
+      "anomalies": {
+        "PICKUP_OUTSIDE_FILE_MONTH": 33,
+        "NON_POSITIVE_DURATION": 1147,
+        "EXCESSIVE_DURATION": 1982,
+        "ZERO_DISTANCE": 49791,
+        "IMPLAUSIBLE_DISTANCE": 154,
+        "IMPLAUSIBLE_SPEED": 1158,
+        "NEGATIVE_AMOUNT": 48992,
+        "REVERSAL_RECORD": 42606,
+        "REVERSED_ORIGINAL": 42606,
+        "UNKNOWN_ZONE": 38725,
+        "EXACT_DUPLICATE": 0,
+        "MISSING_PASSENGER_INFO": 404666,
+        "DST_SPANNING": 0,
+        "DST_UNRESOLVED": 0
+      },
+      "profiles": {
+        "activity": 3674841,
+        "flows": 3636771,
+        "journey": 3591918
+      }
+    },
+    "2024-06": {
+      "file": "yellow_tripdata_2024-06.parquet",
+      "file_id": "677cf14c8347f745b583f012fbdba072334c6c4efa17bfd6a64369f2ba30329c",
+      "num_rows": 3539193,
+      "inserted": 3539193,
+      "already_present": 0,
+      "seconds": 118.1,
+      "anomalies": {
+        "PICKUP_OUTSIDE_FILE_MONTH": 51,
+        "NON_POSITIVE_DURATION": 1140,
+        "EXCESSIVE_DURATION": 1950,
+        "ZERO_DISTANCE": 52954,
+        "IMPLAUSIBLE_DISTANCE": 169,
+        "IMPLAUSIBLE_SPEED": 1115,
+        "NEGATIVE_AMOUNT": 48795,
+        "REVERSAL_RECORD": 42313,
+        "REVERSED_ORIGINAL": 42313,
+        "UNKNOWN_ZONE": 38513,
+        "EXACT_DUPLICATE": 0,
+        "MISSING_PASSENGER_INFO": 410781,
+        "DST_SPANNING": 0,
+        "DST_UNRESOLVED": 0
+      },
+      "profiles": {
+        "activity": 3490398,
+        "flows": 3452592,
+        "journey": 3404607
+      }
     }
   },
-  "total_seconds": 286.2,
-  "checkpoints": [],
-  "f6": null
+  "ingestion_seconds": 652.6,
+  "script_seconds": 1343.0,
+  "checkpoints": [
+    {
+      "months": 1,
+      "source_rows": 2964624,
+      "distinct_trips_activity_profile": 2929120,
+      "documents": 2964624,
+      "storage": {
+        "server": {
+          "documents": 2964624,
+          "storage_mb": 346.7,
+          "index_mb": 492.9
+        }
+      },
+      "latency": {
+        "f1_parkslope_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 0.087,
+          "times": [
+            0.04,
+            0.029,
+            0.029,
+            0.029,
+            0.032
+          ],
+          "median": 0.029,
+          "min": 0.029,
+          "max": 0.04,
+          "stdev": 0.005
+        },
+        "f1_jfk_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 1.528,
+          "times": [
+            1.731,
+            1.595,
+            1.553,
+            1.246,
+            1.588
+          ],
+          "median": 1.588,
+          "min": 1.246,
+          "max": 1.731,
+          "stdev": 0.179
+        },
+        "f2_brooklyn_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 2.264,
+          "times": [
+            2.01,
+            2.023,
+            1.967,
+            1.948,
+            2.131
+          ],
+          "median": 2.01,
+          "min": 1.948,
+          "max": 2.131,
+          "stdev": 0.071
+        },
+        "f3_brooklyn_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 12.155,
+          "times": [
+            13.866,
+            12.215,
+            12.819,
+            13.193,
+            12.329
+          ],
+          "median": 12.819,
+          "min": 12.215,
+          "max": 13.866,
+          "stdev": 0.674
+        },
+        "f4_jfk_midtown_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 0.116,
+          "times": [
+            0.044,
+            0.056,
+            0.056,
+            0.05,
+            0.044
+          ],
+          "median": 0.05,
+          "min": 0.044,
+          "max": 0.056,
+          "stdev": 0.006
+        },
+        "f5_brooklyn_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 0.429,
+          "times": [
+            0.306,
+            0.312,
+            0.243,
+            0.241,
+            0.253
+          ],
+          "median": 0.253,
+          "min": 0.241,
+          "max": 0.312,
+          "stdev": 0.035
+        },
+        "f1_parkslope_whole_base": {
+          "status": 200,
+          "errors": [],
+          "warmup": 0.027,
+          "times": [
+            0.017,
+            0.018,
+            0.017,
+            0.016,
+            0.03
+          ],
+          "median": 0.017,
+          "min": 0.016,
+          "max": 0.03,
+          "stdev": 0.006
+        },
+        "f2_brooklyn_whole_base": {
+          "status": 200,
+          "errors": [],
+          "warmup": 1.975,
+          "times": [
+            2.015,
+            1.965,
+            2.054,
+            2.019,
+            2.146
+          ],
+          "median": 2.019,
+          "min": 1.965,
+          "max": 2.146,
+          "stdev": 0.067
+        }
+      }
+    },
+    {
+      "months": 3,
+      "source_rows": 9554778,
+      "distinct_trips_activity_profile": 9438882,
+      "documents": 9554778,
+      "storage": {
+        "server": {
+          "documents": 9554778,
+          "storage_mb": 1116.2,
+          "index_mb": 1213.8
+        }
+      },
+      "latency": {
+        "f1_parkslope_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 0.131,
+          "times": [
+            0.018,
+            0.031,
+            0.015,
+            0.028,
+            0.033
+          ],
+          "median": 0.028,
+          "min": 0.015,
+          "max": 0.033,
+          "stdev": 0.008
+        },
+        "f1_jfk_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 2.241,
+          "times": [
+            1.629,
+            1.682,
+            1.295,
+            1.36,
+            1.764
+          ],
+          "median": 1.629,
+          "min": 1.295,
+          "max": 1.764,
+          "stdev": 0.206
+        },
+        "f2_brooklyn_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 9.266,
+          "times": [
+            8.194,
+            8.269,
+            8.308,
+            8.84,
+            8.214
+          ],
+          "median": 8.269,
+          "min": 8.194,
+          "max": 8.84,
+          "stdev": 0.269
+        },
+        "f3_brooklyn_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 11.061,
+          "times": [
+            11.893,
+            11.147,
+            11.376,
+            11.832,
+            10.965
+          ],
+          "median": 11.376,
+          "min": 10.965,
+          "max": 11.893,
+          "stdev": 0.411
+        },
+        "f4_jfk_midtown_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 0.115,
+          "times": [
+            0.054,
+            0.054,
+            0.044,
+            0.045,
+            0.027
+          ],
+          "median": 0.045,
+          "min": 0.027,
+          "max": 0.054,
+          "stdev": 0.011
+        },
+        "f5_brooklyn_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 0.394,
+          "times": [
+            0.342,
+            0.26,
+            0.258,
+            0.223,
+            0.224
+          ],
+          "median": 0.258,
+          "min": 0.223,
+          "max": 0.342,
+          "stdev": 0.048
+        },
+        "f1_parkslope_whole_base": {
+          "status": 200,
+          "errors": [],
+          "warmup": 0.119,
+          "times": [
+            0.059,
+            0.038,
+            0.056,
+            0.039,
+            0.059
+          ],
+          "median": 0.056,
+          "min": 0.038,
+          "max": 0.059,
+          "stdev": 0.011
+        },
+        "f2_brooklyn_whole_base": {
+          "status": 200,
+          "errors": [],
+          "warmup": 10.161,
+          "times": [
+            10.192,
+            10.218,
+            10.32,
+            10.858,
+            10.254
+          ],
+          "median": 10.254,
+          "min": 10.192,
+          "max": 10.858,
+          "stdev": 0.278
+        }
+      }
+    },
+    {
+      "months": 6,
+      "source_rows": 20332093,
+      "distinct_trips_activity_profile": 20074661,
+      "documents": 20332093,
+      "storage": {
+        "server": {
+          "documents": 20332093,
+          "storage_mb": 2378.0,
+          "index_mb": 2480.5
+        }
+      },
+      "latency": {
+        "f1_parkslope_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 0.12,
+          "times": [
+            0.041,
+            0.017,
+            0.039,
+            0.029,
+            0.016
+          ],
+          "median": 0.029,
+          "min": 0.016,
+          "max": 0.041,
+          "stdev": 0.012
+        },
+        "f1_jfk_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 1.937,
+          "times": [
+            1.858,
+            1.325,
+            1.572,
+            1.659,
+            1.42
+          ],
+          "median": 1.572,
+          "min": 1.325,
+          "max": 1.858,
+          "stdev": 0.208
+        },
+        "f2_brooklyn_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 19.663,
+          "times": [
+            19.487,
+            19.096,
+            19.588,
+            19.632,
+            19.235
+          ],
+          "median": 19.487,
+          "min": 19.096,
+          "max": 19.632,
+          "stdev": 0.233
+        },
+        "f3_brooklyn_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 11.47,
+          "times": [
+            11.623,
+            10.88,
+            11.203,
+            11.411,
+            10.917
+          ],
+          "median": 11.203,
+          "min": 10.88,
+          "max": 11.623,
+          "stdev": 0.318
+        },
+        "f4_jfk_midtown_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 0.099,
+          "times": [
+            0.053,
+            0.035,
+            0.043,
+            0.049,
+            0.027
+          ],
+          "median": 0.043,
+          "min": 0.027,
+          "max": 0.053,
+          "stdev": 0.01
+        },
+        "f5_brooklyn_january": {
+          "status": 200,
+          "errors": [],
+          "warmup": 0.401,
+          "times": [
+            0.299,
+            0.265,
+            0.241,
+            0.266,
+            0.274
+          ],
+          "median": 0.266,
+          "min": 0.241,
+          "max": 0.299,
+          "stdev": 0.021
+        },
+        "f1_parkslope_whole_base": {
+          "status": 200,
+          "errors": [],
+          "warmup": 0.267,
+          "times": [
+            0.257,
+            0.163,
+            0.168,
+            0.148,
+            0.111
+          ],
+          "median": 0.163,
+          "min": 0.111,
+          "max": 0.257,
+          "stdev": 0.054
+        },
+        "f2_brooklyn_whole_base": {
+          "status": 200,
+          "errors": [],
+          "warmup": 25.9,
+          "times": [
+            25.528,
+            25.492,
+            25.509,
+            26.297,
+            25.234
+          ],
+          "median": 25.509,
+          "min": 25.234,
+          "max": 26.297,
+          "stdev": 0.401
+        }
+      }
+    }
+  ],
+  "f6": {
+    "http_seconds": 114.3,
+    "documents_before": 9554778,
+    "documents_after": 13069067,
+    "documents_after_second_import": 13069067,
+    "second_import_seconds": 1.1,
+    "f1_zone181_april_before": {
+      "raw": 0,
+      "retained": 0,
+      "excluded": 0
+    },
+    "f1_zone181_april_after": {
+      "raw": 1738,
+      "retained": 1722,
+      "excluded": 16
+    }
+  }
 }

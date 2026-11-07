@@ -1,0 +1,38 @@
+[
+  {
+    "_id": "1974230be2b5a3ea92e47b5eb77f32dbf1de896d81ad8df4ab6faba52749ad23",
+    "documents": 3723833,
+    "total_distance": 19985997.28,
+    "total_amount": 105662803.2
+  },
+  {
+    "_id": "2d4cdc8fb96726cdd3803b13b02d2e61e71d45720aff0ebc693a8bdd1f249823",
+    "documents": 3582628,
+    "total_distance": 16184205.17,
+    "total_amount": 97162913.97
+  },
+  {
+    "_id": "677cf14c8347f745b583f012fbdba072334c6c4efa17bfd6a64369f2ba30329c",
+    "documents": 3539193,
+    "total_distance": 18481638.7,
+    "total_amount": 98854638.37
+  },
+  {
+    "_id": "c4d59da7bbc8abaeeeb1727947ee93d9891a71acb42854bd80db1571b2030510",
+    "documents": 2964624,
+    "total_distance": 10827308.4,
+    "total_amount": 79456384.28
+  },
+  {
+    "_id": "c76c43c18c6c6664080dd920baab4928988d5786a6b65980792ca7cd796f9f20",
+    "documents": 3007526,
+    "total_distance": 11611633.16,
+    "total_amount": 80073615.28
+  },
+  {
+    "_id": "ce37f736c7cf9e92164c850ef2b502a8f7bb590fc1804b6edbcb80293da01b89",
+    "documents": 3514289,
+    "total_distance": 18568977.97,
+    "total_amount": 96619892.35
+  }
+]

@@ -1,0 +1,90 @@
+{
+  "une_zone_chargee": {
+    "path": "/api/activity?zoneId=132&direction=pickup&from=2024-03-01&to=2024-04-01",
+    "status": 200,
+    "seconds": 1.99,
+    "contactes": [
+      "shard2"
+    ],
+    "par_serveur": {
+      "shard2": {
+        "documents_lus": 157704,
+        "cles_lues": 157704,
+        "documents_rendus": 157704,
+        "millisecondes": 1252
+      }
+    },
+    "calcul_local": [],
+    "fusion": [],
+    "lieu_de_fusion": null,
+    "serveur_de_fusion": null
+  },
+  "plusieurs_zones": {
+    "path": "/api/flows?zoneIds=181,189,33,52,97&from=2024-01-01&to=2024-07-01",
+    "status": 200,
+    "seconds": 12.802,
+    "contactes": [
+      "shard1",
+      "shard2"
+    ],
+    "par_serveur": {
+      "shard1": {
+        "documents_lus": 88485,
+        "cles_lues": 91397,
+        "documents_rendus": 88485,
+        "millisecondes": 2885
+      },
+      "shard2": {
+        "documents_lus": 101453,
+        "cles_lues": 104542,
+        "documents_rendus": 101453,
+        "millisecondes": 3314
+      }
+    },
+    "calcul_local": [
+      "$match",
+      "$project",
+      "$group"
+    ],
+    "fusion": [
+      "$mergeCursors",
+      "$group"
+    ],
+    "lieu_de_fusion": "anyShard",
+    "serveur_de_fusion": null
+  },
+  "origine_destination_ville": {
+    "path": "/api/flow-changes?from=2024-04-01&to=2024-04-08&referenceFrom=2024-03-25&referenceTo=2024-04-01&baselineFrom=2024-03-04&baselineTo=2024-04-01",
+    "status": 200,
+    "seconds": 20.651,
+    "contactes": [
+      "shard1",
+      "shard2"
+    ],
+    "par_serveur": {
+      "shard2": {
+        "documents_lus": 2057196,
+        "cles_lues": 2453988,
+        "documents_rendus": 2057196,
+        "millisecondes": 13159
+      },
+      "shard1": {
+        "documents_lus": 2062737,
+        "cles_lues": 2457754,
+        "documents_rendus": 2062737,
+        "millisecondes": 20153
+      }
+    },
+    "calcul_local": [
+      "$match",
+      "$project",
+      "$group"
+    ],
+    "fusion": [
+      "$mergeCursors",
+      "$group"
+    ],
+    "lieu_de_fusion": "anyShard",
+    "serveur_de_fusion": null
+  }
+}

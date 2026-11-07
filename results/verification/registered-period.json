@@ -1,0 +1,48 @@
+{
+  "source_rows": 20332093,
+  "f1": {
+    "raw": 50064,
+    "retained": 49616,
+    "excluded": 448
+  },
+  "f2": {
+    "totals": {
+      "raw": 97219,
+      "retained": 95809,
+      "excluded": 1410
+    },
+    "top": [
+      [
+        181,
+        181,
+        382
+      ],
+      [
+        61,
+        61,
+        321
+      ],
+      [
+        33,
+        33,
+        312
+      ]
+    ]
+  },
+  "f4": {
+    "reference": {
+      "trips": 1792,
+      "median_seconds": 2963.5
+    },
+    "current": {
+      "trips": 2220,
+      "median_seconds": 3086.5
+    }
+  },
+  "f6_avril": {
+    "raw": 1738,
+    "retained": 1722,
+    "excluded": 16
+  },
+  "verified": true
+}
