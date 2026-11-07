@@ -8,7 +8,7 @@ ici la base contient les six mois et on vérifie sur la période enregistrée.
   F4 : JFK vers Midtown, autour du changement d'heure du 10 mars
   F6 : les trajets d'avril sont bien visibles
 
-Usage (API lancée sur n'importe quel déploiement) :
+Usage (API lancée sur le port 8090, sur n'importe quel déploiement) :
     python scripts/verify-registered-period.py
 """
 

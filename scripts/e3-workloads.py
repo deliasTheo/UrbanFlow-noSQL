@@ -22,7 +22,7 @@ from datetime import date, timedelta
 import common
 
 MIXES = {"100A": 1.0, "70A_30B": 0.7, "30A_70B": 0.3, "100B": 0.0}
-REQUESTS_PER_MIX = 24
+REQUESTS_PER_MIX = 60
 CLIENTS = 3
 SEED = 2024
 

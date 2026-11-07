@@ -67,7 +67,8 @@ python -m urbanflow.ingest --month 2024-03
 java -jar backend/target/urbanflow-api-0.1.0.jar
 ```
 
-L'API écoute sur `http://127.0.0.1:8080`. MongoDB écoute uniquement sur localhost,
+L'API écoute sur `http://127.0.0.1:8080`, ou sur le port de la variable `PORT` si
+celui-ci est déjà pris. MongoDB écoute uniquement sur localhost,
 sans authentification : ne pas exposer ces ports sur Internet.
 
 ## Déploiement réparti
@@ -192,7 +193,7 @@ s'obtient avec `python -m urbanflow.quality_report` et s'écrit dans `results/qu
 ## Reproduire les expériences
 
 Le script `run-all.py` enchaîne tout, une étape à la fois. Docker Desktop doit être
-démarré, le jar compilé, et le port 8080 libre.
+démarré, le jar compilé, et le port 8090 libre : les scripts y lancent leur propre API.
 
 ```bash
 python scripts/run-all.py --quick --reset

@@ -14,6 +14,7 @@ import urllib.request
 import pandas as pd
 import pyarrow.parquet as pq
 from pymongo import MongoClient
+import common
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from urbanflow.quality import flag_trips
 from urbanflow.ingest import documents, value_for_mongo
@@ -133,6 +134,5 @@ try:
         }, indent=2))
 finally:
     if process is not None:
-        process.terminate()
-        process.wait(timeout=15)
+        common.stop_api(process)
     client.drop_database(name)

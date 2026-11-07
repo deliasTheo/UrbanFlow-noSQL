@@ -17,7 +17,8 @@ ROOT = Path(__file__).resolve().parents[1]
 JAR = ROOT / "backend/target/urbanflow-api-0.1.0.jar"
 # Un essai écrit ailleurs, pour ne pas mélanger ses chiffres aux vraies mesures.
 RESULTS = Path(os.environ.get("URBANFLOW_RESULTS", ROOT / "results"))
-API_PORT = 8080
+# Pas 8080 : ce port est souvent déjà pris sur un poste de développement.
+API_PORT = 8090
 API = f"http://127.0.0.1:{API_PORT}"
 
 # Un seul déploiement tourne à la fois : sinon ils se partageraient le processeur et le disque
@@ -102,7 +103,7 @@ def start_api(name, log_path=None, debug_queries=False, database=None):
     if debug_queries:
         command.append("--logging.level.org.springframework.data.mongodb.core.MongoTemplate=DEBUG")
     uri = DEPLOYMENTS[name]["uri"] + "/?serverSelectionTimeoutMS=10000&connectTimeoutMS=10000"
-    environment = {**os.environ, "MONGODB_URI": uri}
+    environment = {**os.environ, "MONGODB_URI": uri, "PORT": str(API_PORT)}
     if database:
         environment["MONGODB_DATABASE"] = database
     if log_path:
@@ -121,12 +122,17 @@ def start_api(name, log_path=None, debug_queries=False, database=None):
             return process
         except OSError:
             time.sleep(1)
-    process.terminate()
+    stop_api(process)
     raise RuntimeError("L'API ne répond pas")
 
 
 def stop_api(process):
-    process.terminate()
+    if os.name == "nt":
+        # Sous Windows, java.exe peut n'être qu'un lanceur : il faut aussi arrêter le vrai Java qu'il a démarré.
+        subprocess.run(["taskkill", "/T", "/F", "/PID", str(process.pid)],
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    else:
+        process.terminate()
     process.wait(timeout=30)
 
 

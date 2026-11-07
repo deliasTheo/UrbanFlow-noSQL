@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 JANUARY = "from=2024-01-01&to=2024-02-01"
 
 parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-parser.add_argument("--api", default="http://127.0.0.1:8080")
+parser.add_argument("--api", default="http://127.0.0.1:8090")
 args = parser.parse_args()
 
 
