@@ -1,5 +1,6 @@
 package fr.urbanflow.flows;
 
+import fr.urbanflow.QualityProfiles;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class FlowRepository {
-    public static final List<String> EXCLUDED = List.of("NEGATIVE_AMOUNT", "EXACT_DUPLICATE", "UNKNOWN_ZONE");
     private final MongoTemplate mongo;
     public FlowRepository(MongoTemplate mongo) { this.mongo = mongo; }
 
@@ -21,7 +21,7 @@ public class FlowRepository {
                 .append("$or", List.of(new Document("data.PULocationID", new Document("$in", zones)),
                         new Document("data.DOLocationID", new Document("$in", zones))));
         var retained = new Document("$eq", List.of(new Document("$size", new Document("$setIntersection",
-                List.of(new Document("$ifNull", List.of("$quality_flags", List.of())), EXCLUDED))), 0));
+                List.of(new Document("$ifNull", List.of("$quality_flags", List.of())), QualityProfiles.FLOWS))), 0));
         var week = new Document("$dateToString", new Document("format", "%Y-%m-%d").append("date",
                 new Document("$dateTrunc", new Document("date", new Document("$dateFromString",
                         new Document("dateString", "$data.tpep_pickup_datetime")))

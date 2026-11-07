@@ -42,7 +42,6 @@ def main():
     out = ROOT / args.output
     out.mkdir(parents=True, exist_ok=True)
     files = sorted(d['_id'] for d in imports)
-    zones = sorted(d['_id'] for d in db.zones.find({'Borough':'Brooklyn'}))
     queries = {'airport': ('originId=132&destinationId=161',[132,161]), 'manhattan': ('originId=161&destinationId=236',[161,236])}
     results = {'database':args.database, 'documents':count, 'imports':files,
                'mongoVersion':db.command('buildInfo')['version'], 'platform':platform.platform(),

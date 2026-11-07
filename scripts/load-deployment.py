@@ -104,14 +104,20 @@ def measure_latencies(requests):
     """Un appel d'échauffement, puis REPETITIONS appels mesurés pour chaque requête."""
     results = {}
     for label, path in requests.items():
-        status, warmup, _ = common.call_api(path)
-        times = []
-        for _ in range(REPETITIONS):
-            status, seconds, _ = common.call_api(path)
-            times.append(seconds)
-        results[label] = {"status": status, "warmup": round(warmup, 3), **common.summarize(times)}
-        print(f"  {label}: {results[label]['median']} s (HTTP {status})", flush=True)
+        _, warmup, _ = common.call_api(path)
+        times, errors, status, _ = common.repeat_calls(path, REPETITIONS)
+        results[label] = {"status": status, "errors": errors, "warmup": round(warmup, 3), **common.summarize(times)}
+        print(f"  {label}: {results[label]['median']} s (HTTP {status}, {len(errors)} échec(s))", flush=True)
     return results
+
+
+def require_empty_database(name):
+    """Un mois déjà importé serait ignoré : son temps d'import ne serait pas remesuré."""
+    with MongoClient(common.DEPLOYMENTS[name]["uri"]) as client:
+        db = client.urbanflow
+        if db.trips.estimated_document_count() or db.imports.count_documents({}):
+            command = " ".join(common.DEPLOYMENTS[name]["compose"])
+            sys.exit(f"La base de {name} n'est pas vide. Pour repartir de zéro : {command} down -v")
 
 
 def checkpoint(name, months_loaded, requests):
@@ -138,9 +144,11 @@ def main():
     args = parser.parse_args()
     name = args.deployment
 
-    common.start_deployment(name)
+    common.start_deployment(name, initialized=False)
     subprocess.run([sys.executable, "-m", "urbanflow.deploy", "--placement", name], cwd=common.ROOT,
                    check=True, env={**os.environ, "PYTHONIOENCODING": "utf-8"})
+    require_empty_database(name)
+    common.write_environment(name)
 
     months = {}
     checkpoints = []
@@ -152,7 +160,9 @@ def main():
         common.write_json(output, {
             "deployment": name,
             "months": months,
-            "total_seconds": round(time.perf_counter() - started, 1),
+            # Le temps du script comprend aussi les latences de E1 : seul le premier se compare.
+            "ingestion_seconds": round(sum(month["seconds"] for month in months.values()), 1),
+            "script_seconds": round(time.perf_counter() - started, 1),
             "checkpoints": checkpoints,
             "f6": f6,
         })

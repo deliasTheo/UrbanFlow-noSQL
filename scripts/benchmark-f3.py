@@ -56,7 +56,7 @@ def main():
         return time.perf_counter()-start, data
     def canonical(data):
         return json.dumps(data,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()
-    with tempfile.TemporaryDirectory(prefix='urbanflow-f2-java-') as tmp:
+    with tempfile.TemporaryDirectory(prefix='urbanflow-f3-java-') as tmp:
         with zipfile.ZipFile(ROOT/'backend/target/urbanflow-api-0.1.0.jar') as jar:
             jar.extractall(tmp)
         classpath = os.pathsep.join([str(Path(tmp)/'BOOT-INF/classes'),str(Path(tmp)/'BOOT-INF/lib/*')])

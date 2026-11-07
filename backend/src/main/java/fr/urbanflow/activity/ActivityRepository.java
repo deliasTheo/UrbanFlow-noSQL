@@ -1,5 +1,6 @@
 package fr.urbanflow.activity;
 
+import fr.urbanflow.QualityProfiles;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
@@ -14,8 +15,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ActivityRepository {
-    // Même profil activity que dans urbanflow/quality.py. Les motifs se chevauchent.
-    static final List<String> EXCLUDED_FLAGS = List.of("NEGATIVE_AMOUNT", "EXACT_DUPLICATE");
+    // Les motifs d'exclusion peuvent se chevaucher.
+    private static final List<String> EXCLUDED_FLAGS = QualityProfiles.ACTIVITY;
     private final MongoTemplate mongo;
 
     public ActivityRepository(MongoTemplate mongo) { this.mongo = mongo; }

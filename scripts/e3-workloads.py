@@ -2,7 +2,8 @@
 
 Charge A : quelques zones très actives et des fenêtres courtes (F1 départs, F4).
 Charge B : beaucoup de zones et de périodes (F1 arrivées, F2, F5).
-La suite de requêtes est tirée avec une graine fixe, donc la même partout.
+Chaque mélange a sa propre suite de requêtes, tirée avec une graine fixe : elle est
+la même sur tous les déploiements, mais aucun mélange ne rejoue les requêtes d'un autre.
 
 La prédiction doit être déposée avant de lancer ce script : docs/prediction-e3.md.
 
@@ -13,6 +14,7 @@ Usage :
 import argparse
 import random
 import statistics
+import sys
 import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, timedelta
@@ -63,9 +65,9 @@ def wide_request(rng):
             f"&baselineFrom={start - timedelta(days=35)}&baselineTo={start}")
 
 
-def build_workload(share_of_a):
+def build_workload(label, share_of_a):
     """Autant de requêtes A et B que le mélange le demande, dans un ordre tiré au sort."""
-    rng = random.Random(SEED)
+    rng = random.Random(f"{SEED}-{label}")
     count_a = round(REQUESTS_PER_MIX * share_of_a)
     requests = [("A", hot_request(rng)) for _ in range(count_a)]
     requests += [("B", wide_request(rng)) for _ in range(REQUESTS_PER_MIX - count_a)]
@@ -93,7 +95,7 @@ def run_mix(name, requests):
                "work_per_instance": common.counters_delta(before, after),
                "calls": calls}
     for kind in ["A", "B"]:
-        times = [call["seconds"] for call in calls if call["kind"] == kind]
+        times = [call["seconds"] for call in calls if call["kind"] == kind and call["status"] == 200]
         if times:
             summary[f"median_{kind}"] = round(statistics.median(times), 3)
             summary[f"max_{kind}"] = round(max(times), 3)
@@ -107,21 +109,26 @@ def main():
     name = args.deployment
 
     common.start_deployment(name)
+    common.write_environment(name)
     api = common.start_api(name)
     results = {"deployment": name, "clients": CLIENTS, "requests_per_mix": REQUESTS_PER_MIX, "seed": SEED, "mixes": {}}
     output = common.RESULTS / "experiments" / "e3" / f"{name}.json"
     try:
         # Une passe à blanc de chaque charge, pour que tous les mélanges partent d'un cache chaud.
         print("Échauffement", flush=True)
-        run_mix(name, build_workload(0.5))
+        run_mix(name, build_workload("echauffement", 0.5))
         for label, share_of_a in MIXES.items():
             print(f"Mélange {label}", flush=True)
-            results["mixes"][label] = run_mix(name, build_workload(share_of_a))
+            results["mixes"][label] = run_mix(name, build_workload(label, share_of_a))
             mix = results["mixes"][label]
             print(f"  {mix['wall_seconds']} s, {mix['errors']} erreurs, A {mix.get('median_A')} s, B {mix.get('median_B')} s", flush=True)
             common.write_json(output, results)
     finally:
         common.stop_api(api)
+
+    failures = sum(mix["errors"] for mix in results["mixes"].values())
+    if failures:
+        sys.exit(f"{failures} appel(s) en échec : ces mesures ne sont pas exploitables, voir {output}")
 
 
 if __name__ == "__main__":

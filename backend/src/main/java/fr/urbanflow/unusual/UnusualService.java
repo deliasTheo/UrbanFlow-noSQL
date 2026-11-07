@@ -1,5 +1,8 @@
 package fr.urbanflow.unusual;
 
+import fr.urbanflow.Counts;
+import fr.urbanflow.QualityProfiles;
+import fr.urbanflow.Zone;
 import fr.urbanflow.activity.ActivityRepository;
 import java.time.*;
 import java.util.*;
@@ -13,9 +16,7 @@ public class UnusualService {
     private final ActivityRepository reference;
     private final UnusualRepository repository;
     public UnusualService(ActivityRepository reference,UnusualRepository repository) { this.reference=reference;this.repository=repository; }
-    public record Counts(long raw,long retained,long excluded) {}
     public record Source(String fileId,String fileName,Counts counts) {}
-    public record Zone(int id,String borough,String name) {}
     public record Day(LocalDate date,Counts counts,List<Source> sources) {}
     public record ExcludedDay(LocalDate date,String reason) {}
     public record Cell(Zone zone,Day observed,String status,String change,List<Day> references,
@@ -32,8 +33,9 @@ public class UnusualService {
         final Map<String,long[]> files=new TreeMap<>();
         void add(String file,long r,long k) { raw+=r;kept+=k;var c=files.computeIfAbsent(file,x -> new long[2]);c[0]+=r;c[1]+=k; }
         Day day(LocalDate date,List<Document> imports) {
-            return new Day(date,new Counts(raw,kept,raw-kept),imports.stream().map(d -> {
-                var c=files.getOrDefault(d.getString("_id"),new long[2]);
+            // Seuls les fichiers qui contribuent : la réponse liste déjà tous les fichiers consultés.
+            return new Day(date,new Counts(raw,kept,raw-kept),imports.stream().filter(d -> files.containsKey(d.getString("_id"))).map(d -> {
+                var c=files.get(d.getString("_id"));
                 return new Source(d.getString("_id"),d.getString("file_name"),new Counts(c[0],c[1],c[0]-c[1]));
             }).toList());
         }
@@ -51,7 +53,7 @@ public class UnusualService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Choisir zoneIds OU borough ; dates 2024, référence antérieure sans chevauchement ; 0 <= startHour < endHour <= 24 ; minReferenceDays >= 3 et seuils positifs.");
         }
         var zones=new TreeMap<Integer,Zone>();
-        reference.zones().forEach(d -> { int id=((Number)d.get("_id")).intValue();zones.put(id,new Zone(id,d.getString("Borough"),d.getString("Zone"))); });
+        reference.zones().forEach(d -> { var zone=Zone.from(d);zones.put(zone.id(),zone); });
         var area=new TreeSet<Integer>();
         if (hasZones) {
             for (int id:zoneIds) { if (!zones.containsKey(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Zone inconnue : "+id);area.add(id); }
@@ -112,7 +114,7 @@ public class UnusualService {
         for (var d=referenceFrom;d.isBefore(referenceTo);d=d.plusDays(1)) coverage.put(d,city.getOrDefault(new Key(0,d),new Counter()).day(d,imports));
         for (var d=from;d.isBefore(to);d=d.plusDays(1)) coverage.put(d,city.getOrDefault(new Key(0,d),new Counter()).day(d,imports));
         return new Response(area.stream().map(zones::get).toList(),direction,from,to,referenceFrom,referenceTo,startHour,endHour,
-            "America/New_York","activity",List.of("NEGATIVE_AMOUNT","EXACT_DUPLICATE"),new Rules(minReferenceDays,minBaseline,minAbsoluteChange,minRelativeChange,minRobustScore),
+            "America/New_York","activity",QualityProfiles.ACTIVITY,new Rules(minReferenceDays,minBaseline,minAbsoluteChange,minRelativeChange,minRobustScore),
             cells,anomalies,new ArrayList<>(coverage.values()),excluded,files,Calendar2024.SOURCE,
             "Comparaisons descriptives, pas un test statistique. Jours fériés fédéraux et journées DST exclus. Les volumes ville et mois source ne garantissent pas une couverture complète. Une alerte de couverture/qualité n'établit pas sa cause. Pour dropoff, les départs d'un mois antérieur peuvent manquer.");
     }

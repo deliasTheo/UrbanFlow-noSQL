@@ -9,8 +9,8 @@ Ce module est la référence unique pour deux choses :
 
 Les anomalies sont signalées, jamais supprimées : les trajets bruts sont
 conservés tels quels et chaque service applique le profil qui le concerne.
-Le même code servira à l'ingestion, ce qui garantit que le rapport de
-qualité et la base appliquent exactement les mêmes règles.
+Le même code sert à l'ingestion, ce qui garantit que le rapport de qualité
+et la base appliquent exactement les mêmes règles.
 
 Règle d'affectation temporelle : un trajet appartient à la période qui
 contient son heure de prise en charge (heure locale), quel que soit le

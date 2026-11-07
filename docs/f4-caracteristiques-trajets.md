@@ -1,11 +1,11 @@
 # F4 — Comparer durées et distances
 
-Ce guide explique les choix et les requêtes ; les mesures brutes et la synthèse
-sont des supports au rapport final unique.
+Ce guide explique les choix et les requêtes. Les mesures brutes et la synthèse
+sont dans `results/performance/f4/`.
 
 ## API et paramètres
 
-Sur la branche feature/f4-journeys, redémarrer Spring puis appeler dans Postman :
+Exemples à essayer dans Postman :
 
 ```text
 http://localhost:8080/api/journeys?originId=132&destinationId=161&from=2024-02-01&to=2024-03-01&referenceFrom=2024-01-01&referenceTo=2024-02-01
@@ -60,7 +60,7 @@ valeurs finies, valeurs manquantes, min, q25, médiane, q75, p90, max, moyenne,
 Un ensemble vide a des statistiques null, pas des zéros inventés.
 
 Les quantiles utilisent l'interpolation linéaire à l'indice `(n-1)*p`, comme
-NumPy quantile(method="linear"). Exemple illustratif : sur 10,20,30,40,
+NumPy quantile(method="linear"). Par exemple, sur 10,20,30,40,
 la médiane vaut 25 et q25 vaut 17,5. Ce n'est pas une approximation par digest.
 La dispersion est calculée sur les valeurs observées ; ce n'est pas un intervalle
 de confiance. Un grand nombre de lignes ne garantit pas l'indépendance des trajets.
@@ -196,29 +196,12 @@ mais doit encore examiner les documents de cette origine pour tester l'arrivée.
 L'index F4 ne couvre pas les flags et métriques : FETCH reste nécessaire.
 
 Les mesures comparent _id_ seul, les deux index F1, puis F1 + F4. L'API ne force
-pas le plan par hint. Le script `scripts/create-f4-index.js` crée explicitement
-l'index ; pas de création automatique au lancement ni de réimport nécessaire.
+pas le plan par hint. `urbanflow/deploy.py` crée cet index avec les autres, et
 MongoDB le maintient ensuite aux écritures, avec un coût disque et d'ingestion.
-
-Dans Compass, ouvrir mongosh et exécuter :
-
-```javascript
-db.getSiblingDB("urbanflow").trips.createIndex(
-  { "data.PULocationID": 1, "data.DOLocationID": 1,
-    "data.tpep_pickup_datetime": 1 },
-  { name: "f4_pair_pickup_datetime" }
-)
-```
-
-Ou depuis PowerShell, à la racine du dépôt :
-
-```powershell
-Get-Content -Raw .\scripts\create-f4-index.js | docker compose exec -T mongo mongosh urbanflow --quiet
-```
 
 ## Vérification et reproduction
 
-Les mesures cloud portent sur janvier complet, pas les trois mois du PC. Les
+Les mesures portent sur janvier complet, dans une base dédiée. Les
 périodes mesurées sont [1er,15 janvier[ et [15 janvier,1er février[ ; les deux paires
 sont 132 -> 161 et 161 -> 236. Un échauffement, trois répétitions par phase,
 caches actifs ; réponses comparées strictement. Les plans explain sont exportés

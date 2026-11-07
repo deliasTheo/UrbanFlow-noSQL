@@ -2,6 +2,8 @@ name: urbanflow
 services:
   mongo:
     image: mongo:8.0.16
+    # Même cache total que les deux shards de compose.cluster.yaml, quelle que soit la mémoire de Docker.
+    command: mongod --wiredTigerCacheSizeGB 1.4
     ports:
       - "127.0.0.1:27018:27017"
     volumes:

@@ -1,5 +1,8 @@
 package fr.urbanflow.activity;
 
+import fr.urbanflow.Counts;
+import fr.urbanflow.QualityProfiles;
+import fr.urbanflow.Zone;
 import java.time.LocalDate;
 import java.util.*;
 import org.bson.Document;
@@ -13,9 +16,7 @@ public class ActivityService {
 
     public ActivityService(ActivityRepository repository) { this.repository = repository; }
 
-    public record Counts(long raw, long retained, long excluded) {}
     public record Bucket(Object value, Counts counts) {}
-    public record Zone(int id, String borough, String name) {}
     public record Source(String fileId, String fileName, String fileMonth, Counts counts) {}
     public record Reason(String flag, long count) {}
     public record Activity(Zone zone, Direction direction, LocalDate from, LocalDate to,
@@ -23,7 +24,7 @@ public class ActivityService {
             Counts totals, List<Bucket> byHour, List<Bucket> byWeekday, List<Bucket> byDate,
             List<Reason> exclusionReasons, List<Source> sources, String coverageNote) {}
 
-    public List<Zone> zones() { return repository.zones().stream().map(ActivityService::zone).toList(); }
+    public List<Zone> zones() { return repository.zones().stream().map(Zone::from).toList(); }
 
     public Activity activity(int zoneId, Direction direction, LocalDate from, LocalDate to) {
         if (zoneId <= 0 || !from.isBefore(to)) {
@@ -43,20 +44,17 @@ public class ActivityService {
         imports.stream().sorted(Comparator.comparing(d -> d.getString("_id"))).forEach(d -> sources.add(
                 new Source(d.getString("_id"), d.getString("file_name"), d.getString("file_month"),
                         bySource.getOrDefault(d.getString("_id"), new Counts(0, 0, 0)))));
-        return new Activity(zone(zone), direction, from, to, "America/New_York", direction.timeField,
-                "activity", ActivityRepository.EXCLUDED_FLAGS,
+        return new Activity(Zone.from(zone), direction, from, to, "America/New_York", direction.timeField,
+                "activity", QualityProfiles.ACTIVITY,
                 totals.isEmpty() ? new Counts(0, 0, 0) : counts(totals.getFirst()),
                 padded(result, "byHour", 0, 23), padded(result, "byWeekday", 1, 7),
                 rows(result, "byDate").stream().map(d -> new Bucket(d.get("_id"), counts(d))).toList(),
-                ActivityRepository.EXCLUDED_FLAGS.stream().map(flag -> new Reason(flag,
+                QualityProfiles.ACTIVITY.stream().map(flag -> new Reason(flag,
                         rows(result, "exclusionReasons").stream().filter(d -> flag.equals(d.getString("_id")))
                                 .mapToLong(d -> ((Number) d.get("count")).longValue()).sum())).toList(),
                 sources, "Imports complete uniquement ; la présence de fichiers ne garantit pas une couverture complète de l'intervalle, notamment pour les arrivées en bordure. Un zéro ne prouve pas l'absence d'activité. Les motifs d'exclusion peuvent se chevaucher.");
     }
 
-    private static Zone zone(Document d) {
-        return new Zone(((Number) d.get("_id")).intValue(), d.getString("Borough"), d.getString("Zone"));
-    }
     private static Counts counts(Document d) {
         long raw = ((Number) d.get("raw")).longValue();
         long retained = ((Number) d.get("retained")).longValue();

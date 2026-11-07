@@ -1,8 +1,7 @@
 # F2 — Flux origine–destination
 
 F2 est une API Spring Boot ; elle utilise les mêmes MongoDB, imports, serveur et
-conventions de dates que F1. Aucun nouvel import ni index supplémentaire n'est
-nécessaire sur un PC où les deux index F1 existent déjà.
+conventions de dates que F1, et réutilise les deux index F1.
 
 ## Essayer dans Postman
 
@@ -94,8 +93,8 @@ La présence d'un fichier mensuel complete ne prouve pas une couverture parfaite
 chaque jour. `missingSourceMonths` est un contrôle conservateur des mois attendus,
 pas une détection de toutes les lacunes. Les volumes sont des lignes sources
 retenues, pas une mesure de demande ni une reconstruction des routes physiques.
-Les semaines avec changement d'heure ne sont pas normalisées par heure ; F3
-traitera les comparaisons de calendrier plus finement.
+Les semaines avec changement d'heure ne sont pas normalisées par heure ; les
+comparaisons de calendrier plus fines relèvent de F3.
 
 ## Comprendre le pipeline MongoDB
 
@@ -156,8 +155,8 @@ unique `$facet` : le tableau résultant pourrait atteindre la limite BSON de
 disque (`allowDiskUse`) et est limité à 120 secondes (`maxTime`). Java rassemble
 les comptes par paire et destination, ajoute les semaines à zéro, calcule les
 parts et classe les résultats. Ce compromis évite des requêtes séparées par
-paire mais conserve en mémoire les groupes, pas seulement le top : le coût doit
-être réévalué pour six mois et une aire très étendue.
+paire mais conserve en mémoire les groupes, pas seulement le top : le coût augmente
+avec la durée et l'étendue de l'aire.
 
 ### Index réutilisés de F1
 
@@ -172,12 +171,12 @@ Les retours restent filtrés sur leur date de départ. Dans l'index d'arrivée F
 le second champ est une date d'arrivée : il peut donc aider par la zone, sans
 borner directement la date de départ. Aucun troisième index n'est ajouté sans
 mesure. Pour une aire large, MongoDB peut préférer COLLSCAN ; on ne force pas
-un index par hint. Voir les plans réels du benchmark, pas seulement les attentes.
+un index par hint. Les plans réels sont archivés avec le benchmark.
 
 ## Reproduire les contrôles et mesures
 
-Le protocole cloud est isolé des données applicatives et des temps PC F1.
-Il utilise janvier 2024 **complet**, puis deux requêtes : zone 181 et Brooklyn.
+Le protocole utilise une base dédiée, janvier 2024 **complet** et deux requêtes :
+zone 181 et Brooklyn.
 
 ```bash
 python -m urbanflow.ingest --month 2024-01 --database urbanflow_f2_benchmark

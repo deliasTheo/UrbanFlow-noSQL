@@ -11,6 +11,7 @@ Usage :
 
 import argparse
 import json
+import sys
 
 import common
 from pymongo import MongoClient
@@ -56,7 +57,7 @@ def restart_data_servers(name):
     """Vide le cache de MongoDB. Le cache disque de la VM n'est pas vidé."""
     common.run(common.DEPLOYMENTS[name]["compose"] + ["restart"])
     for port in common.DEPLOYMENTS[name]["instances"].values():
-        common.wait_for_port(port)
+        common.wait_for_primary(port)
 
 
 def main():
@@ -67,11 +68,13 @@ def main():
 
     common.start_deployment(name)
     restart_data_servers(name)
+    common.write_environment(name)
     api = common.start_api(name)
 
     responses = common.ROOT / "data/staging/responses" / name
     responses.mkdir(parents=True, exist_ok=True)
     results = {}
+    failures = 0
     output = common.RESULTS / "experiments" / "e2" / f"{name}.json"
 
     def save():
@@ -79,43 +82,50 @@ def main():
             "deployment": name,
             "repetitions": REPETITIONS,
             "protocol": "premier appel après redémarrage des serveurs, un échauffement, puis cinq appels à la suite ; un seul client",
+            "failures": failures,
             "requests": results,
         })
 
     try:
         cold = {}
         for label, path in common.REQUESTS.items():
-            _, cold[label], _ = common.call_api(path)
-            print(f"froid {label}: {cold[label]:.1f} s", flush=True)
+            cold_status, seconds, _ = common.call_api(path)
+            cold[label] = {"status": cold_status, "seconds": round(seconds, 3)}
+            failures += cold_status != 200
+            print(f"froid {label}: {seconds:.1f} s (HTTP {cold_status})", flush=True)
 
         for label, path in common.REQUESTS.items():
             common.call_api(path)
             before = common.instance_counters(name)
-            times = []
-            for _ in range(REPETITIONS):
-                status, seconds, body = common.call_api(path)
-                times.append(seconds)
+            times, errors, status, body = common.repeat_calls(path, REPETITIONS)
             after = common.instance_counters(name)
+            failures += len(errors)
             (responses / f"{label}.json").write_text(json.dumps({"status": status, "body": body}), encoding="utf-8")
             results[label] = {
                 "path": path,
                 "status": status,
-                "cold": round(cold[label], 3),
+                "errors": errors,
+                "cold": cold[label],
                 **common.summarize(times),
                 "work_per_instance_for_all_repetitions": common.counters_delta(before, after),
             }
-            print(f"{label}: {results[label]['median']} s (HTTP {status})", flush=True)
+            print(f"{label}: {results[label]['median']} s (HTTP {status}, {len(errors)} échec(s))", flush=True)
             save()
 
         for label, path in COMPARE_ONLY.items():
             status, seconds, body = common.call_api(path)
+            failures += status != 200
             (responses / f"{label}.json").write_text(json.dumps({"status": status, "body": body}), encoding="utf-8")
             print(f"{label}: {seconds:.1f} s (HTTP {status})", flush=True)
 
         fingerprint = dataset_fingerprint(name)
         common.write_json(common.RESULTS / "distributed" / "fingerprints" / f"{name}.json", fingerprint)
+        save()
     finally:
         common.stop_api(api)
+
+    if failures:
+        sys.exit(f"{failures} appel(s) en échec : ces mesures ne sont pas exploitables, voir {output}")
 
 
 if __name__ == "__main__":

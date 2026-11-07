@@ -12,6 +12,7 @@ import argparse
 import json
 import subprocess
 import sys
+import time
 
 import common
 
@@ -40,6 +41,22 @@ def start_container(container):
     subprocess.run(["docker", "start", container], check=True, stdout=subprocess.DEVNULL)
 
 
+def wait_until_answers(path):
+    """Après un redémarrage, mongos met un moment à retrouver le shard."""
+    for _ in range(60):
+        if common.call_api(path)[0] == 200:
+            return
+        time.sleep(2)
+    raise RuntimeError("Le cluster ne répond plus normalement après le redémarrage")
+
+
+def error_message(body):
+    try:
+        return json.loads(body).get("detail")
+    except ValueError:
+        return body[:200]
+
+
 def compare(requests, references):
     """Appelle les requêtes et les compare à leur réponse sans panne."""
     results = {}
@@ -52,7 +69,7 @@ def compare(requests, references):
                 print(f"RÉPONSE PARTIELLE : {label}")
                 sys.exit(1)
         else:
-            entry["message"] = json.loads(body).get("detail")
+            entry["message"] = error_message(body)
         results[label] = entry
         print(label, entry, flush=True)
     return results
@@ -87,18 +104,23 @@ def main():
         stop_container(containers["shard2"])
         report["shard2_arrete"] = compare(requests, references)
         start_container(containers["shard2"])
-        common.wait_for_port(common.DEPLOYMENTS[name]["instances"]["shard2"])
+        common.wait_for_primary(common.DEPLOYMENTS[name]["instances"]["shard2"])
+        wait_until_answers(common.REQUESTS["f1_parkslope_dropoff_semester"])
 
         # shard1 porte aussi les collections zones et imports : tout s'arrête.
         print("Arrêt de shard1", flush=True)
         stop_container(containers["shard1"])
         report["shard1_arrete"] = compare(requests, references)
         start_container(containers["shard1"])
-        common.wait_for_port(common.DEPLOYMENTS[name]["instances"]["shard1"])
+        common.wait_for_primary(common.DEPLOYMENTS[name]["instances"]["shard1"])
+        wait_until_answers(common.REQUESTS["f1_parkslope_dropoff_semester"])
 
         print("Retour à la normale", flush=True)
         report["apres_redemarrage"] = compare(requests, references)
     finally:
+        # Quoi qu'il arrive, on ne laisse pas un shard arrêté derrière nous.
+        for container in containers.values():
+            start_container(container)
         common.stop_api(api)
 
     common.write_json(common.RESULTS / "distributed" / f"lose-instance-{name}.json", report)

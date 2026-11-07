@@ -1,6 +1,6 @@
 # F1 — Activité d'une zone
 
-## Lancer sur le PC
+## Lancer l'API
 
 Prérequis : **JDK 21** (pas seulement le runtime Java), Docker Desktop et les
 imports MongoDB existants. Vérifier `java -version` et `javac -version`.
@@ -9,9 +9,6 @@ Maven est téléchargé automatiquement par le wrapper au premier lancement.
 Depuis PowerShell, à la racine du dépôt :
 
 ```powershell
-git fetch origin
-git switch feature/f1-activity
-git pull --ff-only origin feature/f1-activity
 docker compose up -d --wait
 cd backend
 .\mvnw.cmd spring-boot:run
@@ -24,8 +21,7 @@ Les imports Python restent indépendants : aucun réimport n'est nécessaire.
 
 Configuration facultative : variables `MONGODB_URI`, `MONGODB_DATABASE` et `PORT`.
 Valeurs par défaut : `mongodb://127.0.0.1:27018`, `urbanflow` et `8080`.
-Aucun index ni collection n'est créé par l'API. Les index F1 se créent
-explicitement avec le script décrit ci-dessous.
+L'API ne crée ni index ni collection : les index viennent de `urbanflow.deploy`.
 
 ## Essayer dans Postman
 
@@ -40,7 +36,6 @@ http://localhost:8080/api/activity?zoneId=181&direction=dropoff&from=2024-01-01&
 Le référentiel permet de retrouver les identifiants : les noms ne sont pas uniques.
 181 est Park Slope, Brooklyn. Ces URL sont des exemples de paramètres ; les
 résultats sont calculés à chaque appel sur la base disponible, pas prédéfinis.
-Swagger et une page web personnalisée ne sont pas nécessaires pour cette version.
 
 ### Entrées
 
@@ -85,8 +80,8 @@ complets consultés, y compris ceux sans contribution. Elle ne garantit pas la
 couverture complète d'une période : un résultat nul peut venir d'un mois absent,
 et les arrivées en début de période peuvent provenir de départs du mois précédent.
 Un import `loading` ou `failed` est ignoré ; cela ne constitue pas une archive complète.
-Convention conservée : ne pas importer pendant une analyse, l'API n'offre pas
-un instantané transactionnel entre lecture des imports et agrégation.
+Il ne faut pas importer pendant une analyse : l'API n'offre pas d'instantané
+transactionnel entre la lecture des imports et l'agrégation.
 
 ### Erreurs
 
@@ -118,14 +113,13 @@ par l'ingestion. L'extraction calendaire les traite comme des valeurs sans
 décalage : aucune seconde conversion UTC ne vient déplacer l'heure locale.
 Aucune durée n'est calculée dans F1.
 
-Le profil activity est reproduit explicitement en Java ; en cas de changement
-dans `quality.py`, il faudra mettre à jour `EXCLUDED_FLAGS` également.
+Le profil activity est reproduit en Java ; en cas de changement dans `quality.py`,
+il faut aussi mettre à jour `QualityProfiles.java`.
 
 
-## Vérification de cette version
+## Vérification
 
-Compilation et packaging réussis avec le wrapper Maven et JDK 21. Contrôles
-HTTP contre MongoDB 8.0.16, dans une base temporaire distincte : les 50 000
+Contrôles HTTP contre MongoDB 8.0.16, dans une base temporaire distincte : les 50 000
 premières lignes de janvier et les 50 000 premières de mars 2024, sans données
 synthétiques. Les indicateurs qualité ont été calculés sur ces sous-ensembles :
 ce contrôle ne valide pas la détection des doublons à l'échelle du mois entier.
@@ -145,50 +139,18 @@ Les répartitions par heure, jour de semaine et date correspondent également.
 Les sommes des comptes par source retrouvent les totaux. Les réponses 400/404,
 l'absence d'import complet (503), l'exclusion des imports loading/failed, une
 période sans résultats et MongoDB inaccessible (503) ont été vérifiées.
-La performance sur les trois mois complets reste à mesurer.
 
 
-## Créer les index F1
+## Index F1
 
-Le script versionné `scripts/create-f1-indexes.js` crée les deux index zone/date,
-un pour les départs et un pour les arrivées. Il peut être relancé sans dupliquer
-ces index. L'API et l'ingestion ne les créent pas automatiquement ; une fois
-créés dans une base, ils persistent et MongoDB les maintient lors des imports.
+`python -m urbanflow.deploy --placement local` crée les deux index zone/date, un
+pour les départs et un pour les arrivées, avec ceux des autres services. La commande
+peut être relancée sans dupliquer les index. Une fois créés, ils persistent et
+MongoDB les maintient lors des imports.
 
-Dans Compass, ouvrir le shell **mongosh** de la connexion locale et exécuter :
-
-```javascript
-const urbanflowDb = db.getSiblingDB("urbanflow");
-urbanflowDb.trips.createIndex(
-  { "data.DOLocationID": 1, "data.tpep_dropoff_datetime": 1 },
-  { name: "f1_dropoff_zone_datetime" }
-);
-```
-
-Attendre la fin de la création avant de mesurer dropoff. Pour pickup :
-
-```javascript
-urbanflowDb.trips.createIndex(
-  { "data.PULocationID": 1, "data.tpep_pickup_datetime": 1 },
-  { name: "f1_pickup_zone_datetime" }
-);
-urbanflowDb.trips.getIndexes();
-```
-
-Autre possibilité, pour créer les deux depuis PowerShell à la racine du dépôt :
-
-```powershell
-Get-Content -Raw .\scripts\create-f1-indexes.js | docker compose exec -T mongo mongosh urbanflow --quiet
-```
-
-Pas de redémarrage Spring ni de réimport nécessaire. Les index occupent du disque
-et augmentent le travail d'écriture ; ils accélèrent la sélection sans éviter
-les regroupements sur les trajets retenus par le filtre.
-
-Conserver les mêmes paramètres pour la comparaison et vérifier que les réponses
-restent identiques. Les mesures initiales rapportées sur le PC et les informations
-à compléter pour le rapport sont dans
-[le suivi des mesures F1](../results/performance/f1-indexes.md).
+Les index occupent du disque et augmentent le travail d'écriture ; ils accélèrent la
+sélection sans éviter les regroupements sur les trajets retenus par le filtre.
+Les premières mesures sont dans [le suivi des mesures F1](../results/performance/f1-indexes.md).
 
 
 Pour une explication étape par étape des opérateurs et de leur rôle dans le code,

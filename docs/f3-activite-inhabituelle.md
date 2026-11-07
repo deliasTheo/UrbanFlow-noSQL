@@ -1,10 +1,8 @@
 # F3 — Activité inhabituelle : utilisation et explication MongoDB
 
-Ce guide et les mesures sont des supports au rapport final unique.
-
 ## Appels et entrées
 
-Après mise à jour et redémarrage du backend Spring, essayer dans Postman :
+Exemples à essayer dans Postman :
 
 ```text
 http://localhost:8080/api/unusual-activity?zoneIds=132&direction=pickup&from=2024-03-01&to=2024-04-01&referenceFrom=2024-01-01&referenceTo=2024-03-01
@@ -40,14 +38,15 @@ Les seuils sont positifs, visibles et modifiables dans l'URL. Il s'agit de choix
 exploratoires, pas de prescriptions du sujet ni de tests de significativité.
 Une zone inconnue donne 404, les entrées invalides 400, une base inaccessible,
 une agrégation interrompue ou l'absence d'import complet 503. Chaque agrégation
-est limitée à 120 s ; les deux requêtes sont successives, pas une limite de 120 s
+est limitée à 300 s ; les deux requêtes sont successives, pas une limite de 300 s
 pour le GET entier. Aucune réponse partielle n'est présentée comme complète.
 
 ## Choisir des jours réellement comparables
 
 Pour un mardi de mars à 8..12 h, les références sont les mardis de la période
 antérieure sur le même créneau, dans la même zone et avec le même profil.
-Chaque référence admissible est affichée avec ses comptes et fichiers sources.
+Chaque référence admissible est affichée avec ses comptes et les fichiers qui y
+contribuent ; `sourceFiles` liste tous les fichiers consultés.
 Un zéro local est inclus si les contrôles de couverture passent : supprimer ces
 zéros gonflerait artificiellement la référence.
 
@@ -62,7 +61,7 @@ météorologiques. L'exclusion ne mesure pas l'effet causal d'un jour férié.
 Pour le changement d'heure, Java mesure la durée entre deux minuits locaux avec
 America/New_York. Une journée différente de 24 h est exclue intégralement :
 10 mars et 3 novembre 2024, y compris si le créneau ne traverse pas 2 h.
-Cela suit le choix du projet et ne repose pas sur DST_SPANNING, qui ne signale
+Ce choix ne repose pas sur DST_SPANNING, qui ne signale
 que les trajets traversant la transition. Aucun flag supplémentaire n'est stocké.
 
 Avant comparaison, une date nécessite un import complet pour son mois source et
@@ -96,7 +95,7 @@ Lorsque MAD=0, on n'invente pas un score infini : robustScore=null et
 ZERO_REFERENCE_MAD est signalé ; les critères absolu et relatif suffisent alors.
 Ce comportement est explicitement différent d'un test de significativité.
 
-Exemple **illustratif**, non présenté comme résultat TLC : m=100, MAD=10,
+Exemple de calcul, avec des valeurs choisies pour l'illustration : m=100, MAD=10,
 observé=180 donne +80 %, delta=80 et un score d'environ 5,4 ; les seuils par défaut
 sont franchis. Une médiane de 2 avec une hausse de 100 % reste LOW_BASELINE.
 
@@ -124,8 +123,8 @@ précédent est absent, car certaines arrivées peuvent provenir de ses départs
 Ce diagnostic conservateur peut concerner tout un mois ; il ne garantit pas non
 plus la couverture lorsque le mois précédent est présent. Les fichiers sont tous
 consultés selon les dates réelles, et ne sont pas restreints à leurs mois annoncés.
-Convention conservée : pas d'import concurrent ; les deux lectures ne constituent
-pas un instantané transactionnel commun.
+Il ne faut pas importer pendant une analyse : les deux lectures ne constituent pas
+un instantané transactionnel commun.
 
 ## Les requêtes MongoDB, étape par étape
 
@@ -159,10 +158,11 @@ le format produit par l'ingestion.
 
 ### 2. `$project` : conserver/calculer les champs utiles
 
-`$project` prépare zone, date, heure, source et retained sans écrire en base.
-`$substrBytes` extrait AAAA-MM-JJ. `$dateFromString` puis `$hour` extrait les
-chiffres de l'heure locale sans les déplacer : comme F1, l'interprétation UTC
-intermédiaire sert au calendrier, pas aux durées physiques.
+`$project` prépare zone, date, source et retained sans écrire en base.
+`$substrBytes` extrait AAAA-MM-JJ. Si un créneau est demandé, il extrait aussi les
+deux chiffres de l'heure locale, que `$toInt` transforme en nombre. L'heure n'est
+pas calculée pour une journée entière : le pipeline ville lit des millions de
+documents, et ce travail ne servirait à rien.
 
 `$ifNull` donne un tableau vide si les flags sont absents. `$setIntersection`
 trouve les motifs communs avec le profil activity ; `$size` les compte et
@@ -175,9 +175,10 @@ zéro : `$literal` évite cette ambiguïté.
 
 ### 3. Second `$match` : sélectionner les heures
 
-L'heure calculée doit satisfaire `$gte: startHour` et `$lt: endHour`.
-On conserve le même créneau chaque jour, avec une fin exclue. Ce filtre suit
-le project car le champ hour n'existe pas dans les documents stockés.
+Cette étape n'existe que si un créneau est demandé. L'heure calculée doit satisfaire
+`$gte: startHour` et `$lt: endHour`. On conserve le même créneau chaque jour, avec
+une fin exclue. Ce filtre suit le project car le champ hour n'existe pas dans les
+documents stockés.
 
 ### 4. `$group` : compter par zone, date et fichier
 
@@ -203,16 +204,18 @@ et calcule médianes/MAD. Ces calculs sur de petits groupes sont plus explicites
 
 Le pipeline par zone réutilise l'index F1 zone/date correspondant au sens. Le
 pipeline ville n'a pas de filtre zone : les index dont le premier champ est une
-zone ne fournissent pas un accès temporel aussi sélectif. Il peut donc continuer
-à parcourir la collection. Accélérer le pipeline local ne garantit pas un gros
-gain du GET entier : le benchmark inclut les deux calculs et archive leurs plans
-séparément. Aucun index supplémentaire n'est ajouté sans mesure.
+zone ne fournissent pas un accès temporel aussi sélectif. En départs, il peut
+utiliser l'index `pickup_datetime_zone`, créé pour le placement par période. En
+arrivées, aucun index ne commence par la date : il parcourt la collection.
+Accélérer le pipeline local ne garantit pas un gros gain du GET entier : le benchmark
+inclut les deux calculs et archive leurs plans séparément. Il a été réalisé avant
+l'ajout de `pickup_datetime_zone`, sans cet index.
 
 ## Tests, mesures et reproduction
 
 `results/performance/f3/` conserve les requêtes, réponses, plans explain,
-répétitions et synthèse. Les mesures cloud utilisent janvier complet dans une
-base dédiée, pas des données fabriquées ni les trois mois PC. Le calendrier DST
+répétitions et synthèse. Les mesures utilisent janvier complet dans une base
+dédiée, avec de vraies lignes TLC. Le calendrier DST
 est contrôlé séparément ; aucune anomalie réelle de mars n'est validée par un
 jeu limité à janvier.
 
@@ -233,8 +236,7 @@ pipelines de production pour explain ; un JDK 21 est nécessaire.
 La vérification indépendante relit le Parquet et recalcule directement les flags
 activity, comptes quotidiens, références, médianes, MAD, statuts et directions,
 sans lire MongoDB. Les exclusions de journées DST, jours fériés, mois absents et
-paramètres invalides sont aussi contrôlées. Les exemples réels et les limites
-statistiques restent à reprendre dans le rapport final, avec les expériences du collègue.
+paramètres invalides sont aussi contrôlées.
 
 Le contrôle calendaire isolé est reproductible avec :
 

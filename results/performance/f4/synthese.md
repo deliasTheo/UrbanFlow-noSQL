@@ -1,7 +1,4 @@
-# F4 — Synthèse pour le rapport final
-
-F3 a été fusionné dans main via la PR #4. F4 est développé sur feature/f4-journeys.
-Ce document et les fichiers bruts alimentent le rapport final unique.
+# F4 — Synthèse
 
 ## Choix réalisés
 
@@ -27,7 +24,7 @@ Les fractions d'effectif couvertes sont affichées, pas masquées.
 
 ## Protocole et mesures
 
-5 novembre 2026, environnement cloud identique aux mesures précédentes : MongoDB
+5 novembre 2026, même serveur distant que les mesures précédentes : MongoDB
 8.0.16, Spring Boot 3.5.7, Temurin JDK 21.0.9, cgroup 2 CPU/8 Gio ; API et MongoDB
 partagent la machine et le disque. Détail dans environment.json.
 
@@ -65,13 +62,13 @@ l'origine. Les plans complets et pipelines exacts sont archivés.
 La construction de l'index F4 a pris environ 7,46 s ; la taille totale des index
 passe de 130 519 040 à 187 248 640 octets (+54,1 Mio environ). Le surcoût à l'import
 n'a pas été mesuré : les index ont été construits après import. L'index F4 est
-retenu comme option explicite pour ces requêtes, vu le gain face aux index F1.
-Il n'est pas créé au lancement ; scripts/create-f4-index.js permet de l'ajouter.
+retenu pour ces requêtes, vu le gain face aux index F1. `urbanflow/deploy.py` le crée
+avec les autres index.
 
 ## Exactitude et résultats réels
 
 Toutes les répétitions et les trois configurations renvoient des JSON
-strictement identiques ; empreintes SHA-256 archivées. Compilation/package réussis.
+strictement identiques ; empreintes SHA-256 archivées.
 
 verify-f4-parquet.py relit le fichier original entier et recalcule directement
 les doublons, profils activity/journey et durées UTC, sans lire MongoDB. Les
@@ -110,7 +107,7 @@ La vérification Parquet de janvier et ces contrôles sont archivés dans
 parquet-verification.json et dst-verification.json. F1–F3 sont aussi contrôlés
 contre les résultats précédents, dans regression.json.
 
-## Limites à conserver
+## Limites
 
 Les performances ne concernent qu'un mois et deux paires, pas les trois/six mois
 ni les expériences E1–E3 distribuées. Trois répétitions ne caractérisent pas
@@ -124,4 +121,4 @@ pas toutes les variations de composition. Les différences de moyennes/médianes
 restent descriptives ; les durées/distances ne reconstituent pas un itinéraire.
 Les mois complets ne prouvent pas la couverture complète de chaque créneau.
 
-Pour les opérateurs MongoDB et l'installation PC : docs/f4-caracteristiques-trajets.md.
+Pour les opérateurs MongoDB : docs/f4-caracteristiques-trajets.md.

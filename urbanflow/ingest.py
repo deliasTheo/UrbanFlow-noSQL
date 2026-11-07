@@ -133,6 +133,15 @@ def import_zones(db):
     db.zones.bulk_write(operations)
 
 
+def check_archive(db):
+    """Le nombre de documents doit valoir la somme des imports, sans relire la collection."""
+    if db.imports.count_documents({"status": {"$ne": "complete"}}):
+        return  # un import inachevé a pu laisser des lignes : le total ne dirait rien
+    expected = sum(doc["summary"]["inserted"] for doc in db.imports.find({}, {"summary.inserted": 1}))
+    if db.trips.estimated_document_count() != expected:
+        raise ValueError("Import déclaré complet mais effectif incorrect")
+
+
 def ingest(db, path, entry, file_month, batch_size=5000):
     """Importe un fichier. Sans effet s'il a déjà été importé en entier."""
     if batch_size <= 0:
@@ -141,11 +150,12 @@ def ingest(db, path, entry, file_month, batch_size=5000):
 
     previous = db.imports.find_one({"_id": file_id})
     if previous and previous.get("status") == "complete":
-        stored = db.trips.count_documents({"source.file_id": file_id})
-        if stored != previous["summary"]["inserted"]:
-            raise ValueError("Import déclaré complet mais effectif incorrect")
+        check_archive(db)
         print(f"{path.name} : déjà importé, aucun changement")
         return previous["summary"]
+
+    # Reprise après une interruption : ces lignes sont déjà là et comptent pour ce fichier.
+    already_stored = db.trips.count_documents({"source.file_id": file_id}) if previous else 0
 
     started = time.perf_counter()
     import_zones(db)
@@ -162,16 +172,17 @@ def ingest(db, path, entry, file_month, batch_size=5000):
         identity = trip_identity(trips)
 
         documents_before = db.trips.estimated_document_count()
-        inserted = 0
+        inserted_now = 0
         for start in range(0, len(trips), batch_size):
             stop = min(start + batch_size, len(trips))
-            inserted += insert_batch(db, list(documents(trips, flags, file_id, start, stop, identity)))
+            inserted_now += insert_batch(db, list(documents(trips, flags, file_id, start, stop, identity)))
             if stop == len(trips) or stop % 500000 == 0:
                 print(f"{path.name} : {stop:,}/{len(trips):,}", flush=True)
 
         added = db.trips.estimated_document_count() - documents_before
-        if added != inserted:
-            raise ValueError(f"{inserted} insertions annoncées, mais {added} documents en plus")
+        if added != inserted_now:
+            raise ValueError(f"{inserted_now} insertions annoncées, mais {added} documents en plus")
+        inserted = already_stored + inserted_now
 
         summary = {
             "file": path.name,
@@ -209,9 +220,13 @@ def main():
         # Avec --file, --month indique que le fichier couvre le mois entier.
         # Sans --month, le fichier est un extrait et ne compte pas comme un mois complet.
         path = Path(args.file)
+        if not path.is_file():
+            parser.error(f"fichier introuvable : {path}")
         entry = outside_entry(path)
     else:
         path = config.RAW_DIR / config.trip_file_name(args.month)
+        if path.name not in json.loads(config.MANIFEST_PATH.read_text())["files"] or not path.is_file():
+            parser.error(f"{path.name} n'est pas disponible : lancer d'abord urbanflow.download")
         entry = manifest_entry(path.name)
 
     uri = os.environ.get("MONGODB_URI", "mongodb://127.0.0.1:27018")
@@ -219,10 +234,11 @@ def main():
         client.admin.command("ping")
         summary = ingest(client[args.database], path, entry, args.month, args.batch_size)
 
-    output = config.RESULTS_DIR / "ingestion"
-    output.mkdir(parents=True, exist_ok=True)
-    label = args.month or path.stem
-    (output / f"{label}.json").write_text(json.dumps(summary, indent=2) + "\n")
+    # Le résumé d'un extrait est dans imports : il ne remplace pas celui d'un mois.
+    if not args.file:
+        output = config.RESULTS_DIR / "ingestion"
+        output.mkdir(parents=True, exist_ok=True)
+        (output / f"{args.month}.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps(summary, indent=2))
 
 

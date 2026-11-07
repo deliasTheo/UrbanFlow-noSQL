@@ -1,6 +1,5 @@
 # F5 — Changements de parts des flux
 
-Ce guide et les mesures sont des supports au rapport final unique.
 F5 est exposé par Spring Boot dans la même API que F1–F4.
 
 ## Appels Postman
@@ -85,7 +84,7 @@ nB - nA = volumeOnlyCountChange + residualCountChange
 
 L'effectif attendu est théorique et peut être fractionnaire ; aucun trajet n'est
 créé. Il répond à « combien si le flux avait seulement suivi le volume global ? ».
-Exemple **illustratif** : si le total double et le flux double aussi, sa part ne
+Par exemple, si le total double et le flux double aussi, sa part ne
 change pas. Son augmentation de compte ne suffit pas à entrer dans le classement.
 
 Si un dénominateur est nul, les parts/écarts non définis sont null ; la période
@@ -222,7 +221,7 @@ semaines et sorties sont ordonnées explicitement pour la reproductibilité.
 
 On n'utilise pas un `$facet` contenant toutes les paires dans un unique document,
 pour éviter sa limite BSON de 16 Mo. Le group autorise le disque (allowDiskUse)
-et la requête est limitée à 120 secondes. Java conserve tous les groupes pour
+et la requête est limitée à 300 secondes. Java conserve tous les groupes pour
 calculer les dénominateurs et historiques avant le top : la taille croît avec
 les zones, semaines et sources, même si limit est petit.
 

@@ -101,8 +101,10 @@ public class ImportService {
         int exitCode = process.waitFor();
         List<String> lines = text.lines().toList();
         if (exitCode != 0) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Import en échec : " + lines.get(lines.size() - 1));
+            // argparse sort avec le code 2 : c'est le paramètre qui est mauvais, pas le serveur.
+            var status = exitCode == 2 ? HttpStatus.BAD_REQUEST : HttpStatus.INTERNAL_SERVER_ERROR;
+            String message = lines.isEmpty() ? "aucun message" : lines.getLast();
+            throw new ResponseStatusException(status, "Import en échec : " + message);
         }
         return new ImportResult(exitCode, lines);
     }

@@ -1,5 +1,7 @@
 package fr.urbanflow.journeys;
 
+import fr.urbanflow.QualityProfiles;
+import fr.urbanflow.Zone;
 import fr.urbanflow.activity.ActivityRepository;
 import java.time.*;
 import java.util.*;
@@ -10,14 +12,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class JourneyService {
-    public static final List<String> ACTIVITY=List.of("NEGATIVE_AMOUNT","EXACT_DUPLICATE");
-    public static final List<String> JOURNEY=List.of("NEGATIVE_AMOUNT","EXACT_DUPLICATE","UNKNOWN_ZONE","NON_POSITIVE_DURATION",
-        "EXCESSIVE_DURATION","ZERO_DISTANCE","IMPLAUSIBLE_DISTANCE","IMPLAUSIBLE_SPEED","DST_UNRESOLVED");
+    private static final List<String> ACTIVITY=QualityProfiles.ACTIVITY;
+    private static final List<String> JOURNEY=QualityProfiles.JOURNEY;
     private static final long MAX_ROWS=200000;
     private final ActivityRepository reference;
     private final JourneyRepository repository;
     public JourneyService(ActivityRepository reference,JourneyRepository repository) { this.reference=reference;this.repository=repository; }
-    public record Zone(int id,String borough,String name) {}
     public record Metric(long count,long missing,Double min,Double q25,Double median,Double q75,Double p90,Double max,
         Double mean,Double populationStdDev,Double iqr,long iqrOutliers) {}
     public record Statistics(long records,Metric durationSeconds,Metric distanceMiles) {}
@@ -98,10 +98,9 @@ public class JourneyService {
             a.kept==0?null:(double)na/a.kept,b.kept==0?null:(double)nb/b.kept,
             comparable?sa:null,comparable?sb:null,comparable?sb-sa:null,
             "Strates jour ouvré/week-end × créneau de 6 h × distance [0,2[, [2,5[, [5,10[, [10,+inf[ miles. Même poids de référence parmi les strates au seuil dans les deux périodes ; moyennes pondérées, pas médianes standardisées.");
-        return new Response(zone(origin),zone(destination),"America/New_York","data.tpep_pickup_datetime","journey",JOURNEY,minTrips,pa,pb,comparison,
+        return new Response(Zone.from(origin),Zone.from(destination),"America/New_York","data.tpep_pickup_datetime","journey",JOURNEY,minTrips,pa,pb,comparison,
             "Quantiles exacts par interpolation linéaire (n-1)*p. Durées en secondes, distances en miles. Les moins fiables excluent les montants négatifs/doublons ; leurs valeurs numériques peuvent être aberrantes. Seuil IQR descriptif sans suppression supplémentaire. Les différences ne prouvent pas une cause, les jours fériés ne sont pas neutralisés. Mois complets ne garantit pas une couverture complète. Limite 200 000 candidats pour la mémoire.");
     }
-    private static Zone zone(Document d) { return new Zone(((Number)d.get("_id")).intValue(),d.getString("Borough"),d.getString("Zone")); }
     private static void addNumber(Object value,List<Double> target) { if (value instanceof Number n&&Double.isFinite(n.doubleValue())) target.add(n.doubleValue()); }
     private static double quantile(List<Double> x,double p) { double at=(x.size()-1)*p;int i=(int)at;return x.get(i)+(x.get((int)Math.ceil(at))-x.get(i))*(at-i); }
     private static Metric metric(List<Double> values,long total) {

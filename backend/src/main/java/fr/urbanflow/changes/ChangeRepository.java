@@ -1,5 +1,6 @@
 package fr.urbanflow.changes;
 
+import fr.urbanflow.QualityProfiles;
 import java.time.*;
 import java.util.*;
 import org.bson.Document;
@@ -17,7 +18,7 @@ public class ChangeRepository {
         for (var range:List.of(List.of(from,to),List.of(referenceFrom,referenceTo),List.of(baselineFrom,baselineTo)))
             ranges.add(new Document("data.tpep_pickup_datetime",new Document("$gte",range.get(0)+"T00:00:00").append("$lt",range.get(1)+"T00:00:00")));
         var retained=new Document("$eq",List.of(new Document("$size",new Document("$setIntersection",List.of(
-            new Document("$ifNull",List.of("$quality_flags",List.of())),List.of("NEGATIVE_AMOUNT","EXACT_DUPLICATE","UNKNOWN_ZONE")))),0));
+            new Document("$ifNull",List.of("$quality_flags",List.of())),QualityProfiles.FLOWS))),0));
         var week=new Document("$dateToString",new Document("format","%Y-%m-%d").append("date",new Document("$dateTrunc",
             new Document("date",new Document("$dateFromString",new Document("dateString","$data.tpep_pickup_datetime")))
                 .append("unit","week").append("startOfWeek","monday"))));
@@ -34,6 +35,6 @@ public class ChangeRepository {
         var ops=pipeline(zones,from,to,referenceFrom,referenceTo,baselineFrom,baselineTo,files).stream()
             .<AggregationOperation>map(d -> context -> d).toList();
         return mongo.aggregate(Aggregation.newAggregation(ops).withOptions(AggregationOptions.builder()
-            .allowDiskUse(true).maxTime(Duration.ofSeconds(120)).build()),"trips",Document.class).getMappedResults();
+            .allowDiskUse(true).maxTime(Duration.ofSeconds(300)).build()),"trips",Document.class).getMappedResults();
     }
 }

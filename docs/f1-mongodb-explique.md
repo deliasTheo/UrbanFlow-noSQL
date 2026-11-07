@@ -1,7 +1,6 @@
 # Comprendre F1 et ses requêtes MongoDB
 
-Ce document pédagogique complète le guide d'exécution `f1-activite.md`.
-Il sert de matière au rapport final unique, pas de livrable supplémentaire.
+Ce document complète le guide `f1-activite.md`, opérateur par opérateur.
 
 ## Du GET aux documents stockés
 
@@ -65,7 +64,7 @@ Le code produit heure, jour de semaine, date, identifiant source et `retained`.
 - `$size` compte ces flags ; `$eq: [nombre, 0]` produit un booléen : la ligne est
   retenue seulement si aucun motif d'exclusion ne s'applique.
 
-Exemple illustratif : une ligne portant les deux flags reste une seule ligne
+Par exemple, une ligne portant les deux flags reste une seule ligne
 brute, avec retained=false. Elle sera exclue une seule fois du total.
 
 Une chaîne `"$source.file_id"` représente la valeur du champ, alors que
@@ -118,7 +117,8 @@ pas dans ces index, et les regroupements doivent être effectués. Il ne s'agit
 pas d'un cache des réponses. Les index sont non uniques ; ils ne changent pas
 l'identité des lignes ni les règles de déduplication.
 
-Les mesures PC, conditions et limites sont dans `results/performance/f1-indexes.md`.
+Les premières mesures, leurs conditions et leurs limites sont dans
+`results/performance/f1-indexes.md`.
 La baisse avec répétition sans index est distincte de l'amélioration après index.
-Les index sont créés manuellement par `scripts/create-f1-indexes.js` ; MongoDB les
-maintient ensuite pendant les écritures. Ils ne modifient aucun résultat attendu.
+Les index sont créés par `urbanflow/deploy.py` ; MongoDB les maintient ensuite
+pendant les écritures. Ils ne modifient aucun résultat attendu.

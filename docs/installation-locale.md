@@ -1,17 +1,13 @@
-# Installer UrbanFlow sur son PC
+# Installer UrbanFlow
 
-La base de ton PC est indépendante de celle du cloud. Le code, les fichiers TLC
-et les commandes ci-dessous permettent de reconstruire le même contenu.
-Prérequis : Git, Python 3.12, Docker Desktop démarré (mode conteneurs Linux),
-MongoDB Compass. Prévoir plusieurs Go de mémoire disponible et d’espace disque ;
-le calcul qualité charge un mois entier en mémoire.
+Prérequis : Git, Python 3.12, JDK 21, Docker Desktop démarré (mode conteneurs
+Linux). MongoDB Compass est utile pour explorer la base. Prévoir plusieurs Go de
+mémoire et d'espace disque : le calcul qualité charge un mois entier en mémoire.
 
-## 1. Cloner la branche
-
-Dans un terminal :
+## 1. Cloner le dépôt
 
 ```bash
-git clone --branch feature/importation-data https://github.com/deliasTheo/UrbanFlow-noSQL.git
+git clone https://github.com/deliasTheo/UrbanFlow-noSQL.git
 cd UrbanFlow-noSQL
 python -m venv .venv
 ```
@@ -32,20 +28,32 @@ Linux/macOS :
 .venv/bin/python -m pip install -r requirements.txt
 ```
 
-## 3. Démarrer MongoDB
+L'API lance elle-même l'import F6 avec le Python de `.venv` quand il existe.
 
-À la racine du dépôt :
+## 3. Compiler l'API
+
+```powershell
+cd backend
+.\mvnw.cmd -DskipTests package
+cd ..
+```
+
+Sous Linux/macOS : `./mvnw -DskipTests package`. Maven est téléchargé par le wrapper
+au premier lancement. Le résultat est `backend/target/urbanflow-api-0.1.0.jar`.
+
+## 4. Démarrer MongoDB et créer les index
 
 ```bash
 docker compose up -d --wait
 docker compose ps
+python -m urbanflow.deploy --placement local
 ```
 
-UrbanFlow utilise le port 27018 sur ton PC ; ton MongoDB habituel peut continuer
-à utiliser le port 27017. Le conteneur conserve son port interne 27017.
-Le conteneur utilise MongoDB 8.0.16 et le volume nommé `urbanflow_mongo-data`.
+UrbanFlow utilise le port 27018, pour laisser libre le port 27017 d'un autre
+MongoDB. Le conteneur utilise MongoDB 8.0.16 et le volume nommé
+`urbanflow_mongo-data`. `urbanflow.deploy` crée les index utilisés par les services.
 
-## 4. Télécharger puis importer janvier
+## 5. Télécharger puis importer janvier
 
 Windows PowerShell :
 
@@ -61,14 +69,16 @@ Linux/macOS :
 .venv/bin/python -m urbanflow.ingest --month 2024-01
 ```
 
-Le téléchargement récupère aussi le référentiel des zones. L’import peut prendre
-plusieurs minutes : attendre la fin et l’état `complete`. Janvier contient
-2 964 624 lignes ; elles sont toutes conservées, y compris celles avec anomalies.
-Relancer la commande d’import est sans effet sur un fichier déjà complet.
+Le téléchargement récupère aussi le référentiel des zones. L'import prend plusieurs
+minutes : attendre la fin et l'état `complete`. Janvier contient 2 964 624 lignes ;
+elles sont toutes conservées, y compris celles avec anomalies. Relancer la commande
+sur un fichier déjà complet ne change rien.
 
-## 5. Ouvrir MongoDB Compass
+Répéter ces deux commandes pour février et mars. Avril reste réservé au service F6.
 
-Créer une connexion avec l’URI suivante :
+## 6. Ouvrir MongoDB Compass
+
+Créer une connexion avec l'URI suivante :
 
 ```text
 mongodb://127.0.0.1:27018
@@ -78,7 +88,7 @@ Cliquer sur Connect, puis ouvrir la base `urbanflow` :
 
 - `trips` : les enregistrements TLC, dates locales dans `data`, durée et flags.
 - `zones` : le référentiel (265 zones).
-- `imports` : provenance, état et compteurs du fichier importé.
+- `imports` : provenance, état et compteurs des fichiers importés.
 
 Dans `trips`, exemples de filtres Compass :
 
@@ -94,9 +104,9 @@ Dans `trips`, exemples de filtres Compass :
 ```
 
 La provenance est dans `source.file_id` et `source.row_number`. Le mois annoncé
-par le fichier n’est pas forcément celui de chaque date enregistrée.
+par le fichier n'est pas forcément celui de chaque date enregistrée.
 
-## 6. Vérifier depuis le terminal
+## 7. Vérifier depuis le terminal
 
 ```bash
 docker compose exec mongo mongosh urbanflow --quiet --eval 'db.trips.countDocuments({})'
@@ -105,22 +115,25 @@ docker compose exec mongo mongosh urbanflow --quiet --eval 'db.imports.find({}, 
 
 Attendu après janvier seul : 2 964 624 documents et un import `complete`.
 
-## 7. Arrêter, reprendre ou mettre le code à jour
+## 8. Lancer l'API
+
+```bash
+java -jar backend/target/urbanflow-api-0.1.0.jar
+```
+
+L'API écoute sur `http://127.0.0.1:8080`. Les requêtes de chaque service sont dans
+le [README](../README.md#services).
+
+## 9. Arrêter ou reprendre
 
 ```bash
 docker compose stop
 docker compose up -d --wait
-git pull --ff-only origin feature/importation-data
 ```
 
 Le volume conserve les données après `stop` ou `docker compose down`.
 **Ne pas utiliser `docker compose down -v` pour un arrêt normal : cela supprime
 le volume et la base.**
 
-Après un échec normal, corriger la cause puis relancer l’import : les lignes déjà
-insérées sont conservées et les manquantes sont ajoutées.
-
-Une connexion Compass à cette URI montre la base de ton PC, pas la base cloud.
-Pour février/mars, répéter téléchargement et import avec le mois correspondant.
-Conserver avril à part pour tester F6. Cette version couvre les fichiers mensuels
-identiques ; la gestion des extraits chevauchants reste à développer.
+Après un import interrompu, corriger la cause puis relancer la même commande : les
+lignes déjà insérées sont conservées et les manquantes sont ajoutées.

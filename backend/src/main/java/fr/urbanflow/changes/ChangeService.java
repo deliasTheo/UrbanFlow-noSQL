@@ -1,10 +1,14 @@
 package fr.urbanflow.changes;
 
+import fr.urbanflow.Counts;
+import fr.urbanflow.QualityProfiles;
+import fr.urbanflow.Zone;
 import fr.urbanflow.activity.ActivityRepository;
 import fr.urbanflow.unusual.Calendar2024;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.function.UnaryOperator;
 import org.bson.Document;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,9 +19,7 @@ public class ChangeService {
     private final ActivityRepository reference;
     private final ChangeRepository repository;
     public ChangeService(ActivityRepository reference,ChangeRepository repository) { this.reference=reference;this.repository=repository; }
-    public record Counts(long raw,long retained,long excluded) {}
     public record Source(String fileId,String fileName,Counts counts) {}
-    public record Zone(int id,String borough,String name) {}
     public record Week(LocalDate start,Counts counts,List<Source> sources,boolean usable,List<String> warnings) {}
     public record Period(LocalDate from,LocalDate to,Counts counts,List<Source> sources,List<Week> weeks) {}
     public record PairWeek(LocalDate start,Counts counts,long denominator,Double share,List<Source> sources) {}
@@ -54,7 +56,7 @@ public class ChangeService {
             || List.of(to,referenceTo,baselineTo).stream().anyMatch(d -> d.minusDays(1).getYear()!=2024)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Dates 2024 lundi à lundi ; périodes comparées de même durée, référence et baseline avant la période courante ; seuils positifs, minBaselineWeeks >= 3, ratio >= 1, limit 1..100. zoneIds OU borough ou aucun pour toute la ville.");
         }
-        var zones=new TreeMap<Integer,Zone>();reference.zones().forEach(d -> {int id=((Number)d.get("_id")).intValue();zones.put(id,new Zone(id,d.getString("Borough"),d.getString("Zone")));});
+        var zones=new TreeMap<Integer,Zone>();reference.zones().forEach(d -> {var zone=Zone.from(d);zones.put(zone.id(),zone);});
         var area=new TreeSet<Integer>();
         if (hasZones) { for(int id:zoneIds) {if(!zones.containsKey(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Zone inconnue : "+id);area.add(id);} }
         else if(hasBorough) {zones.values().stream().filter(z -> borough.trim().equalsIgnoreCase(z.borough())).forEach(z -> area.add(z.id()));if(area.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Borough inconnu.");}
@@ -81,10 +83,9 @@ public class ChangeService {
             var key=entry.getKey();var values=entry.getValue();var ca=sum(values,referenceFrom,referenceTo);var cb=sum(values,from,to);
             if(ca.kept==0&&cb.kept==0) continue;
             Double pa=a.counts().retained()==0?null:(double)ca.kept/a.counts().retained(),pb=b.counts().retained()==0?null:(double)cb.kept/b.counts().retained(),delta=pa==null||pb==null?null:pb-pa;
-            var weeks=new ArrayList<PairWeek>();var shares=new TreeMap<LocalDate,Double>();long baselineCount=0;
+            var shares=new TreeMap<LocalDate,Double>();long baselineCount=0;
             for(var w:history.weeks()) {
                 var c=values.getOrDefault(w.start(),new Counter());Double p=w.usable()?(double)c.kept/w.counts().retained():null;
-                weeks.add(new PairWeek(w.start(),c.counts(),w.counts().retained(),p,c.sources(imports)));
                 if(p!=null) {shares.put(w.start(),p);baselineCount+=c.kept;}
             }
             var adjacent=new ArrayList<Double>();for(var w:shares.keySet()) if(shares.containsKey(w.minusWeeks(1))) adjacent.add(shares.get(w)-shares.get(w.minusWeeks(1)));
@@ -94,24 +95,39 @@ public class ChangeService {
                 :baselineCount<minBaselineTrips?"LOW_BASELINE_COUNTS":Math.abs(delta)<minShareChange?"SMALL_SHARE_CHANGE"
                 :ratio<minVariationRatio?"WITHIN_WEEKLY_VARIATION":"CHANGED";
             Double expected=a.counts().retained()==0?null:pa*b.counts().retained();
-            changes.add(new Change(zones.get(key.origin()),zones.get(key.destination()),ca.counts(),cb.counts(),ca.sources(imports),cb.sources(imports),
+            // Les semaines et les sources sont ajoutées ensuite, seulement pour les flux renvoyés.
+            changes.add(new Change(zones.get(key.origin()),zones.get(key.destination()),ca.counts(),cb.counts(),List.of(),List.of(),
                 pa,pb,delta,delta==null?null:100*delta,pa==null||pa==0||delta==null?null:delta/pa,expected,expected==null?null:expected-ca.kept,expected==null?null:cb.kept-expected,
-                pairStatus,typical,p90,ratio,weeks,adjacent));
+                pairStatus,typical,p90,ratio,List.of(),adjacent));
         }
         Comparator<Change> rank=Comparator.<Change>comparingDouble(c -> (c.shareChange()==null?-1:Math.abs(c.shareChange()))).reversed()
             .thenComparingInt(c -> c.origin().id()).thenComparingInt(c -> c.destination().id());changes.sort(rank);
         var qualified=changes.stream().filter(c -> c.status().equals("CHANGED")).toList();
+        UnaryOperator<Change> details=c -> withDetails(c,pairs.get(new Pair(c.origin().id(),c.destination().id())),referenceFrom,referenceTo,from,to,history,imports);
         return new Response(area.stream().map(zones::get).toList(),"Tous les départs retenus de l'aire sélectionnée ; même périmètre dans les trois intervalles, trajets internes inclus.",
-            "data.tpep_pickup_datetime","flows",List.of("NEGATIVE_AMOUNT","EXACT_DUPLICATE","UNKNOWN_ZONE"),
+            "data.tpep_pickup_datetime","flows",QualityProfiles.FLOWS,
             new Rules(minTrips,minBaselineTrips,minTotalTrips,minBaselineWeeks,minShareChange,minVariationRatio,limit),a,b,history,status,
             a.counts().retained()==0?null:(double)b.counts().retained()/a.counts().retained()-1,changes.size(),qualified.size(),
-            qualified.stream().filter(c -> c.shareChange()>0).limit(limit).toList(),qualified.stream().filter(c -> c.shareChange()<0).limit(limit).toList(),
-            changes.stream().filter(c -> !c.status().equals("CHANGED")).limit(limit).toList(),files,
+            qualified.stream().filter(c -> c.shareChange()>0).limit(limit).map(details).toList(),qualified.stream().filter(c -> c.shareChange()<0).limit(limit).map(details).toList(),
+            changes.stream().filter(c -> !c.status().equals("CHANGED")).limit(limit).map(details).toList(),files,
             "Filtrer par effectifs, variation absolue minimale de part et ratio au p90 des variations hebdomadaires propres au flux ; trier par variation absolue de part décroissante, puis identifiants croissants.",
             "Comparaison descriptive, aucun test de significativité. Parts en fractions ; percentagePointChange en points. Baseline antérieure à current, peut inclure reference. Zéros historiques locaux inclus si la semaine globale est utilisable. Calendrier signalé, pas neutralisé. Une couverture source apparemment complète ne prouve pas chaque heure complète. Ne pas importer pendant la requête.");
     }
     private static boolean fullWeeks(LocalDate from,LocalDate to) { return from.isBefore(to)&&from.getDayOfWeek()==DayOfWeek.MONDAY&&to.getDayOfWeek()==DayOfWeek.MONDAY; }
-    private static double share(long n,long total) {return total==0?0:(double)n/total;}
+    private static Change withDetails(Change c,Map<LocalDate,Counter> values,LocalDate referenceFrom,LocalDate referenceTo,
+            LocalDate from,LocalDate to,Period history,List<Document> imports) {
+        var weeks=new ArrayList<PairWeek>();
+        for(var w:history.weeks()) {
+            var counter=values.getOrDefault(w.start(),new Counter());
+            Double share=w.usable()?(double)counter.kept/w.counts().retained():null;
+            weeks.add(new PairWeek(w.start(),counter.counts(),w.counts().retained(),share,counter.sources(imports)));
+        }
+        return new Change(c.origin(),c.destination(),c.referenceCounts(),c.currentCounts(),
+            sum(values,referenceFrom,referenceTo).sources(imports),sum(values,from,to).sources(imports),
+            c.referenceShare(),c.currentShare(),c.shareChange(),c.percentagePointChange(),c.relativeShareChange(),
+            c.expectedCurrentAtReferenceShare(),c.volumeOnlyCountChange(),c.residualCountChange(),c.status(),
+            c.typicalWeeklyChange(),c.p90WeeklyChange(),c.variationRatio(),weeks,c.adjacentWeeklyChanges());
+    }
     private static double quantile(List<Double> x,double p) {double at=(x.size()-1)*p;int i=(int)at;return x.get(i)+(x.get((int)Math.ceil(at))-x.get(i))*(at-i);}
     private static Counter sum(Map<LocalDate,Counter> values,LocalDate from,LocalDate to) {var c=new Counter();for(var w=from;w.isBefore(to);w=w.plusWeeks(1)) c.add(values.getOrDefault(w,new Counter()));return c;}
     private static Period period(LocalDate from,LocalDate to,Map<LocalDate,Counter> totals,List<String> months,int minTotal,List<Document> imports) {

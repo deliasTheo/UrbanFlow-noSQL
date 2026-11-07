@@ -1,7 +1,4 @@
-# F5 — Synthèse pour le rapport final
-
-Ce document et les mesures brutes alimentent le rapport final unique.
-F4 est intégré dans main via la PR #5 ; F5 suit sur une branche dédiée avant fusion.
+# F5 — Synthèse
 
 ## Choix de conception
 
@@ -31,9 +28,9 @@ MongoDB filtre origines/dates/fichiers, prépare semaine et qualité puis compte
 par paire/semaine/source. Java utilise ces groupes pour les parts, p90 et tris.
 Pas de chargement de millions de trajets détaillés, pas de nouvel index F5.
 
-## Protocole cloud
+## Protocole
 
-5 novembre 2026, environnement des expériences précédentes : MongoDB 8.0.16,
+5 novembre 2026, même serveur distant que les mesures précédentes : MongoDB 8.0.16,
 Spring Boot 3.5.7 / JDK Temurin 21.0.9, cgroup 2 CPU et 8 Gio. API et MongoDB
 partagent le même hôte et le disque ; détail dans environment.json.
 
@@ -109,7 +106,7 @@ Les comptes et références de chaque résultat renvoyé sont justifiés par sou
 Les régressions F2/F3/F4 ont des JSON identiques aux sorties précédentes sur
 janvier ; F1 retrouve les totaux vérifiés précédemment dans le Parquet.
 
-## Limites à conserver dans le rapport
+## Limites
 
 Janvier ne fournit ici que trois semaines de baseline et deux différences,
 avec des semaines fériées (1er/15 janvier). Le p90 est donc fragile. Les dates
@@ -128,9 +125,8 @@ Le volume mémoire des groupes croît avec les semaines, zones et fichiers, mêm
 si limit est petit. Les performances d'un mois et trois répétitions ne prédisent
 pas celles de trois/six mois ou des configurations distribuées E1–E3.
 
-Les déploiements distribués, F6 et les expériences restent à réaliser par la suite ;
-ils devront agréger les comptes de toutes les instances avant de calculer parts
-et variabilité. Une réponse d'instance manquante ne devra jamais être présentée
-comme complète. La version locale échoue explicitement si MongoDB est indisponible.
+Sur le cluster, les comptes de toutes les instances sont agrégés avant le calcul
+des parts et de la variabilité. Une réponse échoue explicitement si une instance
+nécessaire ou MongoDB est indisponible.
 
 Le détail des opérateurs et commandes est dans docs/f5-changements-flux.md.

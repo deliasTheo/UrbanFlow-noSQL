@@ -1,7 +1,6 @@
 # Prédiction pour l'expérience E3
 
-Écrite avant toute mesure sur les déploiements répartis, comme demandé par le
-sujet. À déposer sur la plateforme du cours ou à envoyer à l'enseignante.
+Écrite avant toute mesure sur les déploiements répartis, comme le demande le sujet.
 
 ## Ce qu'on compare
 
@@ -12,18 +11,18 @@ Trois configurations sur les mêmes trajets (janvier à juin 2024) et les mêmes
   zones sont réparties pour équilibrer le nombre de départs ;
 - **période** : deux shards, janvier à mars sur le premier, avril à juin sur le second.
 
-Tout tourne sur le même PC (4 cœurs, 3,7 Go pour Docker). Les serveurs partagent
-donc le processeur, la mémoire et le disque. Le cache total est le même partout
-(1,4 Go), coupé en deux quand il y a deux shards.
+Tout tourne sur le même PC (6 cœurs, 12 threads, 32 Go de mémoire, disque SSD). Les
+serveurs partagent donc le processeur, la mémoire et le disque. Le cache total de
+MongoDB est fixé à 1,4 Go partout, coupé en deux quand il y a deux shards.
 
 ## Les deux charges
 
 - **Charge A, zones chargées** : quelques zones très actives (132 JFK, 161 Midtown
   Center, 236 et 237 Upper East Side). Requêtes F1 sur les départs et F4 sur des
-  paires, avec des fenêtres courtes d'une à deux semaines.
+  paires, avec une fenêtre d'une semaine.
 - **Charge B, large** : beaucoup de zones et de périodes. F1 sur des zones variées
-  à l'arrivée et sur tout le semestre, F2 et F5 sur Brooklyn et Queens, F5 sur
-  toute la ville avec des périodes de part et d'autre du 1er avril.
+  à l'arrivée et sur tout le semestre, F2 sur Brooklyn et Queens et sur quatre
+  semaines, F5 sur Brooklyn et Queens avec cinq semaines d'historique.
 
 On mesure aussi des mélanges des deux charges.
 

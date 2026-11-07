@@ -1,7 +1,4 @@
-# F3 — Synthèse pour le rapport final
-
-F2 a été fusionné dans main via la PR #3. F3 est développé sur une branche séparée.
-Ces notes et les mesures brutes sont des supports au rapport final unique.
+# F3 — Synthèse
 
 ## Fonctionnement et critères
 
@@ -22,7 +19,7 @@ possiblement inégale. Leur présence ne garantit pas la complétude locale.
 
 ## Environnement et protocole de mesure
 
-5 novembre 2026 ; même environnement cloud que F2 : Linux, trois CPU logiques
+5 novembre 2026 ; même serveur distant que F2 : Linux, trois CPU logiques
 visibles Xeon Platinum 8370C, cgroup limité à 2 CPU et 8 Gio de RAM ; MongoDB
 8.0.16 et Spring Boot 3.5.7 / Temurin JDK 21.0.9 partagent CPU, mémoire et disque.
 Le détail est conservé dans environment.json.
@@ -72,8 +69,8 @@ leur intérêt déjà mesuré pour F1/F2 et pour le pipeline local de F3.
 Les plans sans index sont des COLLSCAN. Le pipeline local avec index utilise
 IXSCAN puis FETCH. Le pipeline ville reste COLLSCAN. Les temps explain sont
 ceux d'exécutions supplémentaires et ne sont pas les mesures HTTP du tableau.
-Un index temporel ou une agrégation maintenue serait une autre conception à
-mesurer sur des périodes et volumes pertinents ; aucune n'est ajoutée ici.
+Ces mesures précèdent l'index `pickup_datetime_zone`, créé ensuite pour le placement
+par période. Son effet sur le pipeline ville n'a pas de mesure séparée.
 
 ## Vérifications et exemples réels
 
@@ -107,10 +104,10 @@ les données de mesure ne contiennent que janvier. Voir parquet-verification.jso
 La non-régression F1 est contrôlée contre les comptes du Parquet et F2 contre
 la réponse JSON archivée de la version précédente (zone 181, janvier).
 
-## Limites à conserver dans le rapport
+## Limites
 
 Les trois répétitions et le jeu d'un mois sont une première comparaison, pas
-les expériences E1–E3 ni une prédiction sur trois/six mois ou sur le PC utilisateur.
+les expériences E1–E3 ni une prédiction sur trois ou six mois.
 La référence courte rend le seuil MAD fragile ; le comportement MAD=0 est décrit
 explicitement. Le calendrier fédéral ne couvre pas toutes les particularités de
 New York. La couverture source est un diagnostic conservateur, pas une preuve
@@ -119,7 +116,6 @@ départ précédent, dont l'absence est signalée. Pas d'import concurrent ni de
 snapshot transactionnel entre les deux agrégations.
 
 La réponse contient toutes les cellules et leurs références pour la traçabilité ;
-sa taille augmente avec le nombre de zones, jours et références. La consommation
-et les performances restent à mesurer sur le périmètre initial complet.
+sa taille augmente avec le nombre de zones, jours et références.
 
 Les opérateurs et règles sont expliqués dans docs/f3-activite-inhabituelle.md.

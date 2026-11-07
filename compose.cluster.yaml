@@ -5,8 +5,8 @@
 #   docker compose -p urbanflow-zone -f compose.cluster.yaml up -d
 #   docker compose -p urbanflow-month -f compose.cluster.yaml up -d
 #
-# 0,7 Go de cache par shard, soit 1,4 Go en tout. C'est le cache que prend le
-# serveur local sur la VM Docker de 3,7 Go, pour comparer à mémoire égale.
+# 0,7 Go de cache par shard, soit 1,4 Go en tout : le même cache que le serveur
+# local de compose.yaml, pour comparer à mémoire égale.
 name: urbanflow-cluster
 services:
   config:

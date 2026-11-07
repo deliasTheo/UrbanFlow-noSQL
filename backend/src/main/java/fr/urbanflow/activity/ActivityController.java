@@ -1,5 +1,6 @@
 package fr.urbanflow.activity;
 
+import fr.urbanflow.Zone;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,7 +14,7 @@ public class ActivityController {
     public ActivityController(ActivityService service) { this.service = service; }
 
     @GetMapping("/zones")
-    public List<ActivityService.Zone> zones() { return service.zones(); }
+    public List<Zone> zones() { return service.zones(); }
 
     @GetMapping("/activity")
     public ActivityService.Activity activity(@RequestParam int zoneId, @RequestParam Direction direction,

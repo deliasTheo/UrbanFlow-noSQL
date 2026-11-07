@@ -1,7 +1,7 @@
 # F2 — Synthèse des mesures et vérifications
 
-Ces notes alimentent le rapport final unique. Elles concernent le cloud,
-pas le PC de l'utilisateur ni les expériences distribuées E1–E3.
+Ces mesures comparent les index sur un serveur distant. Elles ne font pas partie
+des expériences E1–E3.
 
 ## Données et protocole
 
@@ -33,7 +33,7 @@ d'échauffement sont conservés dans measurements.json.
 | zone181 | 2.313, 2.942, 2.114 | 2.313 | 0.238, 0.209, 0.202 | 0.209 |
 | brooklyn | 3.461, 4.748, 3.464 | 3.464 | 1.330, 1.335, 1.239 | 1.330 |
 
-Ces mesures ne sont pas comparables directement aux temps PC F1 : matériel,
+Ces mesures ne sont pas comparables directement aux premiers temps de F1 : matériel,
 volume et traitements diffèrent. Elles ne permettent pas de prédire la latence
 sur trois/six mois ni sur une machine différente.
 
@@ -75,11 +75,11 @@ Exemples réels de résultats :
 - Paire 181 → 181 : 122 retenus ; trajet interne, aucune direction opposée artificielle.
 - Brooklyn : 25 258 candidates, 24 860 retenues et 398 exclues ; 160 paires au seuil.
 
-Contrôles HTTP supplémentaires réussis : erreurs 400/404, sélection multi-zones,
+Autres contrôles HTTP : erreurs 400/404, sélection multi-zones,
 historique trop court, mois source manquant, seuil élevé masquant le classement
 sans modifier les totaux, et appel F1 après ajout de F2.
 
-## Interprétation et suite
+## Interprétation
 
 Les deux index déjà retenus pour F1 sont utiles à F2 sur ces requêtes. Aucun
 nouvel index dédié à F2 n'a été ajouté. L'index d'arrivée ne borne pas directement
@@ -87,7 +87,6 @@ la date de départ des retours ; un troisième index serait une autre alternativ
 à mesurer si nécessaire, avec son coût disque/écriture.
 
 Trois répétitions constituent une première comparaison reproductible, pas une
-estimation robuste de la distribution des latences. Les expériences finales
-restent à étendre aux volumes et configurations demandés. La classification
+estimation robuste de la distribution des latences. La classification
 regular/peak utilise des seuils exploratoires exposés dans l'API, non un test de
 significativité. Les détails du pipeline et les limites sont dans docs/f2-flux.md.

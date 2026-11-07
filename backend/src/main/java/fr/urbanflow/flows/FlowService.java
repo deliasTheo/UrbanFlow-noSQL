@@ -1,5 +1,8 @@
 package fr.urbanflow.flows;
 
+import fr.urbanflow.Counts;
+import fr.urbanflow.QualityProfiles;
+import fr.urbanflow.Zone;
 import fr.urbanflow.activity.ActivityRepository;
 import java.time.*;
 import java.time.temporal.TemporalAdjusters;
@@ -16,8 +19,6 @@ public class FlowService {
     public FlowService(ActivityRepository reference, FlowRepository repository) {
         this.reference = reference; this.repository = repository;
     }
-    public record Counts(long raw, long retained, long excluded) {}
-    public record Zone(int id, String borough, String name) {}
     public record Week(LocalDate start, boolean completeWeek, Counts counts) {}
     public record Source(String fileId, String fileName, String month, Counts counts) {}
     public record Destination(Zone zone, Counts counts, double share, List<Source> sources) {}
@@ -54,10 +55,7 @@ public class FlowService {
                     "Choisir zoneIds OU borough, début < fin, limit 1..100, seuils entiers positifs et fractions dans ]0,1].");
         }
         var zones = new TreeMap<Integer, Zone>();
-        reference.zones().forEach(d -> {
-            int id = ((Number)d.get("_id")).intValue();
-            zones.put(id, new Zone(id, d.getString("Borough"), d.getString("Zone")));
-        });
+        reference.zones().forEach(d -> { var zone = Zone.from(d); zones.put(zone.id(), zone); });
         var area = new TreeSet<Integer>();
         if (hasZones) {
             for (int id : zoneIds) {
@@ -124,7 +122,7 @@ public class FlowService {
                 .sorted(Comparator.<Map.Entry<Integer,Accumulator>>comparingLong(e -> e.getValue().retained).reversed().thenComparingInt(Map.Entry::getKey))
                 .limit(limit).map(e -> new Destination(zones.get(e.getKey()), e.getValue().counts(), share(e.getValue().retained,total.retained), sources(e.getValue(),imports))).toList();
         return new Response(area.stream().map(zones::get).toList(),from,to,"America/New_York","data.tpep_pickup_datetime",
-                "flows",FlowRepository.EXCLUDED,new Rules(minTrips,minWeeklyTrips,regularFraction,peakShare,3),total.counts(),
+                "flows",QualityProfiles.FLOWS,new Rules(minTrips,minWeeklyTrips,regularFraction,peakShare,3),total.counts(),
                 eligible.size(),outgoing.stream().filter(e -> e.getValue().retained<minTrips).count(),dest,top,sources(total,imports),missing,
                 "Totaux et parts : tous les départs de l'aire retenus, avant limite/seuil. Les trajets internes à l'aire sont inclus. Sens inverse : mêmes dates de départ, même profil, sans seuil. Semaines partielles exclues de la classification. Couverture par mois source indicative ; aucune causalité ni demande non satisfaite déduite.");
     }
