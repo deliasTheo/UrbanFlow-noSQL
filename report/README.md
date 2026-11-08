@@ -63,10 +63,10 @@ python report/build-figures.py
 .venv/bin/python report/build-evidence.py
 ```
 
-Windows, avec l'encodage UTF-8 :
+Sous Windows :
 
 ```powershell
-$env:PYTHONUTF8 = "1"; .\.venv\Scripts\python.exe report\build-evidence.py
+.\.venv\Scripts\python.exe report\build-evidence.py
 ```
 
 Le script contrôle les SHA-256 et les effectifs des six Parquet et du référentiel,
