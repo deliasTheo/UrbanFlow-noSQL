@@ -14,8 +14,7 @@ Projet 3 — Big Data et NoSQL, Master 2 SLCD, Université Côte d'Azur (2026-20
 | Zone d'étude | Brooklyn |
 | Mois d'expérience (E1–E3, six mois) | 2024-05, 2024-06 |
 
-La plateforme couvre toute la ville ; Brooklyn sert aux exemples détaillés. Ce
-périmètre se modifie dans `urbanflow/config.py`.
+La plateforme couvre toute la ville ; Brooklyn sert aux exemples détaillés. Les mois étudiés se règlent dans `urbanflow/config.py`.
 
 ## Arborescence
 
@@ -37,6 +36,7 @@ results/             rapport de qualité, mesures brutes et vérifications
 compose.yaml         serveur MongoDB local
 compose.cluster.yaml cluster : deux shards, un serveur de configuration, un routeur mongos
 docs/                modèle de données, guides des services, prédiction de E3
+report/              rapport LaTeX, figures et annexes
 ```
 
 ## Installation
@@ -49,7 +49,9 @@ python -m venv .venv
 .venv\Scripts\activate          # Windows ; source .venv/bin/activate sous Linux/macOS
 pip install -r requirements.txt
 python -m urbanflow.download
-cd backend && ./mvnw -DskipTests package && cd ..      # Windows : .\mvnw.cmd
+cd backend
+./mvnw -DskipTests package      # Windows : .\mvnw.cmd -DskipTests package
+cd ..
 ```
 
 `urbanflow.download` récupère la table des zones et les six mois dans `data/raw/`,
@@ -67,9 +69,13 @@ python -m urbanflow.ingest --month 2024-03
 java -jar backend/target/urbanflow-api-0.1.0.jar
 ```
 
-L'API écoute sur `http://127.0.0.1:8080`, ou sur le port de la variable `PORT` si
-celui-ci est déjà pris. MongoDB écoute uniquement sur localhost,
-sans authentification : ne pas exposer ces ports sur Internet.
+L'API écoute sur `http://127.0.0.1:8080` par défaut ; la variable `PORT` change ce port s'il est
+déjà pris. MongoDB écoute uniquement sur localhost, sans authentification : ne pas exposer ces
+ports sur Internet.
+
+**Attention :** `urbanflow.ingest --month`, `urbanflow.deploy --placement zone` et `run-all.py` sans
+`--quick` réécrivent des mesures livrées dans `results/`. Pour un essai, définir `URBANFLOW_RESULTS`
+vers un autre dossier.
 
 ## Déploiement réparti
 
@@ -98,7 +104,12 @@ java -jar backend/target/urbanflow-api-0.1.0.jar
 | 27020 | serveur de configuration |
 | 27021, 27022 | shards |
 
-Le cache MongoDB est fixé à 1,4 Go au total dans les deux déploiements.
+Sous Linux, remplacer la ligne `$env:` par `export MONGODB_URI=mongodb://127.0.0.1:27019`. La variable
+reste active dans le terminal : `Remove-Item Env:MONGODB_URI`, ou `unset MONGODB_URI` sous Linux, pour
+revenir au serveur local.
+
+Le cache des serveurs de données est fixé à 1,4 Go au total dans les deux déploiements : un serveur
+de 1,4 Go, ou deux shards de 0,7 Go. Le serveur de configuration du cluster a 0,25 Go en plus.
 
 ## Services
 
@@ -132,6 +143,10 @@ ou `--file extrait.parquet`. La réponse contient le résumé de l'import : lign
 ajoutées, lignes déjà présentes, anomalies et effet des profils de filtrage. Un
 paramètre invalide donne 400, un échec d'import 500, et un second import
 simultané 409.
+
+Un fichier déjà importé n'est pas relu : la réponse indique « déjà importé, aucun changement » et
+reprend le résumé du premier import. Si un fichier couvre un mois entier, indiquer `month` dès le
+premier import.
 
 L'identité d'un trajet est expliquée dans
 [le modèle de données](docs/modele-donnees.md#identité-dun-trajet).
@@ -208,9 +223,12 @@ python scripts/run-all.py --reset
 - Sans `--quick`, le script charge les six mois et écrit dans `results/`.
 - `--reset` **efface les volumes Docker des trois déploiements**. Il faut repartir de
   volumes vides, car un mois déjà importé ne serait pas remesuré.
-- Relancé sans `--reset`, le script reprend après la dernière étape réussie.
+- Relancé sans `--reset`, le script reprend après la dernière étape réussie. Si un chargement a été
+  interrompu, `load-deployment.py` refuse une base non vide : repartir de `--reset`.
+- L'exécution complète a pris 2 h 01 sur un Ryzen 5 7600, l'essai `--quick` 37 min.
 
-Le journal de chaque étape est dans `results/experiments/logs/`. Le détail des étapes :
+Le journal de chaque étape est écrit dans `results/experiments/logs/`, qui n'est pas versionné ; les
+sorties des vérifications sont copiées dans `results/verification/`. Le détail des étapes :
 
 ```bash
 # E1 et coût d'ingestion
@@ -251,17 +269,19 @@ ne sont alors pas exploitables.
 
 ## Vérifications
 
-**Service F6, sur de vraies lignes TLC et dans une base à part :**
+**Service F6, sur de vraies lignes TLC et dans une base à part** (serveur local démarré pour la
+première commande, cluster pour les suivantes) **:**
 
 ```powershell
 python scripts/verify-f6.py
 python -m urbanflow.deploy --placement zone --database urbanflow_f6_test
 $env:MONGODB_URI = "mongodb://127.0.0.1:27019"
 python scripts/verify-f6.py --keep-database
+Remove-Item Env:MONGODB_URI
 ```
 
-**Résultats sur six mois, recalculés depuis les Parquet sans lire MongoDB**, API
-lancée sur n'importe quel déploiement chargé :
+**Résultats sur six mois, recalculés depuis les Parquet sans lire MongoDB**, API lancée sur le port
+8090 (`$env:PORT = "8090"`, ou `export PORT=8090` sous Linux) sur n'importe quel déploiement chargé :
 
 ```bash
 python scripts/verify-registered-period.py
@@ -276,11 +296,12 @@ janvier, et une API lancée sur cette base avec `MONGODB_DATABASE` et `PORT` :
 
 | Service | Base | Port | Commandes |
 |---|---|---|---|
-| F2 | `urbanflow_f2_benchmark` | 8081 | `benchmark-f2.py`, `verify-f2-parquet.py` |
-| F3 | `urbanflow_f3_benchmark` | 8083 | `benchmark-f3.py`, `verify-f3-parquet.py` |
-| F4 | `urbanflow_f4_benchmark` | 8084 | `benchmark-f4.py`, `verify-f4-parquet.py`, `verify-f4-dst.py` |
-| F5 | `urbanflow_f5_benchmark` | 8086 | `benchmark-f5.py`, `verify-f5-parquet.py` |
+| F2 | `urbanflow_f2_benchmark` | 8081 | `benchmark-f2.py --database urbanflow_f2_benchmark`, `verify-f2-parquet.py` |
+| F3 | `urbanflow_f3_benchmark` | 8083 | `benchmark-f3.py --database urbanflow_f3_benchmark`, `verify-f3-parquet.py` |
+| F4 | `urbanflow_f4_benchmark` | 8084 | `benchmark-f4.py --database urbanflow_f4_benchmark`, `verify-f4-parquet.py` |
+| F5 | `urbanflow_f5_benchmark` | 8086 | `benchmark-f5.py --database urbanflow_f5_benchmark`, `verify-f5-parquet.py` |
 
 La base se remplit avec `python -m urbanflow.ingest --month 2024-01 --database <base>`.
 Les benchmarks comparent les index et exigent une base sans index analytique.
+`verify-f4-dst.py` est à part : il lance sa propre API sur le port 8085, avec une base temporaire.
 Les mesures et les vérifications déjà réalisées sont dans `results/performance/`.

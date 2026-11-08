@@ -1,79 +1,75 @@
-# Rapport — contribution données et F1–F5
+# Rapport UrbanFlow
 
-`main.tex` compile la contribution en français. `main.pdf` est le PDF correspondant,
-vérifié après compilation. La version initiale comporte **5 pages de corps, références
-comprises, et 2 pages d'annexes**. Le sujet autorise 10 pages hors annexes pour le
-rapport final entier : conserver une marge pour la contribution du second membre.
+`report.tex` compile le rapport en français et `report.pdf` est le PDF correspondant.
+Le sujet autorise 10 pages hors annexes. Le label `fin-corps` dans `report.aux` donne
+la dernière page du corps, références comprises.
 
 ## Compiler
 
 Depuis la racine du dépôt, avec une installation LaTeX (TeX Live, MiKTeX ou Overleaf) :
 
 ```bash
-latexmk -pdf -interaction=nonstopmode -halt-on-error -cd report/main.tex
+latexmk -pdf -interaction=nonstopmode -halt-on-error -cd report/report.tex
 ```
 
-Sans latexmk, exécuter deux fois `pdflatex main.tex` depuis `report/`.
-Sur Overleaf, importer **le dossier report entier** et sélectionner `main.tex`.
+Sans latexmk, exécuter deux fois `pdflatex report.tex` depuis `report/`.
+Sur Overleaf, importer le dossier `report` entier et sélectionner `report.tex`.
 Les annexes générées sont versionnées : Python et les Parquet ne sont pas nécessaires
-pour compiler. Le préambule utilise les paquets habituels, notamment Latin Modern,
-Babel, geometry, amsmath, booktabs, tabularx, microtype, hyperref, fancyhdr et enumitem.
-Une variante Babel locale est prévue lorsque french.ldf n'est pas installé.
+pour compiler.
 
-## Intégrer la partie du second membre
+## Organisation
 
-Les sections sont séparées pour conserver **un seul rapport final**. Le point
-`sections/04-complement-binome.tex`, vide et commenté, accueille sa rédaction ;
-il se situe après F5, avant les mesures locales. Il peut utiliser plusieurs `\input`.
-Éviter de créer une seconde page de titre, bibliographie ou commande `\appendix`.
-Après intégration, vérifier le nombre de pages du corps : la valeur de `fin-corps`
-dans `main.aux` donne actuellement la page 5. Les annexes commencent ensuite.
+| Fichier | Contenu | Auteur |
+|---|---|---|
+| `sections/00-resume.tex` | Résumé | Ion |
+| `sections/01-donnees.tex` | Périmètre, données, qualité | Théo |
+| `sections/02-modele.tex` | Modèle local, identité, dates, traçabilité | Théo |
+| `sections/03-services.tex` | F1 à F5 | Théo |
+| `sections/04-f6.tex` | F6 | Ion |
+| `sections/05-mesures.tex` | Alternative d'index mesurée en local | Théo |
+| `sections/06-reparti.tex` | Placements, travail par instance, comparaison, panne | Ion |
+| `sections/07-experiences.tex` | Protocole, E1, E2, E3 | Ion |
+| `sections/08-verifications.tex` | Vérifications indépendantes et limites | Ion, Théo |
+| `sections/09-references.tex` | Références | Ion, Théo |
+| `figures/architecture.tex` | Schéma du déploiement réparti | Ion |
+| `figures/temps-par-rapport-au-local.pdf` | Figure générée par `build-figures.py` | Ion |
+| `annexes/` | Anomalies, générées par `build-evidence.py` | Théo |
 
-Les noms des deux membres n'ont pas été fournis dans cette conversation : ajouter
-les deux noms dans `\author` et, si souhaité, remplacer les désignations de rôle par
-les noms dans la répartition du travail. Aucun nom n'a été déduit du compte GitHub.
+## Sources des chiffres
 
-À intégrer par le second membre, sur la base de ses résultats effectifs :
+- E1 à E3, environnement et journal : `results/experiments/`.
+- Comparaison, plans `explain`, pannes et placement : `results/distributed/`.
+- Vérifications indépendantes : `results/verification/`. Les fichiers `.txt` sont les
+  sorties des scripts. `verifications-janvier.txt` vient de l'essai complet sur janvier
+  et avril du 7 novembre, dont l'API et l'ingestion sont identiques à `5f11cfd`.
+  `f1-zone181-janvier.json` est un calcul direct sur le Parquet de janvier (départs de la zone 181,
+  profil activity), dont les totaux sont ceux de l'API.
+- Mesures du prototype du 5 novembre : `results/performance/`.
+- Bilans des fichiers : `results/ingestion/` et `results/quality/`.
 
-- F6 : identité finale, extraits chevauchants, reprise et réimport, démonstration de
-  la mise à jour sur local et distribué ; le code correspondant est déjà dans main.
-- Distribution : deux instances de données, placements par zone et par période,
-  chemin des trois types de requêtes, calculs locaux et résultats échangés.
-- Comparaison automatique après ordre canonique, notamment entre plusieurs instances.
-- Arrêt d'une instance : ce que renvoient F1 et F5, limites de récupération.
-- E1 : trois volumes croissants dont six mois, effectifs distincts, ingestion,
-  stockage, latences ; E2 sur les trois configurations et mêmes données ; E3 avec
-  prédiction déposée avant mesure et analyse des deux charges de travail.
-- Matériel, versions, limites, échauffement/cache, répétitions et variabilité des
-  expériences finales. Les scripts existants ne prouvent pas que ces essais ont réussi.
+## Régénérer la figure des temps
 
-Le bonus E4 est facultatif. Le sujet demande aussi code, README reproductible,
-mesures brutes, présentation et démonstration ; ils ne sont pas remplacés par ce PDF.
+`report/build-figures.py` lit `results/experiments/` et écrit le PDF dans `report/figures/`.
+Il demande une installation LaTeX et `matplotlib`, absent de `requirements.txt` (`pip install matplotlib`). Le PDF est versionné : ce n'est pas
+nécessaire pour compiler le rapport.
 
-## Sources et versions
+```bash
+python report/build-figures.py
+```
 
-Le texte a été rédigé après `git pull --ff-only origin main`, sur l'état intégré
-**5f11cfd**. Il tient compte notamment de la nouvelle identité Pandas + rang,
-des insertions au lieu d'upserts, de `/api/trips`, des profils Java mutualisés,
-des quatre index gérés par `urbanflow.deploy`, des optimisations de F3 et de la
-construction différée des preuves de F5.
-
-Les exemples et mesures du 5 novembre proviennent de `results/performance/f2` à
-`f5`, pas d'une réexécution de l'application actuelle. Les essais de F3 sont
-antérieurs à son optimisation et à l'index temporel supplémentaire. Le texte le
-précise ; aucune nouvelle mesure locale, distribuée ou sur six mois n'a été inventée.
-Les bilans qualité sont par fichier et ne sont pas un comptage actuel de la base
-après la nouvelle déduplication inter-fichiers.
-
-Pour régénérer les annexes avec les fichiers sources présents :
+## Régénérer les annexes
 
 ```bash
 .venv/bin/python report/build-evidence.py
 ```
 
-Windows : `.\.venv\Scripts\python.exe report\build-evidence.py`.
-Le script contrôle SHA-256 et nombres de lignes, compare toutes les colonnes des
-huit exemples aux Parquet, recherche la copie antérieure de l'exemple de doublon
-et recalcule les durées via UTC. Il écrit les deux annexes et
-`evidence-verification.json`. Les fréquences sont reprises explicitement du rapport
-qualité existant, pas recalculées par ce script. Aucun import ni benchmark n'est lancé.
+Windows, avec l'encodage UTF-8 :
+
+```powershell
+$env:PYTHONUTF8 = "1"; .\.venv\Scripts\python.exe report\build-evidence.py
+```
+
+Le script contrôle les SHA-256 et les effectifs des six Parquet et du référentiel,
+compare toutes les colonnes des huit exemples aux Parquet, recherche la copie antérieure
+de l'exemple de doublon et recalcule les durées via UTC. Il écrit l'annexe des anomalies et
+`evidence-verification.json`. Aucun import ni benchmark n'est lancé.

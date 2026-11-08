@@ -57,7 +57,7 @@ non remplacées par une différence locale trompeuse.
 Pour durée (secondes) et distance (miles), chaque ensemble renvoie : nombre de
 valeurs finies, valeurs manquantes, min, q25, médiane, q75, p90, max, moyenne,
 écart-type de population et écart interquartile IQR=q75-q25.
-Un ensemble vide a des statistiques null, pas des zéros inventés.
+Un ensemble vide a des statistiques null.
 
 Les quantiles utilisent l'interpolation linéaire à l'indice `(n-1)*p`, comme
 NumPy quantile(method="linear"). Par exemple, sur 10,20,30,40,

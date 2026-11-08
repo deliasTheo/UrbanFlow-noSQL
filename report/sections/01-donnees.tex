@@ -7,27 +7,17 @@ mais les données de toute la ville sont conservées. Les trajets enregistrés n
 permettent pas de mesurer une demande non satisfaite ni l'ensemble des déplacements
 new-yorkais : les résultats portent sur cette archive de taxis \cite{sujet}.
 
-La répartition retenue dans le binôme est la suivante : cette contribution porte
-sur la récupération des données, leur qualité, le modèle initial, l'API locale
-et les services F1 à F5 inclus. Le second membre prend en charge F6, les
-déploiements distribués, les expériences E1--E3 et leur analyse. Chacun rédige la
-partie correspondante du rapport ; les deux membres doivent pouvoir expliquer
-l'ensemble du projet. Codex a été utilisé pour développer et expliquer du code,
-préparer des vérifications et rédiger cette contribution. Les résultats chiffrés
-présentés ici proviennent des fichiers et mesures conservés dans le dépôt.
+Nous nous sommes réparti le travail : Théo s'est occupé de la récupération des données, de leur qualité, du modèle, de l'API locale et des services F1 à F5, et Ion de F6, des déploiements répartis, des expériences E1-E3 et de leur analyse. Pour la partie données et F1-F5, 
+Codex a été utilisé pour développer et expliquer du code, préparer des vérifications et
+rédiger. 
 
-Le texte décrit l'état intégré de \code{main} après récupération du commit
-\code{5f11cfd}, et tient compte des reprises du second membre : identité des
-trajets, traçabilité détaillée, index de déploiement et optimisations de F3/F5.
-Les mesures du prototype du 5 novembre sont identifiées séparément ; elles ne
-valident pas à elles seules les changements ultérieurs \cite{code,mesures}.
 
-\section{Données et règles de qualité}
+
+\section{Données et règles de qualité}\label{sec:donnees}
 Les sources sont les Parquet mensuels \emph{Yellow Taxi Trip Records} et le
 référentiel officiel des zones TLC. Le manifeste donne pour chaque fichier son
-URL, sa date de récupération, sa taille et son SHA-256. Les trois fichiers initiaux
-ont été récupérés le 2 novembre 2026 selon ce manifeste ; les empreintes complètes
-figurent en annexe \ref{ann:provenance} \cite{tlc,preuves}.
+URL, sa date de récupération, sa taille et son SHA-256. Nous avons récupéré les fichiers de janvier à avril le 2 novembre 2026 et ceux de mai et juin le 3 novembre ;
+les empreintes complètes sont dans \chemin{data/manifest.json} \cite{tlc,preuves}.
 
 \begin{center}\small
 \begin{tabular}{lrrrr}
@@ -37,16 +27,21 @@ Fichier 2024 & Lignes sources & Profil activity & Profil flows & Profil journey\
 Janvier & 2\,964\,624 & 2\,929\,120 & 2\,898\,055 & 2\,841\,251\\
 Février & 3\,007\,526 & 2\,971\,445 & 2\,942\,952 & 2\,878\,111\\
 Mars & 3\,582\,628 & 3\,538\,317 & 3\,503\,542 & 3\,420\,628\\
+Avril & 3\,514\,289 & 3\,470\,540 & 3\,435\,410 & 3\,394\,040\\
+Mai & 3\,723\,833 & 3\,674\,841 & 3\,636\,771 & 3\,591\,918\\
+Juin & 3\,539\,193 & 3\,490\,398 & 3\,452\,592 & 3\,404\,607\\
+\midrule
+Total & 20\,332\,093 & 20\,074\,661 & 19\,869\,322 & 19\,530\,555\\
 \bottomrule
 \end{tabular}
 \end{center}
-Ces effectifs sont ceux des bilans par fichier : au total, 9\,554\,778 lignes
-sources, pas un nombre garanti de déplacements physiques distincts. Ils ne sont
-pas non plus un nouveau comptage du déploiement intégré après déduplication entre
-fichiers. Le référentiel contient 265 zones. Dans le fichier de janvier,
+Ces effectifs sont ceux des bilans par fichier : 9\,554\,778 lignes sources pour les
+trois mois initiaux, 20\,332\,093 pour les six mois, pas un nombre garanti de
+déplacements physiques distincts. À l'import, aucune ligne d'un fichier n'a été
+retrouvée dans un autre : la base contient autant de documents que de lignes
+sources. Le référentiel contient 265 zones. Dans le fichier de janvier,
 25\,258 lignes ont une zone de départ rattachée à Brooklyn ; Manhattan en compte
-2\,646\,948. Le focus géographique ne doit donc pas masquer le déséquilibre des
-volumes \cite{preuves}.
+2\,646\,948 \cite{preuves}.
 
 Une ligne appartient à une période selon sa date réelle de départ, et non selon
 le mois du fichier. F1 et F3 en mode arrivées utilisent toutefois la zone \emph{et}
@@ -59,17 +54,17 @@ Les anomalies de qualité ne provoquent pas de suppression à l'import : elles s
 \code{flows} ajoute les zones 264/265, sans localisation précise ;
 \code{journey} ajoute les durées nulles ou négatives, celles au-delà de six heures,
 les distances nulles ou supérieures à 100 miles, les vitesses supérieures à
-80 miles/h et les heures DST non résolues. Ces seuils larges écartent des anomalies
+80 miles/h et les heures DST non résolues. Le profil activity sert à F1 et F3, flows à F2 et F5, journey à F4. Ces seuils larges écartent des anomalies
 manifestes, sans définir un trajet « normal ». En janvier, le profil journey
 écarte 123\,373 lignes, soit 4,16\,\%, contre 1,20\,\% pour activity.
 Les motifs peuvent se cumuler ; leur somme n'est pas le total des exclusions.
 
 Un doublon exact est une copie de toutes les colonnes dans un même fichier ;
-seule la première occurrence reste exploitable. Une annulation est repérée par
+les deux lignes restent stockées et seule la première entre dans les analyses. Une annulation est repérée par
 le fournisseur, les deux horodatages, les zones et un montant opposé ; l'original
 positif est conservé. La détection est faite sur le fichier entier avant l'écriture
 par lots de 5\,000, ce qui évite de dépendre des frontières de lots, mais impose
-un coût mémoire à mesurer à plus grand volume. Les anomalies ne sont pas toutes
+un coût mémoire que nous n'avons pas mesuré. Les anomalies ne sont pas toutes
 couvertes : le contrôle des zones vise notamment 264/265 et la détection des
 annulations reste interne à chaque fichier. L'annexe \ref{ann:qualite} documente
 huit anomalies ou particularités effectivement présentes avec leurs lignes sources.

@@ -34,8 +34,7 @@ et aucun index dédié F3 ne sont créés par l'API.
 | minRelativeChange | 0.5 | Écart relatif minimal (0,5 = 50 %) |
 | minRobustScore | 3 | Seuil sur le score descriptif médiane/MAD |
 
-Les seuils sont positifs, visibles et modifiables dans l'URL. Il s'agit de choix
-exploratoires, pas de prescriptions du sujet ni de tests de significativité.
+Les seuils sont positifs, visibles et modifiables dans l'URL. Il s'agit de choix exploratoires, pas de tests de significativité.
 Une zone inconnue donne 404, les entrées invalides 400, une base inaccessible,
 une agrégation interrompue ou l'absence d'import complet 503. Chaque agrégation
 est limitée à 300 s ; les deux requêtes sont successives, pas une limite de 300 s
@@ -91,7 +90,7 @@ l'estimation reste fragile ; les jours et seuils sont exposés pour le montrer.
 Le statut est INSUFFICIENT_REFERENCE si moins de minReferenceDays sont admissibles,
 puis LOW_BASELINE si m < minBaseline. Sinon, UNUSUAL exige **les trois** conditions :
 écart absolu minimal, écart relatif minimal et score robuste minimal.
-Lorsque MAD=0, on n'invente pas un score infini : robustScore=null et
+Lorsque MAD=0, robustScore=null et
 ZERO_REFERENCE_MAD est signalé ; les critères absolu et relatif suffisent alors.
 Ce comportement est explicitement différent d'un test de significativité.
 
@@ -114,7 +113,7 @@ HIGH_EXCLUSION_RATE avertit si plus de 20 % des candidats locaux sont exclus.
 Ces seuils sont des diagnostics descriptifs fixes, pas des critères de détection.
 
 Une anomalie accompagnée d'une forte baisse générale peut être liée à un contexte
-collectif ou à une lacune de couverture ; le système ne prétend pas trancher.
+collectif ou à une lacune de couverture ; le service ne tranche pas.
 Les comptes avant/après qualité permettent aussi d'examiner des données irrégulières.
 La couverture locale ne peut pas être prouvée par les seuls trajets observés.
 
@@ -244,5 +243,5 @@ Le contrôle calendaire isolé est reproductible avec :
 java --class-path backend/target/classes scripts/VerifyCalendar2024.java
 ```
 
-Les résultats réels, exemples et limites sont dans
+Les résultats, exemples et limites sont dans
 [la synthèse F3](../results/performance/f3/synthese.md).

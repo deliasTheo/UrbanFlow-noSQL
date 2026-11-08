@@ -35,7 +35,7 @@ http://localhost:8080/api/activity?zoneId=181&direction=dropoff&from=2024-01-01&
 
 Le référentiel permet de retrouver les identifiants : les noms ne sont pas uniques.
 181 est Park Slope, Brooklyn. Ces URL sont des exemples de paramètres ; les
-résultats sont calculés à chaque appel sur la base disponible, pas prédéfinis.
+résultats sont calculés à chaque appel sur la base disponible.
 
 ### Entrées
 
@@ -120,8 +120,7 @@ il faut aussi mettre à jour `QualityProfiles.java`.
 ## Vérification
 
 Contrôles HTTP contre MongoDB 8.0.16, dans une base temporaire distincte : les 50 000
-premières lignes de janvier et les 50 000 premières de mars 2024, sans données
-synthétiques. Les indicateurs qualité ont été calculés sur ces sous-ensembles :
+premières lignes de janvier et les 50 000 premières de mars 2024. Les indicateurs qualité ont été calculés sur ces sous-ensembles :
 ce contrôle ne valide pas la détection des doublons à l'échelle du mois entier.
 
 Comparaison des réponses avec un calcul Python à partir de ces lignes sources :

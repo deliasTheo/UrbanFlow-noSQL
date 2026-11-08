@@ -1,4 +1,4 @@
-\section{Modèle local et accès à MongoDB}
+\section{Modèle local et accès à MongoDB}\label{sec:modele}
 MongoDB fonctionne comme un serveur séparé dans Docker Compose ; l'application
 y accède par une URI réseau. Le déploiement local utilise MongoDB 8.0.16 sur
 \code{127.0.0.1:27018}, avec un volume persistant. L'ingestion et les contrôles
@@ -6,8 +6,10 @@ Parquet sont en Python. L'API est en Spring Boot 3.5.7, Java 21, avec Spring Dat
 MongoDB et \code{MongoTemplate}. JPA n'est pas utilisé : les requêtes sont des
 filtres et pipelines BSON explicites. Les contrôleurs valident les entrées, les
 services appliquent les règles et les repositories interrogent la base. Postman
-sert d'interface de démonstration ; le sujet autorise une API et ne demande pas
-de page web \cite{sujet,code}.
+sert d'interface de démonstration \cite{sujet,code}. Les accès attendus sont des filtres par zone et par
+intervalle de dates suivis de regroupements : les index de la section~\ref{sec:mesures}
+servent ces filtres. MongoDB offre aussi le partitionnement natif, qui laisse à l'API
+une seule URI en déploiement réparti (section~\ref{sec:reparti}).
 
 La collection \code{trips} conserve les colonnes TLC dans \code{data}, la provenance
 \code{source.file_id}/\code{source.row_number}, la durée \code{duration_s} et les
@@ -17,22 +19,19 @@ ses métadonnées et son état \code{loading}, \code{failed} ou \code{complete}.
 Les services ne sélectionnent que les imports complets. Aucun agrégat matérialisé
 n'est nécessaire aux services décrits ici.
 
-\paragraph{Identité et reprise après intégration.}
-Le prototype initial identifiait une ligne par SHA-256 du fichier et position.
-Le second membre a remplacé cette règle pour traiter les extraits chevauchants.
-L'identité actuelle combine l'heure de départ, une empreinte de toutes les
+\paragraph{Identité et reprise.}
+L'identité d'un trajet combine l'heure de départ, une empreinte de toutes les
 colonnes canonisées et le rang parmi les lignes identiques du fichier. Le code
 utilise une empreinte Pandas de 64 bits, \emph{distincte} du SHA-256 de provenance.
 Deux copies dans un fichier ont des rangs différents ; une ligne déjà importée
 retrouve son identité et l'index unique \code{_id} empêche sa réinsertion.
-L'import courant utilise des insertions par lots et traite les collisions de clé
-comme des lignes déjà présentes, pas les anciens upserts.
+L'import utilise des insertions par lots et traite les collisions de clé
+comme des lignes déjà présentes.
 Cette règle ne résout pas toute ambiguïté : deux enregistrements identiques issus
 de fichiers indépendants peuvent être confondus, une correction de contenu
 produit une nouvelle identité, et une collision d'empreinte reste possible.
 En cas de recouvrement, le document garde la provenance de la première insertion,
-pas toutes ses rééditions. La justification et la validation complète de F6
-relèvent de la seconde contribution.
+pas toutes ses rééditions. La section~\ref{sec:f6} teste cette règle sur de vraies lignes.
 
 \paragraph{Dates et durées.}
 Les heures locales TLC sont stockées en chaînes ISO sans fuseau. Les conversions
@@ -54,10 +53,8 @@ l'intersection entre les flags du trajet et ceux du profil, grâce à
 \code{$setIntersection}, \code{$size} et \code{$eq}. Une ligne cumulant plusieurs
 motifs n'est donc exclue qu'une fois.
 
-Les groupes incluent le fichier source pour justifier les comptes. La version
-intégrée ajoute \code{GET /api/trips} : elle compte et liste, avec pagination,
+Les groupes incluent le fichier source pour justifier les comptes. \code{GET /api/trips} compte et liste, avec pagination,
 les lignes sous-jacentes selon zones, dates, créneau, profil et statut, et renvoie
-le fichier et la position d'origine. Ce complément ne faisait pas partie du
-premier prototype F1--F5. La présence de fichiers complets ne prouve pas la
+le fichier et la position d'origine.  La présence de fichiers complets ne prouve pas la
 couverture de chaque heure ; les services ne fournissent pas non plus un
 instantané transactionnel entre la lecture des imports et l'agrégation.

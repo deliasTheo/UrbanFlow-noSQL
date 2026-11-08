@@ -63,38 +63,20 @@ for month in ['2024-01','2024-02','2024-03']:
   annex.append((month,code,anomaly['count'],pct,record,duration,duplicate_of))
  del cache
 
-provenance=r'''\section{Provenance du jeu initial}\label{ann:provenance}
-Le manifeste est \chemin{data/manifest.json}. Les fichiers ci-dessous ont été
-récupérés le 2 novembre 2026 selon les métadonnées enregistrées. Les tailles,
-empreintes et effectifs ont été revérifiés lors de la préparation de ces annexes.
-Les numéros de ligne des exemples sont en base zéro.
-
-Les URL Parquet suivent \url{https://d37ci6vzurychx.cloudfront.net/trip-data/}
-et les noms mensuels ci-dessous. Le référentiel vient de
-\url{https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv}.
-'''
-for file in ['yellow_tripdata_2024-01.parquet','yellow_tripdata_2024-02.parquet','yellow_tripdata_2024-03.parquet','taxi_zone_lookup.csv']:
+for file in [f'yellow_tripdata_2024-0{m}.parquet' for m in range(1,7)]+['taxi_zone_lookup.csv']:
  entry=manifest[file];path=ROOT/'data/raw'/file
- # Le CSV est vérifié ici, les Parquet l'ont été dans la boucle précédente.
- if file.endswith('.csv'):
-  assert hashlib.sha256(path.read_bytes()).hexdigest()==entry['sha256']
-  assert len(pd.read_csv(path))==265
+ assert hashlib.sha256(path.read_bytes()).hexdigest()==entry['sha256'],file
  assert path.stat().st_size==entry['size_bytes'],file
- rows=entry.get('num_rows',265)
- sha=r'\allowbreak{}'.join(entry['sha256'][i:i+8] for i in range(0,64,8))
- provenance+=("\n\\paragraph{\\code{"+file+"}}\n")+f"{number(rows)} lignes de données ; {number(entry['size_bytes'])} octets.\n\\par SHA-256 : \\texttt{{{sha}}}.\n"
-provenance+=r'''
-Le rapport qualité couvre aussi avril--juin ; les effectifs utilisés ici sont
-ceux des trois mois initiaux. Les empreintes de tous les fichiers, y compris
-ceux réservés à F6 et E1--E3, restent dans le manifeste.
-'''
+ if file.endswith('.csv'):
+  assert len(pd.read_csv(path))==265
+ else:
+  assert pq.ParquetFile(path).metadata.num_rows==entry['num_rows'],file
 text=r'''\section{Anomalies présentes et lignes justificatives}\label{ann:qualite}
 Fréquences issues de \chemin{results/quality/quality_report.json}, calculées
 \emph{par fichier entier}, indépendamment des profils. Elles peuvent se recouper.
-Les huit exemples ont été comparés aux colonnes originales des Parquet et leurs
-durées recalculées avec New York puis UTC. Le relevé de cette vérification est
+Nous avons comparé les huit exemples aux colonnes originales des Parquet et recalculé leurs durées avec New York puis UTC. Le relevé de cette vérification est
 \chemin{report/evidence-verification.json}. Une transition DST est une particularité
-à traiter, pas nécessairement une erreur de données.
+à traiter, pas nécessairement une erreur de données. Les numéros de ligne sont en base zéro.
 
 \begin{center}\small
 \begin{tabular}{llrr}
@@ -115,15 +97,14 @@ explanations={
 'UNKNOWN_ZONE':"L'arrivée 265 ne désigne pas une zone précise de New York : exclusion du profil flows et donc journey.",
 'EXACT_DUPLICATE':"Le rapport qualité signale cette ligne comme copie d'une ligne précédente du même fichier ; seule la copie est exclue. Les champs cités identifient l'exemple, le rapport JSON conserve toutes les colonnes.",
 'DST_SPANNING':"Durée UTC de 10\\,891 s contre 14\\,491 s locales : une heure est retranchée. Le flag n'exclut pas automatiquement le trajet de journey.",
-'DST_UNRESOLVED':"L'arrivée est à une heure inexistante le 10 mars. La durée exploitable est null et non les 85\\,132 s de différence locale affichées par l'ancien rapport de diagnostic."
+'DST_UNRESOLVED':"L'arrivée est à une heure inexistante le 10 mars. La durée exploitable est null et non les 85\\,132 s de différence locale."
 }
 for month,code,count,pct,r,duration,duplicate_of in annex:
  text+="\n\\paragraph{"+month+", ligne "+number(r["row_number"])+" --- \\code{"+code+"}}\n"
  text+=f"Départ : {r['tpep_pickup_datetime']} ; arrivée : {r['tpep_dropoff_datetime']}. "
  text+=f"Zones {r['PULocationID']} $\\to$ {r['DOLocationID']}, fournisseur {r['VendorID']}, distance {r['trip_distance']} miles, total {r['total_amount']}.\n"
  text+=explanations[code]+'\n'
- if duplicate_of is not None:text+='La ligne identique antérieure a été retrouvée à la position '+number(duplicate_of)+'.\n'
-(ROOT/'report/annexes/provenance.tex').write_text(provenance)
+ if duplicate_of is not None:text+='La ligne identique antérieure se trouve à la position '+number(duplicate_of)+'.\n'
 (ROOT/'report/annexes/qualite.tex').write_text(text)
 (ROOT/'report/evidence-verification.json').write_text(json.dumps({'verified':True,'method':'SHA-256 et effectifs Parquet contrôlés ; toutes les colonnes des exemples comparées aux originaux ; durées UTC recalculées','examples':proofs},ensure_ascii=False,indent=2)+'\n')
 print('Sources et huit exemples vérifiés ; annexes générées.')

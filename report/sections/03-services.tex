@@ -1,9 +1,6 @@
-\section{Services analytiques F1 à F5}
+\section{Services F1 à F6}\label{sec:services}
 Les paramètres sont fournis à chaque appel ; les réponses JSON sont calculées
-sur les données stockées et renvoient les effectifs et sources. Les exemples
-numériques ci-dessous proviennent des réponses archivées du prototype sur janvier
-complet, à l'exception du contrôle DST sur des lignes de mars \cite{mesures}.
-Ils ne sont pas des résultats recalculés sur les six mois de la version intégrée.
+sur les données stockées et renvoient les effectifs et sources. Les exemples numériques portent sur janvier complet \cite{mesures}. La section~\ref{sec:verifications} retrouve sur le code final les comptes cités pour F1, F2 et F5.
 
 \subsection{F1 : activité au départ ou à l'arrivée}
 \code{GET /api/activity} reçoit une zone, \code{pickup} ou \code{dropoff} et un
@@ -15,8 +12,7 @@ répartitions à partir des mêmes candidats ; chaque branche utilise
 \code{$group} puis \code{$sort}. Les comptes par motif passent par
 \code{$unwind}, qui produit une ligne par flag. Ils peuvent se chevaucher.
 Pour les départs de la zone 181 en janvier, le contrôle Parquet archivé donne
-983 candidats, 977 retenus et six exclus avec activity. Les distributions sont
-cumulées : ce ne sont pas des moyennes corrigées du nombre de lundis ou d'heures.
+983 candidats, 977 retenus et six exclus avec activity. Les retenus culminent à 22 h (100) et tombent à 11 à 4 h ; le lundi en compte 176 et le dimanche 111. Janvier 2024 ayant cinq lundis et quatre dimanches, ces distributions sont cumulées : ce ne sont pas des moyennes corrigées du nombre de lundis ou d'heures.
 
 \subsection{F2 : flux et directions opposées}
 \code{GET /api/flows} accepte une zone, un ensemble de zones ou un borough et
@@ -51,20 +47,17 @@ sont exclus des comparaisons usuelles. Le calendrier est embarqué avec sa sourc
 OPM \cite{calendrier}. Un second pipeline compte la ville par jour et créneau :
 une absence de mois source, de lignes ville, ou une forte variation générale
 peut limiter l'interprétation d'une baisse locale. Ce diagnostic ne prouve pas
-une lacune de collecte. Le prototype signale, par exemple, 55 départs retenus
+une lacune de collecte. F3 signale, par exemple, 55 départs retenus
 pour la zone 181 le 23 janvier contre une médiane de 20 sur ses références.
 La faible profondeur de cet historique et les jours exclus doivent accompagner
 cette hausse, sans en déduire une cause.
 
-L'intégration a optimisé le pipeline ville : sur une journée entière, il ne calcule
-plus l'heure ; sur un créneau, il extrait directement les deux caractères de
-l'heure ISO avec \code{$substrBytes} et \code{$toInt}. Le délai maximal des
-agrégations F3 est passé à 300 s. Les temps initiaux ne mesurent pas ces optimisations.
+Sur une journée entière, le pipeline ville ne calcule pas l'heure ; sur un créneau, il extrait les deux caractères de l'heure ISO avec \code{$substrBytes} et \code{$toInt}. Le délai maximal des agrégations F3 est de 300 s.
 
 \subsection{F4 : caractéristiques des trajets}
 \code{GET /api/journeys} reçoit deux zones et deux périodes non chevauchantes.
 Il renvoie médiane, quartiles, p90, moyenne, écart-type, min/max et effectifs pour
-la durée et la distance. Les moins fiables sont décrits séparément ; les
+la durée et la distance. Les trajets moins fiables, écartés par journey mais conservés par activity, sont décrits séparément ; les
 montants négatifs et doublons restent hors des statistiques. Les valeurs hors
 bornes $[Q_1-1{,}5\,IQR,Q_3+1{,}5\,IQR]$ sont comptées mais pas supprimées à nouveau.
 
@@ -75,9 +68,8 @@ approximatif ou un grand tableau BSON, au prix d'un transfert et d'une mémoire
 proportionnels aux candidats. La limite est de 200\,000 lignes, avec erreur 422
 explicite au-delà.
 
-Pour tenir compte de trajets différents, une seconde comparaison utilise les
-strates semaine/week-end, créneaux de six heures et classes de distance. Les
-moyennes de durée des strates suffisamment représentées sont pondérées par les
+Sous 30 trajets utilisables dans l'une des périodes (\code{minTrips}, modifiable), la comparaison prend le statut \code{INSUFFICIENT_SAMPLE}. Pour tenir compte de trajets différents, une seconde comparaison utilise les
+strates semaine/week-end, créneaux de six heures et classes de distance. Les moyennes de durée des strates atteignant ce même seuil dans les deux périodes sont pondérées par les
 mêmes poids de référence ; les fractions couvertes sont affichées. Ce n'est pas
 une médiane standardisée ni une élimination de tous les facteurs de confusion.
 Pour 132 $\to$ 161, la médiane passe de 2\,678 à 2\,719 s entre les
@@ -105,10 +97,5 @@ statistiquement significatif.
 
 La décomposition $n_B-n_A=(p_A N_B-n_A)+(n_B-p_A N_B)$ distingue l'effet du
 volume global et le résidu du flux. Entre les semaines du 15 et du 22 janvier,
-les départs retenus de la zone 132 passent de 30\,263 à 26\,739. Pour
-132 $\to$ 123, les comptes passent pourtant de 29 à 146, soit de 0,0958\,\% à
-0,5460\,\% : +0,4502 point. L'attendu au seul effet volume est 25,62 ; le résidu
-est +120,38. La baseline du 1er au 22 janvier ne fournit que deux différences
-hebdomadaires, une limite importante. L'intégration construit désormais les
-preuves par source après le classement, seulement pour les flux renvoyés, et
-porte le délai maximal de l'agrégation à 300 s, sans changer ce principe de calcul.
+les départs retenus de Brooklyn passent de 5\,526 à 5\,858. Pour les trajets internes à la zone 76 (East New York), les comptes passent pourtant de 24 à 11, soit de 0,4343\,\% à 0,1878\,\% : $-0{,}2465$ point. L'attendu au seul effet volume est 25,44 ; le résidu est $-14{,}44$. Avec $R=2{,}47$, c'est le seul flux retenu sur 4\,113 paires. La baseline du 1er au 22 janvier ne fournit que deux différences
+hebdomadaires. Les preuves par source sont construites après le classement, seulement pour les flux renvoyés. Le délai maximal de l'agrégation est de 300 s.

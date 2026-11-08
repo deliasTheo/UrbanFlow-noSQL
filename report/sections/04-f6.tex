@@ -1,0 +1,28 @@
+\subsection{F6 : mise à jour de l'archive}\label{sec:f6}
+\code{POST /api/imports?month=2024-04} importe un mois du manifeste ;
+\code{POST /api/imports?file=chemin} importe un autre Parquet, par exemple un extrait
+TLC fourni à la soutenance. La réponse contient le résumé de l'import : lignes du
+fichier, lignes insérées, lignes déjà présentes, durée, anomalies et effectifs par
+profil. \code{GET /api/imports} liste les fichiers et leur état. Un paramètre invalide
+renvoie 400 ; un import lancé pendant un autre renvoie 409.
+
+L'identité décrite en section~\ref{sec:modele} sert d'\code{_id}. Deux lignes
+identiques d'un même fichier gardent deux identités grâce au rang. Un fichier réimporté
+produit les mêmes identités, et l'index unique refuse la réinsertion. Un fichier déjà
+\code{complete}, reconnu par son SHA-256, n'est même pas relu. Un import interrompu reste
+\code{loading} ou \code{failed} : les services l'ignorent, et le relancer n'ajoute que
+les lignes manquantes.
+
+Nous avons importé avril par l'API sur les trois déploiements, à chaque fois sur une base de
+trois mois. Les documents passent de 9\,554\,778 à 13\,069\,067, soit exactement les
+3\,514\,289 lignes du fichier, en 114,3 s (local), 119,0 s (zone) et 129,3 s (période).
+Le second import dure 1,1 à 1,2 s et ne change aucun compte. F1 reflète le nouveau mois :
+pour les départs de la zone 181 en avril, l'API passe de 0 candidat à 1\,738, dont
+1\,722 retenus et 16 exclus, comme le recalcul depuis le Parquet.
+
+\code{verify-f6.py} teste les cas limites sur de vraies lignes, dans une base à part, sur
+les trois déploiements. Les 20\,000 premières lignes d'avril importées deux fois donnent
+20\,000 documents. Le même contenu mélangé et renommé donne 0 ligne nouvelle et 20\,000
+déjà présentes. Un extrait à cheval donne 10\,000 nouvelles et 10\,000 déjà présentes.
+Les lignes identiques 754\,248 et 754\,252 de février restent toutes les deux, avec
+les rangs \code{:0} et \code{:1} \cite{experiences}.

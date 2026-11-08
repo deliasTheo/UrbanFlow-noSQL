@@ -1,0 +1,29 @@
+avril_a.parquet : 20,000/20,000
+avril_a.parquet : déjà importé, aucun changement
+avril_a_renomme.parquet : 20,000/20,000
+avril_b.parquet : 20,000/20,000
+fevrier_doublon.parquet : 2/2
+{
+  "verified": true,
+  "uri": "mongodb://127.0.0.1:27018",
+  "checks": {
+    "meme_fichier_deux_fois": {
+      "documents_avant": 20000,
+      "documents_apres": 20000
+    },
+    "meme_contenu_autre_nom": {
+      "lignes_nouvelles": 0,
+      "deja_presentes": 20000
+    },
+    "extrait_a_cheval": {
+      "lignes_nouvelles": 10000,
+      "deja_presentes": 10000
+    },
+    "vrais_doublons": {
+      "identifiants": [
+        "2024-02-08T18:23:50|94819a6f74bfa914:0",
+        "2024-02-08T18:23:50|94819a6f74bfa914:1"
+      ]
+    }
+  }
+}

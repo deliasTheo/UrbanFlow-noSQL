@@ -24,7 +24,7 @@ Le profil flows exclut NEGATIVE_AMOUNT, EXACT_DUPLICATE et UNKNOWN_ZONE.
 Les codes inconnus signalés par l'ingestion sont 264/265 ; ce profil n'est pas
 une validation générale de tous les codes invalides possibles.
 
-Paramètres de lecture, exposés pour éviter des seuils cachés :
+Paramètres de lecture :
 
 | Paramètre | Défaut | Sens |
 |---|---:|---|
@@ -34,8 +34,7 @@ Paramètres de lecture, exposés pour éviter des seuils cachés :
 | regularFraction | 0.75 | Fraction minimale de semaines actives pour regular |
 | peakShare | 0.5 | Part minimale de la semaine dominante pour peak |
 
-Ces valeurs sont des règles exploratoires, pas des seuils statistiques ou
-prescrits par le sujet. Les seuils entiers sont positifs et les fractions dans ]0,1].
+Ces valeurs sont des règles exploratoires, pas des seuils statistiques. Les seuils entiers sont positifs et les fractions dans ]0,1].
 
 ## Réponse et interprétation
 
@@ -191,8 +190,7 @@ _id_ ; il ne supprime jamais les index d'une base existante. Utiliser une nouvel
 base dédiée et l'API associée pour une répétition. Il crée ensuite les deux index
 F1 et les laisse en place. Ne pas exécuter en parallèle avec un import.
 
-Chaque phase fait un échauffement puis trois appels mesurés par requête. Les
-caches restent actifs, sans promesse de froid. Le script compare toutes les
+Chaque phase fait un échauffement puis trois appels mesurés par requête. Les caches restent actifs. Le script compare toutes les
 réponses JSON avant/après et archive temps, variabilité, tailles et explain.
 `ExportFlowPipeline.java` réutilise exactement le constructeur Java du pipeline
 de production pour explain ; il nécessite un JDK 21 et le jar compilé courant.
@@ -205,5 +203,5 @@ La vérification indépendante relit le Parquet, recalcule les exclusions et les
 comptes sans MongoDB, puis compare totaux, classement, retours et séries hebdomadaires.
 
 
-Les résultats réellement mesurés, exemples vérifiés et limites sont rassemblés
+Les résultats mesurés, exemples vérifiés et limites sont rassemblés
 dans [la synthèse F2](../results/performance/f2/synthese.md).

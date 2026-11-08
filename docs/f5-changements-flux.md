@@ -16,8 +16,7 @@ Sur le périmètre janvier–mars, pour un historique plus fourni :
 http://localhost:8080/api/flow-changes?borough=Brooklyn&from=2024-02-26&to=2024-03-04&referenceFrom=2024-02-19&referenceTo=2024-02-26&baselineFrom=2024-01-01&baselineTo=2024-02-26
 ```
 
-Le second exemple est un choix de paramètres, pas un résultat déjà mesuré dans
-le benchmark limité à janvier. Les semaines avec jours fériés sont signalées.
+Le second exemple n'a pas été mesuré par le benchmark, limité à janvier. Les semaines avec jours fériés sont signalées.
 
 Choisir zoneIds (liste séparée par virgules), borough, ou aucun des deux pour
 l'ensemble des zones du référentiel. Le dénominateur est **tous les départs
@@ -50,8 +49,7 @@ les jours. Il accepte une ou plusieurs semaines par période comparée.
 | minVariationRatio | 2 | Ratio minimal face à la variation habituelle/plancher, au moins 1 |
 | limit | 10 | Nombre maximal par liste, de 1 à 100 |
 
-Ces règles sont exploratoires et modifiables. Ce ne sont ni des tests de
-significativité, ni des seuils imposés par le sujet. Une disparition peut être
+Ces règles sont exploratoires et modifiables. Ce ne sont pas des tests de significativité. Une disparition peut être
 évaluée sans exiger un effectif courant positif : minTrips porte sur le maximum
 des deux comptes. Un flux nouvellement observé sans historique probant est
 signalé LOW_BASELINE_COUNTS plutôt que déclaré changement majeur.
@@ -113,8 +111,7 @@ variationRatio = |pB - pA| / max(p90WeeklyChange, minShareChange)
 Le plancher empêche un ratio infini quand toutes les variations historiques sont
 nulles. Un flux n'est CHANGED que si l'effectif, l'historique, le minimum de part
 et le ratio passent. Avec les défauts, p90=0 implique un écart d'au moins
-2 × 0,001, soit **0,2 point**, à cause du ratio minimal 2. Le plancher n'est donc
-pas une promesse de classer tout écart de 0,1 point.
+2 × 0,001, soit **0,2 point**, à cause du ratio minimal 2. Un écart de 0,1 point n'est donc pas toujours classé.
 
 Le p90 est un repère de fluctuations observées, pas une borne probabiliste ni
 une p-value. Trois semaines ne donnent que deux différences, une estimation
@@ -251,4 +248,4 @@ les parts et variations de **toutes** les paires, puis compare les classements e
 preuves renvoyées. Elle couvre une zone, Brooklyn et le périmètre ville, ainsi
 que les cas de données/historique insuffisants et les erreurs de paramètres.
 
-Voir [les mesures et exemples réels](../results/performance/f5/synthese.md).
+Voir [les mesures et exemples](../results/performance/f5/synthese.md).

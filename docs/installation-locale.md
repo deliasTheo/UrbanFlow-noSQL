@@ -46,7 +46,7 @@ au premier lancement. Le résultat est `backend/target/urbanflow-api-0.1.0.jar`.
 ```bash
 docker compose up -d --wait
 docker compose ps
-python -m urbanflow.deploy --placement local
+.venv/bin/python -m urbanflow.deploy --placement local      # Windows : .\.venv\Scripts\python.exe -m urbanflow.deploy --placement local
 ```
 
 UrbanFlow utilise le port 27018, pour laisser libre le port 27017 d'un autre

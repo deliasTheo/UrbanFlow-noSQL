@@ -1,0 +1,10 @@
+UrbanFlow répond à six services (F1 à F6) par une API REST au-dessus de MongoDB.
+Nous avons comparé trois déploiements sur les mêmes 20\,332\,093 lignes TLC de janvier
+à juin 2024 : un serveur local, deux shards par zone de départ et deux shards par
+période. Les 13 requêtes de la comparaison automatique donnent des réponses identiques
+partout. Le placement par zone raccourcit tous les mélanges de E3 de 17 à 33\,\% par
+rapport au local, et coûte 42\,\% de stockage en plus et, sur la charge large, 25\,\%
+de CPU en plus. Le placement par période termine la charge large 7\,\% plus vite, mais
+il est le plus lent sur les zones chargées et sur F5 à l'échelle de la ville (59 s contre
+22 s). La perte d'un shard rend indisponibles les requêtes qui en ont besoin : l'API
+renvoie alors une erreur 503 et ne présente jamais de résultat partiel.
