@@ -35,14 +35,12 @@ data/
 results/             rapport de qualité, mesures brutes et vérifications
 compose.yaml         serveur MongoDB local
 compose.cluster.yaml cluster : deux shards, un serveur de configuration, un routeur mongos
-docs/                modèle de données, guides des services, prédiction de E3
-report/              rapport LaTeX, figures et annexes
+docs/                prédiction de E3
 ```
 
 ## Installation
 
-Prérequis : Python 3.12, JDK 21, Docker Desktop. Le
-[guide d'installation](docs/installation-locale.md) détaille chaque étape.
+Prérequis : Python 3.12, JDK 21, Docker Desktop.
 
 ```bash
 python -m venv .venv
@@ -113,16 +111,18 @@ de 1,4 Go, ou deux shards de 0,7 Go. Le serveur de configuration du cluster a 0,
 
 ## Services
 
-| Service | Requête | Guide |
-|---|---|---|
-| F1, activité d'une zone | `GET /api/activity` | [F1](docs/f1-activite.md), [opérateurs MongoDB](docs/f1-mongodb-explique.md) |
-| F2, flux origine-destination | `GET /api/flows` | [F2](docs/f2-flux.md) |
-| F3, activité inhabituelle | `GET /api/unusual-activity` | [F3](docs/f3-activite-inhabituelle.md) |
-| F4, durées et distances | `GET /api/journeys` | [F4](docs/f4-caracteristiques-trajets.md) |
-| F5, changements de parts des flux | `GET /api/flow-changes` | [F5](docs/f5-changements-flux.md) |
-| F6, mise à jour de l'archive | `POST /api/imports`, `GET /api/imports` | ci-dessous |
-| Traçabilité d'un résultat | `GET /api/trips` | ci-dessous |
-| Référentiel des zones | `GET /api/zones` | [F1](docs/f1-activite.md) |
+| Service | Requête | Paramètres | Options (défaut) |
+|---|---|---|---|
+| F1, activité d'une zone | `GET /api/activity` | `zoneId`, `direction` (`pickup` ou `dropoff`), `from`, `to` | |
+| F2, flux origine-destination | `GET /api/flows` | `zoneIds` ou `borough`, `from`, `to` | `limit`=10, `minTrips`=20, `minWeeklyTrips`=5, `regularFraction`=0.75, `peakShare`=0.5 |
+| F3, activité inhabituelle | `GET /api/unusual-activity` | `zoneIds` ou `borough`, `from`, `to`, `referenceFrom`, `referenceTo` | `direction`=pickup, `startHour`=0, `endHour`=24, `minReferenceDays`=3, `minBaseline`=20, `minAbsoluteChange`=20, `minRelativeChange`=0.5, `minRobustScore`=3 |
+| F4, durées et distances | `GET /api/journeys` | `originId`, `destinationId`, `from`, `to`, `referenceFrom`, `referenceTo` | `minTrips`=30 |
+| F5, changements de parts des flux | `GET /api/flow-changes` | `zoneIds` ou `borough`, `from`, `to`, `referenceFrom`, `referenceTo`, `baselineFrom`, `baselineTo` | `limit`=10, `minTrips`=20, `minBaselineTrips`=20, `minTotalTrips`=100, `minBaselineWeeks`=3, `minShareChange`=0.001, `minVariationRatio`=2 |
+| F6, mise à jour de l'archive | `POST /api/imports`, `GET /api/imports` | ci-dessous | |
+| Traçabilité d'un résultat | `GET /api/trips` | ci-dessous | |
+| Référentiel des zones | `GET /api/zones` | | |
+
+Les dates sont au format AAAA-MM-JJ, `from` inclus et `to` exclu.
 
 ### F6 : importer un mois ou un extrait
 
@@ -148,8 +148,7 @@ Un fichier déjà importé n'est pas relu : la réponse indique « déjà import
 reprend le résumé du premier import. Si un fichier couvre un mois entier, indiquer `month` dès le
 premier import.
 
-L'identité d'un trajet est expliquée dans
-[le modèle de données](docs/modele-donnees.md#identité-dun-trajet).
+L'identité d'un trajet est expliquée dans la section 3 du rapport.
 
 ### Remonter d'un résultat aux trajets
 

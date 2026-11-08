@@ -121,4 +121,4 @@ pas toutes les variations de composition. Les différences de moyennes/médianes
 restent descriptives ; les durées/distances ne reconstituent pas un itinéraire.
 Les mois complets ne prouvent pas la couverture complète de chaque créneau.
 
-Pour les opérateurs MongoDB : docs/f4-caracteristiques-trajets.md.
+

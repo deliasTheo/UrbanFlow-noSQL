@@ -1,7 +1,5 @@
 # Prédiction pour l'expérience E3
 
-Écrite avant toute mesure sur les déploiements répartis, comme le demande le sujet.
-
 ## Ce qu'on compare
 
 Trois configurations sur les mêmes trajets (janvier à juin 2024) et les mêmes index :

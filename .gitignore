@@ -39,13 +39,7 @@ Thumbs.db
 desktop.ini
 
 # LaTeX (rapport)
-report/*.aux
-report/*.log
-report/*.out
-report/*.toc
-report/*.synctex.gz
-report/*.fdb_latexmk
-report/*.fls
+report/
 
 # Java / Maven
 backend/target/

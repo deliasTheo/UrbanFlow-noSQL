@@ -89,4 +89,4 @@ la date de départ des retours ; un troisième index serait une autre alternativ
 Trois répétitions constituent une première comparaison reproductible, pas une
 estimation robuste de la distribution des latences. La classification
 regular/peak utilise des seuils exploratoires exposés dans l'API, non un test de
-significativité. Les détails du pipeline et les limites sont dans docs/f2-flux.md.
+significativité. 

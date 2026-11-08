@@ -118,4 +118,4 @@ snapshot transactionnel entre les deux agrégations.
 La réponse contient toutes les cellules et leurs références pour la traçabilité ;
 sa taille augmente avec le nombre de zones, jours et références.
 
-Les opérateurs et règles sont expliqués dans docs/f3-activite-inhabituelle.md.
+

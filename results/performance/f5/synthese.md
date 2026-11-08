@@ -129,4 +129,4 @@ Sur le cluster, les comptes de toutes les instances sont agrégés avant le calc
 des parts et de la variabilité. Une réponse échoue explicitement si une instance
 nécessaire ou MongoDB est indisponible.
 
-Le détail des opérateurs et commandes est dans docs/f5-changements-flux.md.
+
